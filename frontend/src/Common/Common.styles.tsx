@@ -1,35 +1,6 @@
 import settings from '../settings.json'
-import styled, { keyframes, css } from "styled-components"
-import { BasicComponentContainer, PanelContainerInterface } from "./Common.interface";
-
-const DEFAULT_BLINK_COLOR = 'rgb(255, 255, 255)'; // White
-
-// Function to validate if a string is a valid CSS color
-const isValidColor = (color: string): boolean => {
-  const s = new Option().style;
-  s.color = color;
-  return s.color !== '';
-};
-
-// Function to get a valid color or return the default
-const getValidColor = (color: string | undefined, defaultColor: string): string => {
-  if (color && isValidColor(color)) {
-    return color;
-  }
-  return defaultColor;
-};
-
-const blink = (color: string) => keyframes`
-  0% {
-    border-color: transparent;
-  }
-  50% {
-    border-color: ${getValidColor(color, DEFAULT_BLINK_COLOR)};
-  }
-  100% {
-    border-color: transparent;
-  }
-`;
+import styled from "styled-components"
+import { PanelContainerInterface } from "./Common.interface";
 
 export const MainContainer = styled.div`
   background-color: #282c34;
