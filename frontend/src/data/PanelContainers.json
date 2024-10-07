@@ -1,0 +1,38 @@
+[
+    {
+        "container_name": "L1", 
+        "container_top": 600,
+        "container_left": 50,
+        "container_width": 1600,
+        "container_height": 1900
+    },
+    {
+        "container_name": "L2", 
+        "container_top": 985,
+        "container_left": 5,
+        "container_width": 2200,
+        "container_height": 5000
+    },
+    {
+        "container_name": "MID", 
+        "container_top": 5,
+        "container_left": 500,
+        "container_width": 500,
+        "container_height": 500
+    },
+    {
+        "container_name": "R1", 
+        "container_top": 5,
+        "container_left": 1000,
+        "container_width": 500,
+        "container_height": 500
+    },
+    {
+        "container_name": "R2", 
+        "container_top": 500,
+        "container_left": 1000,
+        "container_width": 500,
+        "container_height": 500
+    }
+]
+

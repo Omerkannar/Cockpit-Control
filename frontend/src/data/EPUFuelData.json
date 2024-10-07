@@ -1,0 +1,36 @@
+[
+    {
+        "type": "analog",
+        "backend_name": "EPU_FUEL_LEVEL_IN",
+        "width": "375",
+        "height": "375",
+        "left": "0",
+        "top": "0",
+        "offset_left": "0",
+        "offset_top": "0",
+        "imageProps": {
+            "imageDefault": "/EPUFuelPanel/EPU_Fuel_1.png"
+        },
+        "zero_rotation": "0",
+        "debugMode": false,
+        "isClickable": false,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 1, 
+            "clickBoundsWidthFactor": 1
+        },
+        "analog_props": {
+            "conversion": {
+                "0": -117,
+                "50": 0,
+                "100": 117
+            }
+        },
+        "blinking": {
+            "color": "yellow"
+        },
+        "logger": {
+            "display" : "false"
+        }
+
+    }
+]

@@ -1,0 +1,128 @@
+[
+    {
+        "width": 82,
+        "height": 120,
+        "left": 157,
+        "top": 88,
+        "offset_on": 0,
+        "offset_off": 44,
+        "backend_name": "PUMP_1_IN",
+        "imageProps": {
+            "imageDefault": "/FuelPanel/Fuel_Pump_SwitchDown.png",
+            "additionalImageData": {
+                "imageOn": "/FuelPanel/Fuel_Pump_SwitchUP.png"
+            }
+        },
+        "type": "stateN",
+        "debugMode": false,
+        "isClickable": true,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 2, 
+            "clickBoundsWidthFactor": 1.5
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "width": 82,
+        "height": 120,
+        "left":296,
+        "top": 88,
+        "offset_on": 0,
+        "offset_off": 44,
+        "backend_name": "PUMP_2_IN",
+        "imageProps": {
+            "imageDefault": "/FuelPanel/Fuel_Pump_SwitchDown.png",
+            "additionalImageData": {
+                "imageOn": "/FuelPanel/Fuel_Pump_SwitchUP.png"
+            }
+        },
+        "type": "stateN",
+        "debugMode": false,
+        "isClickable": true,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 2, 
+            "clickBoundsWidthFactor": 1.5
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "width": 85,
+        "height": 112,
+        "left": 434,
+        "top": 96,
+        "offset_on": 0,
+        "offset_off": 30,
+        "backend_name": "XFER_IN",
+        "imageProps": {
+            "imageDefault": "/FuelPanel/Fuel_Valve_SwitchDown.png",
+            "additionalImageData": {
+                "imageOn": "/FuelPanel/Fuel_Valve_SwitchUP.png"
+            }
+        },
+        "type": "stateN",
+        "debugMode": false,
+        "isClickable": true,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 2, 
+            "clickBoundsWidthFactor": 1.5
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "width": 85,
+        "height": 112,
+        "left":575,
+        "top": 52,
+        "offset_on": 0,
+        "offset_off": 30,
+        "backend_name": "VALVE_IN",
+        "imageProps": {
+            "imageDefault": "/FuelPanel/Fuel_Valve_SwitchDown.png",
+            "additionalImageData": {
+                "imageOn": "/FuelPanel/Fuel_Valve_SwitchUP.png"
+            }
+        },
+        "type": "stateN",
+        "debugMode": false,
+        "isClickable": true,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 2, 
+            "clickBoundsWidthFactor": 1.5
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "stateN",
+        "width": 60,
+        "height": 60,
+        "left":679,
+        "top": 65,
+        "offset_on": 0,
+        "offset_off": 0,
+        "backend_name": "LIGHT_IN",
+        "imageProps": {
+            "imageDefault": "/FuelPanel/Fuel_LightOff.png",
+            "additionalImageData": {
+                "ON": "/FuelPanel/Fuel_LightOn.png",
+                "OFF": "/FuelPanel/Fuel_LightOff.png"
+            }
+        },
+        "debugMode": false,
+        "isClickable": false,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 1, 
+            "clickBoundsWidthFactor": 1
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    }
+]

@@ -1,0 +1,249 @@
+[
+    {
+        "type": "knobInteger",
+        "backend_name": "IFF_MASTER_KNOB_IN",
+        "width": "145",
+        "height": "145",
+        "left": "96",
+        "top": "637",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Knob2.png"
+        },
+        "debugMode": false,
+        "isClickable": true,
+        "clickProps": {
+            "clickBoundsHeightFactor": 2,
+            "clickBoundsWidthFactor": 2
+        },
+        "knob_props": {
+            "rotation": {
+                "OFF": -112,
+                "STBY": -70,
+                "LOW": -24,
+                "NORM": -5,
+                "EMER": 18
+            }
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "stateN",
+        "backend_name": "M4_CODE_IN",
+        "width": "106",
+        "height": "84",
+        "left": "110",
+        "top": "366",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Edited/Grey_Switch_center.png",
+            "additionalImageData": {
+                "ZERO": "/IFFPanel/Edited/Grey_Switch_left.png",
+                "AB": "/IFFPanel/Edited/Grey_Switch_center.png",
+                "HOLD": "/IFFPanel/Edited/Grey_Switch_right.png"
+            }
+        },
+        "debugMode": true,
+        "isClickable": true,
+        "clickProps": {
+            "clickBoundsHeightFactor": 1.3,
+            "clickBoundsWidthFactor": 1.3,
+            "mapping": {
+                "left" : "ZERO",
+                "center" : "AB",
+                "right" : "HOLD"
+            }
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "stateN",
+        "backend_name": "MODE4_REPLY_IN",
+        "width": "100",
+        "height": "80",
+        "left": "402",
+        "top": "200",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Edited/Grey_Switch_center.png",
+            "additionalImageData": {
+                "B": "/IFFPanel/Edited/Grey_Switch_left.png",
+                "A": "/IFFPanel/Edited/Grey_Switch_center.png",
+                "OUT": "/IFFPanel/Edited/Grey_Switch_right.png"
+            }
+        },
+        "debugMode": true,
+        "isClickable": true,
+        "clickProps": {
+            "clickBoundsHeightFactor": 1.3,
+            "clickBoundsWidthFactor": 1.3,
+            "mapping": {
+                "left" : "B",
+                "center" : "A",
+                "right" : "OUT"
+            }
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "number",
+        "backend_name": "MODE3_TACAN_BAND_IN",
+        "width": "55",
+        "height": "39",
+        "left": "384",
+        "top": "343",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Blank.png",
+            "additionalImageData": {
+                "X" : "/IFFPanel/NumberX.png",
+                "Y" : "/IFFPanel/NumberY.png"
+            }
+        },
+        "debugMode": false,
+        "isClickable": false,
+        "string_props": {
+            "maxStringLength" : 1
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "static",
+        "backend_name": "MODE3_TACAN_BAND_SELECTOR_IN",
+        "width": "36",
+        "height": "36",
+        "left": "470",
+        "top": "343",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Small_Selector.png",
+            "additionalImageData": {
+            }
+        },
+        "debugMode": true,
+        "isClickable": true,
+        "clickProps": {
+            "clickBoundsHeightFactor": 1,
+            "clickBoundsWidthFactor": 2,
+            "mapping": {
+                "left" : "INCREASE",
+                "right" : "DECREASE"
+            }
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "number",
+        "backend_name": "MODE3_TACAN_FREQUENCY___X_SELECTOR_IN",
+        "width": "55",
+        "height": "39",
+        "left": "385",
+        "top": "368",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Blank.png",
+            "additionalImageData": {
+                "0" : "/IFFPanel/Number0.png",
+                "1" : "/IFFPanel/Number1.png",
+                "2" : "/IFFPanel/Number2.png",
+                "3" : "/IFFPanel/Number3.png",
+                "4" : "/IFFPanel/Number4.png",
+                "5" : "/IFFPanel/Number5.png",
+                "6" : "/IFFPanel/Number6.png",
+                "7" : "/IFFPanel/Number7.png",
+                "8" : "/IFFPanel/Number8.png",
+                "9" : "/IFFPanel/Number9.png"
+            }
+        },
+        "debugMode": false,
+        "isClickable": false,
+        "string_props": {
+            "maxStringLength" : 1
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "number",
+        "backend_name": "MODE1_TACAN_FREQUENCY__X__SELECTOR_IN",
+        "width": "55",
+        "height": "39",
+        "left": "385",
+        "top": "394",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Blank.png",
+            "additionalImageData": {
+                "0" : "/IFFPanel/Number0.png",
+                "1" : "/IFFPanel/Number1.png",
+                "2" : "/IFFPanel/Number2.png",
+                "3" : "/IFFPanel/Number3.png",
+                "4" : "/IFFPanel/Number4.png",
+                "5" : "/IFFPanel/Number5.png",
+                "6" : "/IFFPanel/Number6.png",
+                "7" : "/IFFPanel/Number7.png",
+                "8" : "/IFFPanel/Number8.png",
+                "9" : "/IFFPanel/Number9.png"
+            }
+        },
+        "debugMode": false,
+        "isClickable": false,
+        "string_props": {
+            "maxStringLength" : 1
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    },
+    {
+        "type": "number",
+        "backend_name": "MODE1_TACAN_FREQUENCY_X___SELECTOR_IN",
+        "width": "55",
+        "height": "39",
+        "left": "385",
+        "top": "420",
+        "offset_on": "0",
+        "offset_off": "0",
+        "imageProps": {
+            "imageDefault": "/IFFPanel/Blank.png",
+            "additionalImageData": {
+                "0" : "/IFFPanel/Number0.png",
+                "1" : "/IFFPanel/Number1.png",
+                "2" : "/IFFPanel/Number2.png",
+                "3" : "/IFFPanel/Number3.png",
+                "4" : "/IFFPanel/Number4.png",
+                "5" : "/IFFPanel/Number5.png",
+                "6" : "/IFFPanel/Number6.png",
+                "7" : "/IFFPanel/Number7.png",
+                "8" : "/IFFPanel/Number8.png",
+                "9" : "/IFFPanel/Number9.png"
+            }
+        },
+        "debugMode": false,
+        "isClickable": false,
+        "string_props": {
+            "maxStringLength" : 1
+        },
+        "blinking": {
+            "color": "yellow"
+        }
+    }
+]

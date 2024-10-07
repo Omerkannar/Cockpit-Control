@@ -1,0 +1,15 @@
+{
+    "general": {
+        "height": 10000,
+        "width": 10000,
+        "gridDensity" : 5
+    },
+    "logger": {
+        "showLogger" : true,
+        "properties": {
+        "width" : 600,
+        "maxHeight": 300,
+        "color" : "rgba(0, 0, 255, 0.2)"
+        }
+    }
+}
