@@ -1,6 +1,5 @@
-export interface EPUFuelInterface {
+export interface LGControlInterface {
   input: {
-     "EPU_FUEL_LEVEL_IN":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
@@ -25,24 +24,9 @@ export interface CMDSInterface {
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
 
-export interface IFFInterface {
-  input: {
-     "IFF_MASTER_KNOB_IN":	string,
-     "M4_CODE_IN":	string,
-     "MODE4_REPLY_IN":	string,
-     "MODE3_TACAN_BAND_IN":	string,
-     "MODE3_TACAN_BAND_SELECTOR_IN":	string,
-     "MODE3_TACAN_FREQUENCY___X_SELECTOR_IN":	string,
-     "MODE1_TACAN_FREQUENCY__X__SELECTOR_IN":	string,
-     "MODE1_TACAN_FREQUENCY_X___SELECTOR_IN":	string,
-  }
-  handleSendRequest?: (switchName: string, switchValue: string) => void;
-}
-
 export type InterfaceMap = {
-     "EPUFuel":	EPUFuelInterface;
+     "LGControl":	LGControlInterface;
      "CMDS":	CMDSInterface;
-     "IFF":	IFFInterface;
 }
 
 export type InterfaceKey = keyof InterfaceMap;

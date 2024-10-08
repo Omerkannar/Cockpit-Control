@@ -25,11 +25,13 @@ export interface GenericPanelInterface {
 }
 
 export interface PanelContainerInterface {
+    "container_url"?: string, 
     "container_name": string, 
     "container_top": number,
     "container_left": number,
     "container_width": number,
-    "container_height": number
+    "container_height": number,
+    "container_scale": number
 }
 
 export interface StringContainerInterface {

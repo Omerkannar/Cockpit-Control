@@ -15,7 +15,6 @@ export const MainContainer = styled.div`
 
 export const Panel = styled.div<{ url: string; scale: number, width: number; height: number; top: number; left: number }>`
     background-image: url(${props => props.url});
-    background-color: rgb(20, 20, 19);
     background-repeat: no-repeat;
     background-size: contain;
     width: ${props => (props.scale * props.width) / 100}px;
@@ -27,7 +26,8 @@ export const Panel = styled.div<{ url: string; scale: number, width: number; hei
 
 // Define styled containers
 export const Container = styled.div<PanelContainerInterface>`
-    background-color: #525864;
+    background-image: ${props => props.container_url? `url(${props.container_url})` : null};
+    background-color:  ${props => props.container_url? null : '#525864'};
     background-repeat: no-repeat;
     background-size: contain;
     grid-column-start: ${props => props.container_left};
@@ -35,7 +35,7 @@ export const Container = styled.div<PanelContainerInterface>`
     grid-template-columns: ${props => `repeat(${props.container_width}, 5px)`};
     grid-template-rows: ${props => `repeat(${props.container_height}, 5px)`};
     position: relative;
-    width: ${props => props.container_width}px;
-    height: ${props => props.container_height}px;
+    width: ${props => (props.container_scale * props.container_width) / 100}px;
+    height: ${props => (props.container_scale * props.container_height) / 100}px;
     display: grid;
 `;

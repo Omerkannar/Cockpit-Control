@@ -1,11 +1,11 @@
 {
     "general": {
-        "height": 10000,
-        "width": 10000,
+        "height": 10500,
+        "width": 7500,
         "gridDensity" : 5
     },
     "logger": {
-        "showLogger" : true,
+        "showLogger" : false,
         "properties": {
         "width" : 600,
         "maxHeight": 300,

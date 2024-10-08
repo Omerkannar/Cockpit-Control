@@ -1,7 +1,6 @@
 import * as Interface from './Panels.interface'
 
-export const EPUFuelInitialValues: Interface.EPUFuelInterface['input'] = {
-     "EPU_FUEL_LEVEL_IN":	"",
+export const LGControlInitialValues: Interface.LGControlInterface['input'] = {
 }
 
 export const CMDSInitialValues: Interface.CMDSInterface['input'] = {
@@ -21,20 +20,8 @@ export const CMDSInitialValues: Interface.CMDSInterface['input'] = {
      "CH_QTY_IN":	"",
 }
 
-export const IFFInitialValues: Interface.IFFInterface['input'] = {
-     "IFF_MASTER_KNOB_IN":	"",
-     "M4_CODE_IN":	"",
-     "MODE4_REPLY_IN":	"",
-     "MODE3_TACAN_BAND_IN":	"",
-     "MODE3_TACAN_BAND_SELECTOR_IN":	"",
-     "MODE3_TACAN_FREQUENCY___X_SELECTOR_IN":	"",
-     "MODE1_TACAN_FREQUENCY__X__SELECTOR_IN":	"",
-     "MODE1_TACAN_FREQUENCY_X___SELECTOR_IN":	"",
-}
-
 export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.InterfaceMap[K]['input'] } = {
-	"EPUFuel":	EPUFuelInitialValues,
+	"LGControl":	LGControlInitialValues,
 	"CMDS":	CMDSInitialValues,
-	"IFF":	IFFInitialValues,
 }
 

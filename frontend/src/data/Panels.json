@@ -1,13 +1,13 @@
 [
     {
-        "panel_name" : "EPUFuel",
+        "panel_name" : "LGControl",
         "panel_container": "L1",
-        "panel_url" : "./EPUFuelPanel/EPU_Fuel_New.png",
-        "panel_data": "EPUFuelData",
-        "panel_resources" : "/EPUFuelPanel/",
-        "panel_scale": 80,
-        "panel_top": 5,
-        "panel_left": 180
+        "panel_url" : "./LGControlPanel/LG_Control.png",
+        "panel_data": "LGControlData",
+        "panel_resources" : "/LGControlPanel/",
+        "panel_scale": 100,
+        "panel_top": 40,
+        "panel_left": 130
     },
     {
         "panel_name" : "CMDS",
@@ -16,18 +16,8 @@
         "panel_data": "CmdsData",
         "panel_resources" : "/CMDSPanel/",
         "panel_scale": 100,
-        "panel_top": 67,
-        "panel_left": 5
-    },
-    {
-        "panel_name" : "IFF",
-        "panel_container": "L1",
-        "panel_url" : "./IFFPanel/Edited/IFF_Panel.png",
-        "panel_data": "IFFData",
-        "panel_resources" : "/IFFPanel/",
-        "panel_scale": 100,
-        "panel_top": 67,
-        "panel_left": 207
+        "panel_top": 300,
+        "panel_left": 150
     }
 ]
 
