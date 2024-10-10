@@ -1,3 +1,60 @@
 [
-    
+    {
+        "type": "analog_vertical_translation",
+        "backend_name": "LANDING_GEAR_HANDLE_IN",
+        "width": "100",
+        "height": "100",
+        "left": "1164",
+        "top": "750",
+        "offset_left": "0",
+        "offset_top": "0",
+        "imageProps": {
+            "imageDefault": "/LGControlPanel/Light_on.png"
+        },
+        "zero_rotation": "0",
+        "debugMode": false,
+        "isClickable": false,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 1, 
+            "clickBoundsWidthFactor": 1
+        },
+        "analog_props": {
+            "conversion": {
+                "0": 0,
+                "100": -350
+            }
+        },
+        "logger": {
+            "display" : "false"
+        }
+
+    },
+    {
+        "type": "static",
+        "backend_name": "LANDING_GEAR_HANDLE_CLICK_IN",
+        "width": "100",
+        "height": "100",
+        "left": "1166",
+        "top": "580",
+        "offset_left": "0",
+        "offset_top": "0",
+        "imageProps": {
+            "imageDefault": "/Aux/Blank.png"
+        },
+        "debugMode": true,
+        "isClickable": true,
+        "clickProps" : {
+            "clickBoundsHeightFactor": 5.6, 
+            "clickBoundsWidthFactor": 1.5,
+            "mapping": {
+                "top" : "UP",
+                "bottom" : "DOWN"         
+            }
+        },
+        "blinking": {
+
+            "color": "yellow"
+        }
+
+    }
 ]

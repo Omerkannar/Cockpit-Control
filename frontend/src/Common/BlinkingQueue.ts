@@ -1,11 +1,22 @@
+import blinkingMapping from '../data/BlinkingMapping.json'
+
 class BlinkingQueue {
 
   private queue: string[] = [];
   private timeouts: NodeJS.Timeout[] = [];
 
   enqueue(item: string): void {
-    this.queue.push(item);
-    console.log(`Enqueued: ${item}`);
+    const blinkMap = blinkingMapping.filter((obj: any) => {
+      return obj.key === item
+    })
+    if (blinkMap.length > 0) {
+      this.queue.push(blinkMap[0].source);  
+      console.log(`Enqueued: ${blinkMap[0].source}`);
+    } else {
+      this.queue.push(item);
+      console.log(`Enqueued: ${item}`);
+    }
+  
 
     const timeout = setTimeout(() => {
       this.dequeue();
@@ -23,8 +34,16 @@ class BlinkingQueue {
   }
 
   search(target: string): boolean {
+    const blinkMap = blinkingMapping.filter((obj: any) => {
+      return obj.key === target
+    })
+    if (blinkMap.length > 0) {
+      return this.queue.includes(blinkMap[0].source);  
+    } else {
+      return this.queue.includes(target);
+    }
     //console.log(this.displayQueue())
-    return this.queue.includes(target);
+    
   }
 
   // Helper method to display the current queue

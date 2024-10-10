@@ -1,6 +1,8 @@
 import * as Interface from './Panels.interface'
 
 export const LGControlInitialValues: Interface.LGControlInterface['input'] = {
+     "LANDING_GEAR_HANDLE_IN":	"",
+     "LANDING_GEAR_HANDLE_CLICK_IN":	"",
 }
 
 export const CMDSInitialValues: Interface.CMDSInterface['input'] = {

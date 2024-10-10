@@ -34,9 +34,6 @@ export const linearInterpolation = (data: any, x: number): number => {
     }
 }
 
-export const countNumberOfDigits = (num: string): number => {
-    return num.length;
-}
 
 export function readDigits(str: string, dig: number): (string)[] {
     // Ensure the string has exactly 4 digits by padding it with empty spaces (or zeros)

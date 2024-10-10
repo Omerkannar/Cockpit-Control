@@ -36,9 +36,15 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
                 const SelectedComponent = getComponentById("Error") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={state} data={data}>Error {data.backend_name} - maxStringLength not defined</SelectedComponent>;
             }
-        case "analog":
+        case "analog_rotation":
             {
                 const SelectedComponent = getComponentById("AnalogRotation") as React.ComponentType<GenericTypeComponent>;
+                return <SelectedComponent scale={scale} state={linearInterpolation(data.analog_props, Number(state))} data={data} />
+            }
+        case "analog_vertical_translation":
+            //console.log("analog_rotation")
+            {
+                const SelectedComponent = getComponentById("AnalogVerticalTranslation") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={linearInterpolation(data.analog_props, Number(state))} data={data} />
             }
         case "static":

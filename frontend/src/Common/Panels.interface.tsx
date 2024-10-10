@@ -1,5 +1,7 @@
 export interface LGControlInterface {
   input: {
+     "LANDING_GEAR_HANDLE_IN":	string,
+     "LANDING_GEAR_HANDLE_CLICK_IN":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }

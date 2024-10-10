@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import styled, { keyframes, css } from "styled-components"
 import { BasicComponentContainer } from './Common.interface';
 
-const DEFAULT_BLINK_COLOR = 'rgb(255, 255, 255)'; // White
+const DEFAULT_BLINK_COLOR = 'rgba(0, 0, 0,0)'; // White
 const REDUCE_FACTOR: number = 3; // = largeRectangle / smallRectangle
 
 // Function to validate if a string is a valid CSS color
@@ -45,7 +45,7 @@ const LargeSquare = styled.div<BasicComponentContainer>`
   height:                 ${props => (props.scale * props.data.height * Number(props.data.clickProps?.clickBoundsHeightFactor) / 100) | 0}px;
   background-color: rgba(255,255,255,0);
   border: 2px solid transparent;
-  ${props => (props.isBlinking && props.data.type !== "number") && css`
+  ${props => (props.isBlinking && props.data.type !== "number" &&props.data.blinking?.color) && css`
      animation: ${blink(props.data.blinking.color)} 0.8s infinite;
    `}
 `;
@@ -60,6 +60,7 @@ const SmallSquare = styled.div<BasicComponentContainer>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 10;
 `;
 
 // Styled component for the trapezoid zones
@@ -73,6 +74,7 @@ const TrapezoidZone = styled.div<{ zoneColor: string; clipPath: string; cursor: 
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 
 

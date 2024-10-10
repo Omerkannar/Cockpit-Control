@@ -69,9 +69,9 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const handleOnClick = (componentName: string, clickedName: string) => {
         const [newValueToSend, showOnLogger]: [string, string] = nextValueToSend(componentName, clickedName, "click");
         if (showOnLogger === "true") {
-            console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("IN", "OUT")}, Value: ${newValueToSend}`)
+            console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
         }
-        handleSendRequest(static_data?.panel_name, componentName.replace("IN", "OUT"), newValueToSend);
+        handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
     }
 
     const handleOnLongPress = (componentName: string, clickedName: string) => {
@@ -79,9 +79,9 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         console.log(`On Long press ${componentName} - ${clickedName}`)
         const [newValueToSend, showOnLogger]: [string, string] = nextValueToSend(componentName, clickedName, "LongPress");
         if (showOnLogger === "true") {
-            console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("IN", "OUT")}, Value: ${newValueToSend}`)
+            console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
         }
-        handleSendRequest(static_data?.panel_name, componentName.replace("IN", "OUT"), newValueToSend);
+        handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
     }
 
     const nextValueToSend = (componentName: string, clickedName: string, pressType: ClickType): [string, string] => {
@@ -118,7 +118,9 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                     else nextIndex = index + 1;
                 }
                 return [keys[nextIndex], filteredName.logger?.display || "true"];
-            case "analog":
+            case "analog_rotation":
+            case "analog_vertical_translation":
+            case "analog_horizontal_translation":
                 if (clickedName === "DECREASE") {
                     if (currentValue === "0") {
                         return ["0", filteredName.logger?.display || "true"];
