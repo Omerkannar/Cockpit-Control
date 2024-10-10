@@ -24,9 +24,17 @@ export interface CMDSInterface {
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
 
+export interface InteriorLightingInterface {
+  input: {
+     "PRIMARY_CONSOLES_BRT_IN":	string,
+  }
+  handleSendRequest?: (switchName: string, switchValue: string) => void;
+}
+
 export type InterfaceMap = {
      "LGControl":	LGControlInterface;
      "CMDS":	CMDSInterface;
+     "InteriorLighting":	InteriorLightingInterface;
 }
 
 export type InterfaceKey = keyof InterfaceMap;

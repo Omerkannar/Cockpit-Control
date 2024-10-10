@@ -5,11 +5,15 @@
         "gridDensity" : 5
     },
     "logger": {
-        "showLogger" : false,
+        "showLogger" : true,
         "properties": {
-        "width" : 600,
-        "maxHeight": 300,
+        "width" : 700,
+        "maxHeight": 200,
         "color" : "rgba(0, 0, 255, 0.2)"
         }
+    },
+    "components_behavior" : {
+        "analogLongPressDelay" : 200,
+        "analogLongPressStep" : 10
     }
 }

@@ -20,8 +20,13 @@ export const CMDSInitialValues: Interface.CMDSInterface['input'] = {
      "CH_QTY_IN":	"",
 }
 
+export const InteriorLightingInitialValues: Interface.InteriorLightingInterface['input'] = {
+     "PRIMARY_CONSOLES_BRT_IN":	"",
+}
+
 export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.InterfaceMap[K]['input'] } = {
 	"LGControl":	LGControlInitialValues,
 	"CMDS":	CMDSInitialValues,
+	"InteriorLighting":	InteriorLightingInitialValues,
 }
 

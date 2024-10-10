@@ -36,12 +36,11 @@
         "container_scale": 90
     },
     {
-        "container_url" : "./Containers/R2.png",
         "container_name": "R2", 
-        "container_top": 845,
+        "container_top": 1000,
         "container_left": 1050,
-        "container_width": 2278,
-        "container_height": 5568,
+        "container_width": 1500,
+        "container_height": 4500,
         "container_scale": 100
     }
 ]

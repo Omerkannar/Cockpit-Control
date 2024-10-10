@@ -1,6 +1,7 @@
 
 type Type                       = "static" | "stateN" | "knobInteger" | "analog" | "string" | "number";
 type State                      = boolean  | number    | string;
+export type ClickType           = "click"  | "LongPress";
 
 export interface IncomingMessage {
     panel: string;
@@ -114,6 +115,7 @@ export interface BasicTypeComponent {
 export interface BasicComponentContainer extends BasicTypeComponent{
     isBlinking?: boolean;
     handleClick? : (componentName: string, clickedName: string) => void;
+    handleLongPress? : (componentName: string, clickedName: string) => void;
 }
 
 export interface GenericTypeComponent extends BasicTypeComponent {

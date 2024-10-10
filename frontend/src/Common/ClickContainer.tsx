@@ -1,4 +1,5 @@
-import React from 'react';
+import settings from '../settings.json';
+import React, { useState, useRef } from 'react';
 import styled, { keyframes, css } from "styled-components"
 import { BasicComponentContainer } from './Common.interface';
 
@@ -7,17 +8,17 @@ const REDUCE_FACTOR: number = 3; // = largeRectangle / smallRectangle
 
 // Function to validate if a string is a valid CSS color
 const isValidColor = (color: string): boolean => {
-    const s = new Option().style;
-    s.color = color;
-    return s.color !== '';
+  const s = new Option().style;
+  s.color = color;
+  return s.color !== '';
 };
 
 // Function to get a valid color or return the default
 const getValidColor = (color: string | undefined, defaultColor: string): string => {
-    if (color && isValidColor(color)) {
-        return color;
-    }
-    return defaultColor;
+  if (color && isValidColor(color)) {
+    return color;
+  }
+  return defaultColor;
 };
 
 const blink = (color: string) => keyframes`
@@ -77,103 +78,186 @@ const TrapezoidZone = styled.div<{ zoneColor: string; clipPath: string; cursor: 
 
 const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
 
-    const largeRectangleHeight :number = Number(props.data.clickProps?.clickBoundsHeightFactor) * Number(props.data.height) * props.scale / 100;
-    const largeRectangleWidth: number = Number(props.data.clickProps?.clickBoundsWidthFactor) * Number(props.data.width) * props.scale / 100;
-    const smallRectangleHeight : number = Number(props.data.clickProps?.clickBoundsHeightFactor) * Number(props.data.height) * props.scale / 100 / REDUCE_FACTOR;
-    const smallRectangleWidth : number = Number(props.data.clickProps?.clickBoundsWidthFactor) * Number(props.data.width) * props.scale / 100 / REDUCE_FACTOR;
+  const largeRectangleHeight: number = Number(props.data.clickProps?.clickBoundsHeightFactor) * Number(props.data.height) * props.scale / 100;
+  const largeRectangleWidth: number = Number(props.data.clickProps?.clickBoundsWidthFactor) * Number(props.data.width) * props.scale / 100;
+  const smallRectangleHeight: number = Number(props.data.clickProps?.clickBoundsHeightFactor) * Number(props.data.height) * props.scale / 100 / REDUCE_FACTOR;
+  const smallRectangleWidth: number = Number(props.data.clickProps?.clickBoundsWidthFactor) * Number(props.data.width) * props.scale / 100 / REDUCE_FACTOR;
 
-    const handleOnClick = (event: any) => {
-        //console.log(`Clicked on ${event.target.id}`)
-        if (props.handleClick) {
-            props.handleClick(props.data.backend_name, event.target.id)
+  const [isLongPress, setIsLongPress] = useState<boolean>(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Duration to differentiate between short click and long press (ms)
+  const longPressThreshold = settings.components_behavior.analogLongPressDelay;
+
+  const handleOnMouseDown = (event: any) => {
+    setIsLongPress(false);
+    timeoutRef.current = setTimeout(() => {
+      setIsLongPress(true);
+      // Start an interval to fire the handleLongPress event every longPressThreshold
+      intervalRef.current = setInterval(() => {
+        if (props.handleLongPress) {
+          props.handleLongPress(props.data.backend_name, event.target.id);
         }
-    }
+      }, longPressThreshold);
+    }, longPressThreshold);
+  }
 
-    return (
-        <LargeSquare {...props}>
-            {!props.data.isClickable ? null :
-                <SmallSquare {...props}
-                    id={props.data.clickProps?.mapping?.center || "undefined"}
-                    onClick={(e) => {
-                      if(props.data.clickProps?.mapping?.center){ 
-                        handleOnClick(e)
-                      }}} />
+  const handleOnMouseUp = (event: any) => {
+        // If timeoutRef exists and long press hasn't started, it's a short click
+        if (timeoutRef.current && !isLongPress && props.handleClick) {
+          props.handleClick(props.data.backend_name, event.target.id);
+        }
+    
+        // Clear timeout and interval
+        clearTimeout(timeoutRef.current as NodeJS.Timeout);
+        clearInterval(intervalRef.current as NodeJS.Timeout);
+    
+        timeoutRef.current = null;
+        intervalRef.current = null;
+        setIsLongPress(false);
+  }
+
+  return (
+    <LargeSquare {...props}>
+      {!props.data.isClickable ? null :
+        <SmallSquare {...props}
+          id={props.data.clickProps?.mapping?.center || "undefined"}
+          onMouseDown={(e) => {
+            if (props.data.clickProps?.mapping?.center) {
+              handleOnMouseDown(e)
             }
-            {!props.data.isClickable ? null :
-            // Top Trapezoid
-                <TrapezoidZone
-                    id={props.data.clickProps?.mapping?.top || "undefined"}
-                    onClick={(e) => {
-                      if(props.data.clickProps?.mapping?.top){ 
-                        handleOnClick(e)
-                      }}}
-                    zoneColor={props.data.clickProps?.mapping?.top ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-                    cursor = {props.data.clickProps?.mapping?.top ? true : false}
-                    clipPath={`polygon(
+          }}
+          onMouseUp={(e) => {
+            if (props.data.clickProps?.mapping?.center) {
+              handleOnMouseUp(e)
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (props.data.clickProps?.mapping?.center) {
+              handleOnMouseUp(e)
+            }
+          }} />
+      }
+      {!props.data.isClickable ? null :
+        // Top Trapezoid
+        <TrapezoidZone
+          id={props.data.clickProps?.mapping?.top || "undefined"}
+          onMouseDown={(e) => {
+            if (props.data.clickProps?.mapping?.top) {
+              handleOnMouseDown(e)
+            }
+          }}
+          onMouseUp={(e) => {
+            if (props.data.clickProps?.mapping?.top) {
+              handleOnMouseUp(e)
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (props.data.clickProps?.mapping?.top) {
+              handleOnMouseUp(e)
+            }
+          }}
+          zoneColor={props.data.clickProps?.mapping?.top ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.clickProps?.mapping?.top ? true : false}
+          clipPath={`polygon(
                     0 0, 
                     100% 0, 
                     ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
                     ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
-                    }
-                />
+          }
+        />
+      }
+      {!props.data.isClickable ? null :
+        <TrapezoidZone
+          id={props.data.clickProps?.mapping?.bottom || "undefined"}
+          onMouseDown={(e) => {
+            if (props.data.clickProps?.mapping?.bottom) {
+              handleOnMouseDown(e)
             }
-            {!props.data.isClickable ? null :
-                <TrapezoidZone
-                    id={props.data.clickProps?.mapping?.bottom || "undefined"}
-                    onClick={(e) => {
-                      if(props.data.clickProps?.mapping?.bottom){ 
-                        handleOnClick(e)
-                      }}}
-                    zoneColor={props.data.clickProps?.mapping?.bottom ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-                    cursor = {props.data.clickProps?.mapping?.bottom ? true : false}
-                    clipPath={`polygon(
+          }}
+          onMouseUp={(e) => {
+            if (props.data.clickProps?.mapping?.bottom) {
+              handleOnMouseUp(e)
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (props.data.clickProps?.mapping?.bottom) {
+              handleOnMouseUp(e)
+            }
+          }}
+          zoneColor={props.data.clickProps?.mapping?.bottom ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.clickProps?.mapping?.bottom ? true : false}
+          clipPath={`polygon(
                     0 100%, 
                     100% 100%, 
                     ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
                     ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
-                    }
-                />
+          }
+        />
+      }
+      {!props.data.isClickable ? null :
+        <TrapezoidZone
+          id={props.data.clickProps?.mapping?.left || "undefined"}
+          onMouseDown={(e) => {
+            if (props.data.clickProps?.mapping?.left) {
+              handleOnMouseDown(e)
             }
-            {!props.data.isClickable ? null :
-                <TrapezoidZone
-                    id={props.data.clickProps?.mapping?.left || "undefined"}
-                    onClick={(e) => {
-                      if(props.data.clickProps?.mapping?.left){ 
-                        handleOnClick(e)
-                      }}}
-                    zoneColor={props.data.clickProps?.mapping?.left ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-                    cursor = {props.data.clickProps?.mapping?.left ? true : false}
-                    clipPath={`polygon(
+          }}
+          onMouseUp={(e) => {
+            if (props.data.clickProps?.mapping?.left) {
+              handleOnMouseUp(e)
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (props.data.clickProps?.mapping?.left) {
+              handleOnMouseUp(e)
+            }
+          }}
+          zoneColor={props.data.clickProps?.mapping?.left ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.clickProps?.mapping?.left ? true : false}
+          clipPath={`polygon(
                     0 0, 
                     0 100%, 
                     ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
                     ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
-                    }
-                />
+          }
+        />
+      }
+      {!props.data.isClickable ? null :
+        <TrapezoidZone
+          id={props.data.clickProps?.mapping?.right || "undefined"}
+          onMouseDown={(e) => {
+            if (props.data.clickProps?.mapping?.right) {
+              handleOnMouseDown(e)
             }
-            {!props.data.isClickable ? null :
-                <TrapezoidZone
-                    id={props.data.clickProps?.mapping?.right || "undefined"}
-                    onClick={(e) => {
-                      if(props.data.clickProps?.mapping?.right){ 
-                        handleOnClick(e)
-                      }}}
-                    zoneColor={props.data.clickProps?.mapping?.right ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-                    cursor = {props.data.clickProps?.mapping?.right ? true : false}
-                    clipPath={`polygon(
+          }}
+          onMouseUp={(e) => {
+            if (props.data.clickProps?.mapping?.right) {
+              handleOnMouseUp(e)
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (props.data.clickProps?.mapping?.right) {
+              handleOnMouseUp(e)
+            }
+          }}
+          zoneColor={props.data.clickProps?.mapping?.right ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.clickProps?.mapping?.right ? true : false}
+          clipPath={`polygon(
                     100% 0, 
                     100% 100%, 
                     ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
                     ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
-                    }
-                />
-            }
-        </LargeSquare>
-    );
+          }
+        />
+      }
+    </LargeSquare>
+  );
 };
 
 export default ClickContainer;

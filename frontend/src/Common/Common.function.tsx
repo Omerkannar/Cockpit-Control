@@ -39,7 +39,7 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
         case "analog":
             {
                 const SelectedComponent = getComponentById("AnalogRotation") as React.ComponentType<GenericTypeComponent>;
-                return <SelectedComponent scale={scale} state={linearInterpolation(data.analog_props, Number(state))} data={data} needleOffsetLeft={0} needleOffsetTop={0} />
+                return <SelectedComponent scale={scale} state={linearInterpolation(data.analog_props, Number(state))} data={data} />
             }
         case "static":
             {

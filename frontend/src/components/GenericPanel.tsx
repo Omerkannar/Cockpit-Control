@@ -1,6 +1,7 @@
+import settings from '../settings.json'
 import React, { useState, useEffect } from 'react';
 import BlinkingQueue from '../Common/BlinkingQueue';
-import { GenericPanelInterface, GenericTypeComponent } from '../Common/Common.interface'
+import { GenericPanelInterface, GenericTypeComponent, ClickType } from '../Common/Common.interface'
 import { ComponentWrapper } from '../Common/Common.function';
 import useDynamicState from '../useDynamicState';
 import { InterfaceMap } from '../Common/Panels.interface'
@@ -66,18 +67,28 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
 
 
     const handleOnClick = (componentName: string, clickedName: string) => {
-        const [newValueToSend, showOnLogger]: [string, string] = nextValueToSend(componentName, clickedName);
+        const [newValueToSend, showOnLogger]: [string, string] = nextValueToSend(componentName, clickedName, "click");
         if (showOnLogger === "true") {
             console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("IN", "OUT")}, Value: ${newValueToSend}`)
         }
         handleSendRequest(static_data?.panel_name, componentName.replace("IN", "OUT"), newValueToSend);
     }
 
-    const nextValueToSend = (componentName: string, clickedName: string): [string, string] => {
+    const handleOnLongPress = (componentName: string, clickedName: string) => {
+
+        console.log(`On Long press ${componentName} - ${clickedName}`)
+        const [newValueToSend, showOnLogger]: [string, string] = nextValueToSend(componentName, clickedName, "LongPress");
+        if (showOnLogger === "true") {
+            console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("IN", "OUT")}, Value: ${newValueToSend}`)
+        }
+        handleSendRequest(static_data?.panel_name, componentName.replace("IN", "OUT"), newValueToSend);
+    }
+
+    const nextValueToSend = (componentName: string, clickedName: string, pressType: ClickType): [string, string] => {
         const filteredName = jsonData?.filter((item: any) => {
             return item.backend_name === componentName
         })[0]
-        console.log(componentName, clickedName, filteredName);
+        //console.log(componentName, clickedName, filteredName);
         const currentValue = getValue(componentName);
         console.log(currentValue, typeof (currentValue))
         switch (filteredName.type) {
@@ -107,7 +118,40 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                     else nextIndex = index + 1;
                 }
                 return [keys[nextIndex], filteredName.logger?.display || "true"];
-
+            case "analog":
+                if (clickedName === "DECREASE") {
+                    if (currentValue === "0") {
+                        return ["0", filteredName.logger?.display || "true"];
+                    }
+                    else {
+                        if (pressType === 'click') {
+                            return [String(Number(currentValue) - 1), filteredName.logger?.display || "true"];
+                        } else { // 'Long Press'
+                            if (Number(currentValue) < settings.components_behavior.analogLongPressStep) {
+                                return ["0", filteredName.logger?.display || "true"];
+                            } else {
+                                return [String(Number(currentValue) - settings.components_behavior.analogLongPressStep), filteredName.logger?.display || "true"];
+                            }
+                        }
+                    }
+                } else if (clickedName === "INCREASE") {
+                    if (currentValue === "100") {
+                        return ["100", filteredName.logger?.display || "true"];
+                    }
+                    else {
+                        if (pressType === 'click') {
+                            return [String(Number(currentValue) + 1), filteredName.logger?.display || "true"];
+                        } else {
+                            if ((100 - Number(currentValue)) < settings.components_behavior.analogLongPressStep) {
+                                return ["100", filteredName.logger?.display || "true"];
+                            } else {
+                                return [String(Number(currentValue) + settings.components_behavior.analogLongPressStep), filteredName.logger?.display || "true"];
+                            }
+                        }
+                    }
+                } else {
+                    return [clickedName, filteredName.logger?.display || "true"];
+                }
             default:
                 return [clickedName, filteredName.logger?.display || "true"];
         }
@@ -138,6 +182,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                         data={item}
                         isBlinking={blinkingQueue.search(item.backend_name)}
                         handleClick={handleOnClick}
+                        handleLongPress={handleOnLongPress}
                     />
                 </div>
             )}
