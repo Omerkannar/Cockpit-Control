@@ -16,8 +16,18 @@
         "panel_data": "CmdsData",
         "panel_resources" : "/CMDSPanel/",
         "panel_scale": 100,
-        "panel_top": 300,
-        "panel_left": 150
+        "panel_top": 250,
+        "panel_left": 50
+    },
+    {
+        "panel_name" : "IFF",
+        "panel_container": "L1",
+        "panel_url" : "./IFFPanel/IFF_Panel.png",
+        "panel_data": "IFFData",
+        "panel_resources" : "/IFFPanel/",
+        "panel_scale": 100,
+        "panel_top": 250,
+        "panel_left": 250
     },
     {
         "panel_name" : "InteriorLighting",

@@ -7,22 +7,22 @@ public static class Logger
 
     public static void LogInfo(string message)
     {
-        LogMessage("INFO", message, ConsoleColor.Green);
+        LogMessage("INF", message, ConsoleColor.Green);
     }
 
     public static void LogError(string message)
     {
-        LogMessage("ERROR", message, ConsoleColor.Red);
+        LogMessage("ERR", message, ConsoleColor.Red);
     }
 
     public static void LogWarning(string message)
     {
-        LogMessage("WARNING", message, ConsoleColor.Yellow);
+        LogMessage("WRN", message, ConsoleColor.Yellow);
     }
 
     public static void LogDebug(string message)
     {
-        LogMessage("DEBUG", message, ConsoleColor.Gray);
+        LogMessage("DBG", message, ConsoleColor.Gray);
     }
 
     public static void ClearLog()
@@ -32,8 +32,14 @@ public static class Logger
 
     private static void LogMessage(string logLevel, string message, ConsoleColor color)
     {
-        string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  // Add timestamp
-        string log = $"[{timeStamp}] [{logLevel}]\t {message}";
+        string timeStamp = DateTime.Now.ToString("yy-MM-dd HH:mm:ss.ffff");  // Add timestamp
+        int maxLogLevelLength = 3; // Length of longest log level (e.g., "[WRN]")
+
+        // Format the log level inside brackets without adding spaces inside the brackets
+        string formattedLogLevel = $"[{logLevel}]".PadRight(maxLogLevelLength + 2); // +2 for the brackets
+
+        // Construct the log entry with consistent spacing
+        string log = $"[{timeStamp}] {formattedLogLevel} {message}";
 
         // Output to console
         Console.ForegroundColor = color;

@@ -26,6 +26,20 @@ export interface CMDSInterface {
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
 
+export interface IFFInterface {
+  input: {
+     "IFF_MASTER_KNOB_IN":	string,
+     "M4_CODE_IN":	string,
+     "MODE4_REPLY_IN":	string,
+     "MODE3_TACAN_BAND_IN":	string,
+     "MODE3_TACAN_BAND_SELECTOR_IN":	string,
+     "MODE3_TACAN_FREQUENCY___X_SELECTOR_IN":	string,
+     "MODE1_TACAN_FREQUENCY__X__SELECTOR_IN":	string,
+     "MODE1_TACAN_FREQUENCY_X___SELECTOR_IN":	string,
+  }
+  handleSendRequest?: (switchName: string, switchValue: string) => void;
+}
+
 export interface InteriorLightingInterface {
   input: {
      "PRIMARY_CONSOLES_BRT_IN":	string,
@@ -36,6 +50,7 @@ export interface InteriorLightingInterface {
 export type InterfaceMap = {
      "LGControl":	LGControlInterface;
      "CMDS":	CMDSInterface;
+     "IFF":	IFFInterface;
      "InteriorLighting":	InteriorLightingInterface;
 }
 
