@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 //using Swashbuckle.AspNetCore.Annotations;
 
-namespace ATH_BackEndServices.Types
+namespace BackEndServices.Types
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum MotionState

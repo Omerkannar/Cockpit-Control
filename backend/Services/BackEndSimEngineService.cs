@@ -4,17 +4,17 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using ATH_BackEndServices.Utilities;
+using BackEndServices.Utilities;
 using Microsoft.Extensions.Logging;
-using ATH_BackEndServices.Interfaces;
-using ATH_BackEndServices.Types;
+using BackEndServices.Interfaces;
+using BackEndServices.Types;
 using OneSimLinkInterop;
 using System.IO;
 using System.Text.Json;
 using Newtonsoft.Json;
-using ATH_BackEndServices.Configuration;
+using BackEndServices.Configuration;
 
-namespace ATH_BackEndServices.Services
+namespace BackEndServices.Services
 {    
 
     public class BackEndSimEngineService : IBackEndSimEngineService

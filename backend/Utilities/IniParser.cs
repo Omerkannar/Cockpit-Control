@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Collections;
 
-namespace ATH_BackEndServices.Utilities
+namespace BackEndServices.Utilities
 {
     public class IniParser
     {

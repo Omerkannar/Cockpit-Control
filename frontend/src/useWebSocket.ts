@@ -40,7 +40,7 @@ export const useWebSocket = (url: string) => {
     const sendMessage = (panel: string, element: string, value: string) => {
         if (ws) {
             ws.send(JSON.stringify({
-                Type: "UPDATE_CLIENTS",
+                Type: "SET_NEW_VALUE",
                 Details: {
                 Panel: panel,
                 Element: element,

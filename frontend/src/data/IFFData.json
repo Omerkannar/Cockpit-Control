@@ -15,7 +15,14 @@
         "isClickable": true,
         "clickProps": {
             "clickBoundsHeightFactor": 2,
-            "clickBoundsWidthFactor": 2
+            "clickBoundsWidthFactor": 2,
+            "mapping": {
+                "top" : "INCREASE",
+                "right" : "INCREASE",
+                "bottom" : "DECREASE",
+                "left" : "DECREASE"
+                
+            }
         },
         "knob_props": {
             "rotation": {

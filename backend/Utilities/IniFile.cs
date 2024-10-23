@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ATH_BackEndServices.Utilities
+namespace BackEndServices.Utilities
 {
     public class IniFile
     {

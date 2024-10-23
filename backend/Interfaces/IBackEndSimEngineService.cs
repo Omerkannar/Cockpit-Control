@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ATH_BackEndServices.Configuration;
-using ATH_BackEndServices.Types;
-using ATH_BackEndServices.Utilities;
+using BackEndServices.Configuration;
+using BackEndServices.Types;
+using BackEndServices.Utilities;
 
-namespace ATH_BackEndServices.Interfaces
+namespace BackEndServices.Interfaces
 {
     public interface IBackEndSimEngineService
     {

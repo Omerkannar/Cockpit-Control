@@ -1,4 +1,4 @@
-﻿namespace ATH_BackEndServices.Utilities
+﻿namespace BackEndServices.Utilities
 {
     public class DataItem
     {

@@ -1,4 +1,4 @@
-﻿namespace ATH_BackEndServices.Configuration
+﻿namespace BackEndServices.Configuration
 {
     public class CBindDBSimElementItem
     {

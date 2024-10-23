@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace ATH_BackEndServices.Utils
+namespace BackEndServices.Utils
 {
     public static class SystemExtension
     {

@@ -71,7 +71,8 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         if (showOnLogger === "true") {
             console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
         }
-        handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
+        //handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
+        handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
     }
 
     const handleOnLongPress = (componentName: string, clickedName: string) => {
@@ -81,7 +82,8 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         if (showOnLogger === "true") {
             console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
         }
-        handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
+        //handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
+        handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
     }
 
     const nextValueToSend = (componentName: string, clickedName: string, pressType: ClickType): [string, string] => {

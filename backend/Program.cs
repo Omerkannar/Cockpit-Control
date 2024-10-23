@@ -8,13 +8,13 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using ATH_BackEndServices.Configuration;
+using BackEndServices.Configuration;
 
-//using ATH_BackEndServices.Models;
-using ATH_BackEndServices.Interfaces;
-using ATH_BackEndServices.Services;
+//using BackEndServices.Models;
+using BackEndServices.Interfaces;
+using BackEndServices.Services;
 using Newtonsoft.Json.Serialization;
-using ATH_BackEndServices.Utilities;
+using BackEndServices.Utilities;
 using Newtonsoft.Json;
 using OneSimLinkInterop;
 
@@ -103,7 +103,7 @@ class Program
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
                     string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    Logger.LogDebug($"Received new message from {clientId}: \n {message}");
+                    //Logger.LogDebug($"Received new message from {clientId}: \n {message}");
 
                     await ProcessMessage(clientId, message);
                 }
@@ -141,20 +141,25 @@ class Program
             var request = System.Text.Json.JsonSerializer.Deserialize<Request>(message);
             Response response;
 
-            switch (request.Type)
+            switch (request?.Type)
             {
-                case "ECHO":
-                    response = new Response 
-                    { 
-                        Type = "ECHO_RESPONSE", 
-                        Details = new MessageDetails 
-                        { 
-                            Panel = request.Details.Panel, 
-                            Element = request.Details.Element, 
-                            Value = request.Details.Value
-                        } 
-                    };
+                //case "ECHO":
+                //    response = new Response 
+                //    { 
+                //        Type = "ECHO_RESPONSE", 
+                //        Details = new MessageDetails 
+                //        { 
+                //            Panel = request.Details.Panel, 
+                //            Element = request.Details.Element, 
+                //            Value = request.Details.Value
+                //        } 
+                //    };
+                //    break;
+                case "SET_NEW_VALUE":
+                    Logger.LogDebug($"Received new message {request.Details.Element}, {request.Details.Value}");
+                    SetValue(request.Details.Element, request.Details.Value);
                     break;
+                    
                 case "UPDATE_CLIENTS":
                 case "BROADCAST_REQUEST":
                     await BroadcastMessage(clientId, request.Details);

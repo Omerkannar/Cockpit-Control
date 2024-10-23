@@ -3,7 +3,7 @@ using OneSimLinkInterop;
 using System.Runtime.InteropServices;
 using System;
 
-namespace ATH_BackEndServices.Utilities
+namespace BackEndServices.Utilities
 {
     public class DbSimElementUtils
     {
