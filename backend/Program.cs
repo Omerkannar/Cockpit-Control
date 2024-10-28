@@ -157,7 +157,7 @@ class Program
                 //    break;
                 case "SET_NEW_VALUE":
                     Logger.LogDebug($"Received new message {request.Details.Element}, {request.Details.Value}");
-                    SetValue(request.Details.Element, request.Details.Value);
+                    SetValue(request.Details.Element, int.Parse(request.Details.Value));
                     break;
                     
                 case "UPDATE_CLIENTS":
@@ -258,43 +258,50 @@ class Program
             if (stationName != null)
             {
                 Logger.LogDebug("Start Reading map files...");
-                string[] arrFileNames =
-                {
-                    @"C:\FileServer\Y\Projects\ATH\Runtime\OwnshipStation\Setups\BackEnd\CMDS.json",
-                    @"C:\FileServer\Y\Projects\ATH\Runtime\OwnshipStation\Setups\BackEnd\IFF.json"
-                };
+                string configFilePath = "C:\\Users\\ATH_O\\Documents\\OmerK\\WebSocket\\Cockpit-Control\\config\\backend.config";
+                string[] arrFileNames = File.ReadAllLines(configFilePath);
+
                 foreach (string sConfigFile in arrFileNames)
                 {
                     // ===========================
                     // Read Json Config File
                     // ===========================
-                    StreamReader jsonStreamReaderreader = new StreamReader(sConfigFile);
-                    string jsonString = jsonStreamReaderreader.ReadToEnd();
+                    string jsonString = File.ReadAllText(sConfigFile);
                     Logger.LogDebug($"Read map file: {Path.GetFileName(sConfigFile)}");
 
                     // =============================
                     // Deserialize Object
                     // =============================
-                    List<CConfigDBSimElementItem> ConfigDBSimElementList = JsonConvert.DeserializeObject<List<CConfigDBSimElementItem>>(jsonString);
-                    foreach (CConfigDBSimElementItem cDBSimElement in ConfigDBSimElementList)
+                    // Deserialize JSON to a list of BasicDataBackend
+                    var dataList = System.Text.Json.JsonSerializer.Deserialize<List<BasicDataBackend>>(jsonString);
+
+                    if (dataList != null)
                     {
-                        
-                        string sKey = cDBSimElement.Key;
-                        CBindDBSimElementItem cBindDBSimElementItem = new CBindDBSimElementItem();
-                        cBindDBSimElementItem.cConfig = cDBSimElement;
-
-                        string sBlockFullName = $"{stationName}.{cDBSimElement.BlockName}";
-
-                        cBindDBSimElementItem.m_nStationBlockID = OneSimLink.GetBlockIdByName(sBlockFullName);
-                        cBindDBSimElementItem.m_nElementID = OneSimLink.RegisterElement(sBlockFullName, cBindDBSimElementItem.cConfig.ElementName);
-                        cBindDBSimElementItem.m_sValue = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
-
-                        if ((cBindDBSimElementItem.m_nStationBlockID != -1) && (cBindDBSimElementItem.m_nElementID != -1))
+                        foreach (var data in dataList)
                         {
-                            Logger.LogDebug($"Key: {sKey} -> Block: {cDBSimElement.BlockName}, Element: {cDBSimElement.ElementName}, Type: {cDBSimElement.ElementType}");
-                            _listOfKeys.Add(sKey);
-                            _mapKeyToBindDBSimElementItemCurrent.Add(sKey, cBindDBSimElementItem);
-                            _mapKeyToBindDBSimElementItemPrevious.Add(sKey, cBindDBSimElementItem);
+                            //Console.WriteLine($"Key: {data.backend.key}");
+                            // Access other properties within backend as needed
+                            string sKey = data.backend.key;
+                            CBindDBSimElementItem cBindDBSimElementItem = new CBindDBSimElementItem();
+                            cBindDBSimElementItem.cConfig.StationName = stationName;
+                            cBindDBSimElementItem.cConfig.BlockName = data.backend.dbsimProps.blockName;
+                            cBindDBSimElementItem.cConfig.ElementName = data.backend.dbsimProps.elementName;
+                            cBindDBSimElementItem.cConfig.ElementType = data.backend.dbsimProps.elementType;
+
+                            string sBlockFullName = $"{stationName}.{data.backend.dbsimProps.blockName}";
+
+                            cBindDBSimElementItem.m_nStationBlockID = OneSimLink.GetBlockIdByName(sBlockFullName);
+                            cBindDBSimElementItem.m_nElementID = OneSimLink.RegisterElement(sBlockFullName, cBindDBSimElementItem.cConfig.ElementName);
+                            cBindDBSimElementItem.m_sValue = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
+
+                            if ((cBindDBSimElementItem.m_nStationBlockID != -1) && (cBindDBSimElementItem.m_nElementID != -1))
+                            {
+                                Logger.LogDebug($"Key: {sKey} -> Block: {data.backend.dbsimProps.blockName}, Element: {data.backend.dbsimProps.elementName}, Type: {data.backend.dbsimProps.elementType}");
+                                _listOfKeys.Add(sKey);
+                                _mapKeyToBindDBSimElementItemCurrent.Add(sKey, cBindDBSimElementItem);
+                                _mapKeyToBindDBSimElementItemPrevious.Add(sKey, cBindDBSimElementItem);
+                            }
+
                         }
                     }
                 }
@@ -400,12 +407,12 @@ class Program
     }
 
 
-    public static void SetValue(string key, string value)
+    public static void SetValue(string key, int value)
     {
         CBindDBSimElementItem cBindDBSimElementItem = _mapKeyToBindDBSimElementItemCurrent.Search(key);
 
         if (cBindDBSimElementItem != null)
-            _DbSimElementUtils.SetStringValue((uint)cBindDBSimElementItem.m_nElementID, value); 
+            _DbSimElementUtils.SetIntValue((uint)cBindDBSimElementItem.m_nElementID, value); 
     }
 
 }

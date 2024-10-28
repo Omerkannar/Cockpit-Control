@@ -2,7 +2,7 @@
 {
     public class CBindDBSimElementItem
     {
-        public CConfigDBSimElementItem cConfig { get; set; }
+        public CConfigDBSimElementItem cConfig { get; set; } = new CConfigDBSimElementItem(); // Initialized with a new instance
 
         // Value
         public string? m_sValue;
@@ -10,6 +10,14 @@
         // help data
         public int m_nStationBlockID;
         public int m_nElementID;
+
+        // Constructor (Optional) for further initialization
+        public CBindDBSimElementItem(string? value = null, int stationBlockID = 0, int elementID = 0)
+        {
+            m_sValue = value;
+            m_nStationBlockID = stationBlockID;
+            m_nElementID = elementID;
+        }
 
         // Copy method
         public CBindDBSimElementItem Copy()

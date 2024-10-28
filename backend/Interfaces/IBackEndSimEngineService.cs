@@ -8,6 +8,28 @@ using BackEndServices.Utilities;
 
 namespace BackEndServices.Interfaces
 {
+
+    // Define the BasicDataBackend class to only include the backend object
+    public class BasicDataBackend
+    {
+        public Backend backend { get; set; }
+    }
+
+    public class Backend
+    {
+        public string key { get; set; }
+        public DbsimProps dbsimProps { get; set; }
+    }
+
+    public class DbsimProps
+    {
+        public string stationName { get; set; }
+        public string blockName { get; set; }
+        public string elementName { get; set; }
+        public string elementType { get; set; }
+        public object enumMapping { get; set; }
+    }
+
     public interface IBackEndSimEngineService
     {
         void SetMotionState(MotionState motionState);
