@@ -13,12 +13,12 @@ export const ComponentStringContainer = styled.div<StringContainerInterface>`
 `
 
 export const ComponentStringNumber = styled.img.attrs<GenericTypeComponent>(({ state, data }) => ({
-    src: data.imageProps.additionalImageData[state.toString()] || data.imageProps.imageDefault,
-    id: data.backend_name,
+    src: data.component.imageProps.additionalImageData[state.toString()] || data.component.imageProps.imageDefault,
+    id: data.backend.key,
 })) <GenericTypeComponent>`
     position: absolute;
-    width: ${(props) => (props.scale * Number(props.data.width) / 100)}px;
-    height: ${(props) => (props.scale * Number(props.data.height) / 100)}px;
+    width: ${(props) => (props.scale * Number(props.data.component.position.width) / 100)}px;
+    height: ${(props) => (props.scale * Number(props.data.component.position.height) / 100)}px;
     top: ${props =>  (props.scale * 0 / 100)}px;
     left: ${props => (props.scale *  Number(props.digitOffset) / 100)}px;
 `

@@ -5,12 +5,12 @@ import { GenericTypeComponent } from '../Common.interface'
 export const ComponentError = styled.div.attrs<GenericTypeComponent>(({ data }) => ({
 })) <GenericTypeComponent>`
     position: absolute;
-    width: ${(props) => (props.scale * props.data.width / 100)}px;
-    height: ${(props) => (props.scale * props.data.height / 100)}px;
+    width: ${(props) => (props.scale * props.data.component.position.width / 100)}px;
+    height: ${(props) => (props.scale * props.data.component.position.height / 100)}px;
     top: ${props => props.state === true ?
-        ((props.scale * (Number(props.data.top) + Number(props.data.offset_on))) / 100) :
-        ((props.scale * (Number(props.data.top) + Number(props.data.offset_off))) / 100)}px;
-    left: ${props => (props.scale * props.data.left / 100)}px;
+        ((props.scale * (Number(props.data.component.position.top) )) / 100) :
+        ((props.scale * (Number(props.data.component.position.top) )) / 100)}px;
+    left: ${props => (props.scale * props.data.component.position.left / 100)}px;
     font-size: 15px;
     color: red;
 `

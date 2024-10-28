@@ -1,248 +1,195 @@
 [
     {
         "type": "stateN",
-        "backend_name": "RWR_SWITCH_IN",
-        "width": "85",
-        "height": "160",
-        "left": "156",
-        "top": "60",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
+        "backend": {
+            "key": "RWR_SWITCH_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.CMDS",
+                "elementName": "Data.RWR_SWITCH",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "OFF": 0,
+                    "ON": 1
+                }
             }
         },
-        "debugMode": true,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1,
-            "clickBoundsWidthFactor": 2,
-            "mapping": {
-                "top" : "ON",
-                "bottom" : "OFF"
+        "component": {
+            "debugMode": false,
+            "isClickable": true,
+            "position": {
+                "width": "85",
+                "height": "160",
+                "left": "156",
+                "top": "60"
+            },
+            "imageProps": {
+                "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
+                "additionalImageData": {
+                    "ON": "/CMDSPanel/SWITCH_10_UP1.png",
+                    "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "top": "ON",
+                    "bottom": "OFF"
+                }
+            },
+            "knob_props": {},
+            "analog_props": {},
+            "string_props": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
             }
-        },
-        "blinking": {
-            "color": "yellow"
         }
     },
     {
         "type": "stateN",
-        "backend_name": "JMR_SWITCH_IN",
-        "width": "85",
-        "height": "160",
-        "left": "157",
-        "top": "235",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
-
+        "backend": {
+            "key": "JMR_SWITCH_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.CMDS",
+                "elementName": "Data.JMR_SWITCH",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "OFF": 0,
+                    "ON": 1
+                }
             }
         },
-        "debugMode": false,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1,
-            "clickBoundsWidthFactor": 1
-        },
-        "blinking": {
-            "color": "yellow"
+        "component": {
+            "debugMode": false,
+            "isClickable": true,
+            "position": {
+                "width": "85",
+                "height": "160",
+                "left": "157",
+                "top": "235"
+            },
+            "imageProps": {
+                "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
+                "additionalImageData": {
+                    "ON": "/CMDSPanel/SWITCH_10_UP1.png",
+                    "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "top": "ON",
+                    "bottom": "OFF"
+                }
+            },
+            "knob_props": {},
+            "analog_props": {},
+            "string_props": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
         }
     },
     {
         "type": "stateN",
-        "backend_name": "MWS_SWITCH_IN",
-        "width": "85",
-        "height": "160",
-        "left": "156",
-        "top": "412",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
-
+        "backend": {
+            "key": "MWS_SWITCH_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.CMDS",
+                "elementName": "Data.MWS_SWITCH",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "OFF": 0,
+                    "ON": 1
+                }
             }
         },
-        "debugMode": false,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1,
-            "clickBoundsWidthFactor": 1
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "stateN",
-        "backend_name": "SWITCH_01_IN",
-        "width": "85",
-        "height": "160",
-        "left": "318",
-        "top": "192",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
-
+        "component": {
+            "debugMode": false,
+            "isClickable": true,
+            "position": {
+                "width": "85",
+                "height": "160",
+                "left": "156",
+                "top": "412"
+            },
+            "imageProps": {
+                "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
+                "additionalImageData": {
+                    "ON": "/CMDSPanel/SWITCH_10_UP1.png",
+                    "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "top": "ON",
+                    "bottom": "OFF"
+                }
+            },
+            "knob_props": {},
+            "analog_props": {},
+            "string_props": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
             }
-        },
-        "debugMode": false,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1,
-            "clickBoundsWidthFactor": 1
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "stateN",
-        "backend_name": "SWITCH_02_IN",
-        "width": "85",
-        "height": "160",
-        "left": "459",
-        "top": "193",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
-
-            }
-        },
-        "debugMode": false,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1,
-            "clickBoundsWidthFactor": 1
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "stateN",
-        "backend_name": "SWITCH_CH_IN",
-        "width": "85",
-        "height": "160",
-        "left": "596",
-        "top": "193",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
-
-            }
-        },
-        "debugMode": false,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1,
-            "clickBoundsWidthFactor": 1
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "stateN",
-        "backend_name": "SWITCH_FL_IN",
-        "width": "85",
-        "height": "160",
-        "left": "740",
-        "top": "193",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
-
-            }
-        },
-        "debugMode": false,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1,
-            "clickBoundsWidthFactor": 1
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "stateN",
-        "backend_name": "SWITCH_JETT_IN",
-        "width": "90",
-        "height": "90",
-        "left": "330",
-        "top": "440",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/Switch1_Down.png",
-            "additionalImageData": {
-                "ON": "/CMDSPanel/Switch1_Up.png",
-                "OFF": "/CMDSPanel/Switch1_Down.png"
-            }
-        },
-        "debugMode": true,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 2,
-            "clickBoundsWidthFactor": 1
-        },
-        "blinking": {
-            "color": "yellow"
         }
     },
     {
         "type": "knobInteger",
-        "backend_name": "KNOB_PRGM_IN",
-        "width": "78",
-        "height": "78",
-        "left": "533",
-        "top": "443",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/Knob_Plus.png"
-        },
-        "debugMode": true,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 2,
-            "clickBoundsWidthFactor": 2,
-            "mapping": {
-                "top" : "INCREASE",
-                "right" : "INCREASE",
-                "bottom" : "DECREASE",
-                "left" : "DECREASE"
-                
+        "backend": {
+            "key": "KNOB_PRGM_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.CMDS",
+                "elementName": "Data.KNOB_PRGM",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "BIT": 0,
+                    "1": 1,
+                    "2": 2,
+                    "3": 3,
+                    "4": 4
+                }
             }
         },
-        "knob_props": {
+        "component": {
+            "debugMode": false,
+            "isClickable": true,
+            "position": {
+                "width": "78",
+                "height": "78",
+                "left": "533",
+                "top": "443"
+            },
+            "imageProps": {
+                "imageDefault": "/CMDSPanel/Knob_Plus.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 2,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "top": "INCREASE",
+                    "right": "INCREASE",
+                    "bottom": "DECREASE",
+                    "left": "DECREASE"
+                }
+            },
+            "knob_props": {
             "rotation": {
                 "BIT": -90,
                 "1": -55,
@@ -251,173 +198,14 @@
                 "4": 69
             }
         },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "knobInteger",
-        "backend_name": "KNOB_MODE_IN",
-        "width": "78",
-        "height": "78",
-        "left": "756",
-        "top": "444",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/Knob1.png"
-        },
-        "debugMode": false,
-        "isClickable": true,
-        "clickProps": {
-            "clickBoundsHeightFactor": 2,
-            "clickBoundsWidthFactor": 2,
-            "mapping": {
-                "top" : "INCREASE",
-                "right" : "INCREASE",
-                "bottom" : "DECREASE",
-                "left" : "DECREASE"
-                
+            "analog_props": {},
+            "string_props": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
             }
-        },
-        "knob_props": {
-            "rotation": {
-                "OFF": 0,
-                "STBY": 30,
-                "MAN": 60,
-                "SEMI": 93,
-                "AUTO": 125,
-                "BYP": 158
-            }
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "stateN",
-        "backend_name": "DISPENSE_IN",
-        "width": "120",
-        "height": "30",
-        "left": "599",
-        "top": "34",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/Dispense_off.png",
-            "additionalImageData": {
-                "imageOn": "/CMDSPanel/Dispense_Light.png"
-            }
-        },
-        "debugMode": false,
-        "isClickable": false,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1.5,
-            "clickBoundsWidthFactor": 1.2
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "stateN",
-        "backend_name": "RDY_IN",
-        "width": "50",
-        "height": "30",
-        "left": "789",
-        "top": "34",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/RDY_off.png",
-            "additionalImageData": {
-                "imageOn": "/CMDSPanel/RDY_Light.png"
-            }
-        },
-        "debugMode": false,
-        "isClickable": false,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1.5,
-            "clickBoundsWidthFactor": 1.2
-        },
-        "blinking": {
-            "color": "yellow"
-        }
-    },
-    {
-        "type": "number",
-        "backend_name": "FLR_QTY_IN",
-        "width": "35",
-        "height": "50",
-        "left": "710",
-        "top": "110",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/Blank_Num.png",
-            "additionalImageData": {
-                "None": "/CMDSPanel/Blank_Num.png",
-                "0": "/CMDSPanel/0.png",
-                "1": "/CMDSPanel/1.png",
-                "2": "/CMDSPanel/2.png",
-                "3": "/CMDSPanel/3.png",
-                "4": "/CMDSPanel/4.png",
-                "5": "/CMDSPanel/5.png",
-                "6": "/CMDSPanel/6.png",
-                "7": "/CMDSPanel/7.png",
-                "8": "/CMDSPanel/8.png",
-                "9": "/CMDSPanel/9.png"
-            }
-        },
-        "debugMode": false,
-        "isClickable": false,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1.75,
-            "clickBoundsWidthFactor": 2
-        },
-        "string_props": {
-            "maxStringLength" : 3
-        },
-        "blinking": {
-            "color": "none"
-        }
-    },
-    {
-        "type": "number",
-        "backend_name": "CH_QTY_IN",
-        "width": "35",
-        "height": "50",
-        "left": "570",
-        "top": "60",
-        "offset_on": "0",
-        "offset_off": "0",
-        "imageProps": {
-            "imageDefault": "/CMDSPanel/Blank_Num.png",
-            "additionalImageData": {
-                "None": "/CMDSPanel/Blank_Num.png",
-                "0": "/CMDSPanel/0.png",
-                "1": "/CMDSPanel/1.png",
-                "2": "/CMDSPanel/2.png",
-                "3": "/CMDSPanel/3.png",
-                "4": "/CMDSPanel/4.png",
-                "5": "/CMDSPanel/5.png",
-                "6": "/CMDSPanel/6.png",
-                "7": "/CMDSPanel/7.png",
-                "8": "/CMDSPanel/8.png",
-                "9": "/CMDSPanel/9.png"
-            }
-        },
-        "debugMode": false,
-        "isClickable": false,
-        "clickProps": {
-            "clickBoundsHeightFactor": 1.75,
-            "clickBoundsWidthFactor": 2
-        },
-        "string_props": {
-            "maxStringLength" : 3
-        },
-        "blinking": {
-            "color": "none"
         }
     }
 ]

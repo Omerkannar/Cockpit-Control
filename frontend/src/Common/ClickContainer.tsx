@@ -39,24 +39,24 @@ const blink = (color: string) => keyframes`
 const LargeSquare = styled.div<BasicComponentContainer>`
   position:               absolute;
   display:                grid;
-  top:                    ${props => (props.scale * (Number(props.data.top) + (Number(props.data.height) / 2) * (1 - Number(props.data.clickProps?.clickBoundsHeightFactor))) / 100) | 0}px;
-  left:                   ${props => (props.scale * (Number(props.data.left) + (Number(props.data.width) / 2) * (1 - Number(props.data.clickProps?.clickBoundsWidthFactor))) / 100) | 0}px;
-  width:                  ${props => (props.scale * props.data.width * Number(props.data.clickProps?.clickBoundsWidthFactor) / 100) | 0}px;
-  height:                 ${props => (props.scale * props.data.height * Number(props.data.clickProps?.clickBoundsHeightFactor) / 100) | 0}px;
+  top:                    ${props => (props.scale * (Number(props.data.component.position.top) + (Number(props.data.component.position.height) / 2) * (1 - Number(props.data.component.clickProps?.clickBoundsHeightFactor))) / 100) | 0}px;
+  left:                   ${props => (props.scale * (Number(props.data.component.position.left) + (Number(props.data.component.position.width) / 2) * (1 - Number(props.data.component.clickProps?.clickBoundsWidthFactor))) / 100) | 0}px;
+  width:                  ${props => (props.scale * props.data.component.position.width * Number(props.data.component.clickProps?.clickBoundsWidthFactor) / 100) | 0}px;
+  height:                 ${props => (props.scale * props.data.component.position.height * Number(props.data.component.clickProps?.clickBoundsHeightFactor) / 100) | 0}px;
   background-color: rgba(255,255,255,0);
   border: 2px solid transparent;
-  ${props => (props.isBlinking && props.data.type !== "number" &&props.data.blinking?.color) && css`
-     animation: ${blink(props.data.blinking.color)} 0.8s infinite;
+  ${props => (props.isBlinking && props.data.type !== "number" &&props.data.component.blinking?.color) && css`
+     animation: ${blink(props.data.component.blinking.color)} 0.8s infinite;
    `}
 `;
 
 // Styled component for the smaller square at the center
 const SmallSquare = styled.div<BasicComponentContainer>`
   position: absolute;
-  width:                ${props => (props.scale * props.data.width * Number(props.data.clickProps?.clickBoundsWidthFactor) / 100 / REDUCE_FACTOR) | 0}px;
-  height:               ${props => (props.scale * props.data.height * Number(props.data.clickProps?.clickBoundsHeightFactor) / 100 / REDUCE_FACTOR) | 0}px;
-  background-color:     ${props => (props.data.clickProps?.mapping?.center ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)")};
-  cursor:               ${props => (props.data.clickProps?.mapping?.center ? "pointer" : "not-allowed")};
+  width:                ${props => (props.scale * props.data.component.position.width * Number(props.data.component.clickProps?.clickBoundsWidthFactor) / 100 / REDUCE_FACTOR) | 0}px;
+  height:               ${props => (props.scale * props.data.component.position.height * Number(props.data.component.clickProps?.clickBoundsHeightFactor) / 100 / REDUCE_FACTOR) | 0}px;
+  background-color:     ${props => (!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.center ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)")};
+  cursor:               ${props => (props.data.component.clickProps?.mapping?.center ? "pointer" : "not-allowed")};
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -80,10 +80,10 @@ const TrapezoidZone = styled.div<{ zoneColor: string; clipPath: string; cursor: 
 
 const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
 
-  const largeRectangleHeight: number = Number(props.data.clickProps?.clickBoundsHeightFactor) * Number(props.data.height) * props.scale / 100;
-  const largeRectangleWidth: number = Number(props.data.clickProps?.clickBoundsWidthFactor) * Number(props.data.width) * props.scale / 100;
-  const smallRectangleHeight: number = Number(props.data.clickProps?.clickBoundsHeightFactor) * Number(props.data.height) * props.scale / 100 / REDUCE_FACTOR;
-  const smallRectangleWidth: number = Number(props.data.clickProps?.clickBoundsWidthFactor) * Number(props.data.width) * props.scale / 100 / REDUCE_FACTOR;
+  const largeRectangleHeight: number = Number(props.data.component.clickProps?.clickBoundsHeightFactor) * Number(props.data.component.position.height) * props.scale / 100;
+  const largeRectangleWidth: number = Number(props.data.component.clickProps?.clickBoundsWidthFactor) * Number(props.data.component.position.width) * props.scale / 100;
+  const smallRectangleHeight: number = Number(props.data.component.clickProps?.clickBoundsHeightFactor) * Number(props.data.component.position.height) * props.scale / 100 / REDUCE_FACTOR;
+  const smallRectangleWidth: number = Number(props.data.component.clickProps?.clickBoundsWidthFactor) * Number(props.data.component.position.width) * props.scale / 100 / REDUCE_FACTOR;
 
   const [isLongPress, setIsLongPress] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -99,7 +99,7 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
       // Start an interval to fire the handleLongPress event every longPressThreshold
       intervalRef.current = setInterval(() => {
         if (props.handleLongPress) {
-          props.handleLongPress(props.data.backend_name, event.target.id);
+          props.handleLongPress(props.data.backend.key, event.target.id);
         }
       }, longPressThreshold);
     }, longPressThreshold);
@@ -108,7 +108,7 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
   const handleOnMouseUp = (event: any) => {
         // If timeoutRef exists and long press hasn't started, it's a short click
         if (timeoutRef.current && !isLongPress && props.handleClick) {
-          props.handleClick(props.data.backend_name, event.target.id);
+          props.handleClick(props.data.backend.key, event.target.id);
         }
     
         // Clear timeout and interval
@@ -122,46 +122,46 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
 
   return (
     <LargeSquare {...props}>
-      {!props.data.isClickable ? null :
+      {!props.data.component.isClickable ? null :
         <SmallSquare {...props}
-          id={props.data.clickProps?.mapping?.center || "undefined"}
+          id={props.data.component.clickProps?.mapping?.center || "undefined"}
           onMouseDown={(e) => {
-            if (props.data.clickProps?.mapping?.center) {
+            if (props.data.component.clickProps?.mapping?.center) {
               handleOnMouseDown(e)
             }
           }}
           onMouseUp={(e) => {
-            if (props.data.clickProps?.mapping?.center) {
+            if (props.data.component.clickProps?.mapping?.center) {
               handleOnMouseUp(e)
             }
           }}
           onMouseLeave={(e) => {
-            if (props.data.clickProps?.mapping?.center) {
+            if (props.data.component.clickProps?.mapping?.center) {
               handleOnMouseUp(e)
             }
           }} />
       }
-      {!props.data.isClickable ? null :
+      {!props.data.component.isClickable ? null :
         // Top Trapezoid
         <TrapezoidZone
-          id={props.data.clickProps?.mapping?.top || "undefined"}
+          id={props.data.component.clickProps?.mapping?.top || "undefined"}
           onMouseDown={(e) => {
-            if (props.data.clickProps?.mapping?.top) {
+            if (props.data.component.clickProps?.mapping?.top) {
               handleOnMouseDown(e)
             }
           }}
           onMouseUp={(e) => {
-            if (props.data.clickProps?.mapping?.top) {
+            if (props.data.component.clickProps?.mapping?.top) {
               handleOnMouseUp(e)
             }
           }}
           onMouseLeave={(e) => {
-            if (props.data.clickProps?.mapping?.top) {
+            if (props.data.component.clickProps?.mapping?.top) {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={props.data.clickProps?.mapping?.top ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-          cursor={props.data.clickProps?.mapping?.top ? true : false}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.top ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.component.clickProps?.mapping?.top ? true : false}
           clipPath={`polygon(
                     0 0, 
                     100% 0, 
@@ -171,26 +171,26 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
           }
         />
       }
-      {!props.data.isClickable ? null :
+      {!props.data.component.isClickable ? null :
         <TrapezoidZone
-          id={props.data.clickProps?.mapping?.bottom || "undefined"}
+          id={props.data.component.clickProps?.mapping?.bottom || "undefined"}
           onMouseDown={(e) => {
-            if (props.data.clickProps?.mapping?.bottom) {
+            if (props.data.component.clickProps?.mapping?.bottom) {
               handleOnMouseDown(e)
             }
           }}
           onMouseUp={(e) => {
-            if (props.data.clickProps?.mapping?.bottom) {
+            if (props.data.component.clickProps?.mapping?.bottom) {
               handleOnMouseUp(e)
             }
           }}
           onMouseLeave={(e) => {
-            if (props.data.clickProps?.mapping?.bottom) {
+            if (props.data.component.clickProps?.mapping?.bottom) {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={props.data.clickProps?.mapping?.bottom ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-          cursor={props.data.clickProps?.mapping?.bottom ? true : false}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.bottom ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.component.clickProps?.mapping?.bottom ? true : false}
           clipPath={`polygon(
                     0 100%, 
                     100% 100%, 
@@ -200,26 +200,26 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
           }
         />
       }
-      {!props.data.isClickable ? null :
+      {!props.data.component.isClickable ? null :
         <TrapezoidZone
-          id={props.data.clickProps?.mapping?.left || "undefined"}
+          id={props.data.component.clickProps?.mapping?.left || "undefined"}
           onMouseDown={(e) => {
-            if (props.data.clickProps?.mapping?.left) {
+            if (props.data.component.clickProps?.mapping?.left) {
               handleOnMouseDown(e)
             }
           }}
           onMouseUp={(e) => {
-            if (props.data.clickProps?.mapping?.left) {
+            if (props.data.component.clickProps?.mapping?.left) {
               handleOnMouseUp(e)
             }
           }}
           onMouseLeave={(e) => {
-            if (props.data.clickProps?.mapping?.left) {
+            if (props.data.component.clickProps?.mapping?.left) {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={props.data.clickProps?.mapping?.left ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-          cursor={props.data.clickProps?.mapping?.left ? true : false}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.left ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.component.clickProps?.mapping?.left ? true : false}
           clipPath={`polygon(
                     0 0, 
                     0 100%, 
@@ -229,26 +229,26 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
           }
         />
       }
-      {!props.data.isClickable ? null :
+      {!props.data.component.isClickable ? null :
         <TrapezoidZone
-          id={props.data.clickProps?.mapping?.right || "undefined"}
+          id={props.data.component.clickProps?.mapping?.right || "undefined"}
           onMouseDown={(e) => {
-            if (props.data.clickProps?.mapping?.right) {
+            if (props.data.component.clickProps?.mapping?.right) {
               handleOnMouseDown(e)
             }
           }}
           onMouseUp={(e) => {
-            if (props.data.clickProps?.mapping?.right) {
+            if (props.data.component.clickProps?.mapping?.right) {
               handleOnMouseUp(e)
             }
           }}
           onMouseLeave={(e) => {
-            if (props.data.clickProps?.mapping?.right) {
+            if (props.data.component.clickProps?.mapping?.right) {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={props.data.clickProps?.mapping?.right ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
-          cursor={props.data.clickProps?.mapping?.right ? true : false}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.right ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          cursor={props.data.component.clickProps?.mapping?.right ? true : false}
           clipPath={`polygon(
                     100% 0, 
                     100% 100%, 

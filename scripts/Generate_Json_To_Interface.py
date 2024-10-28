@@ -30,7 +30,8 @@ for panel in panels_data:
     with open(f'{base_folder}{panel_data_file}.json', 'r') as file:
         panel_data = json.load(file)
     for item in panel_data:
-        backend_name = item["backend_name"]
+        backend_data = item["backend"]
+        backend_name = backend_data["key"]
         backend_type = "string"
         initial_value = "\"\"" if backend_type == "string" else "0" if backend_type == "number" else "false" if backend_type == "boolean" else "0"
 

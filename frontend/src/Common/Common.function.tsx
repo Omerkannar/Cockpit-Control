@@ -12,7 +12,7 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
         case "knobInteger":
             {
                 const SelectedComponent = getComponentById("IntegerKnob") as React.ComponentType<GenericTypeComponent>;
-                const rot = getValueByKey(state, data.knob_props?.rotation)
+                const rot = getValueByKey(state, data.component.knob_props?.rotation)
                 return <SelectedComponent scale={scale} state={rot} data={data} />
             }
         case "stateN":
@@ -22,30 +22,38 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
             }
         case "number":
             const elements = [];
-            if (data.string_props?.maxStringLength) {
-                for (let digit = 0; digit < data.string_props?.maxStringLength; digit++) {
+            if (data.component.string_props?.maxStringLength) {
+                for (let digit = 0; digit < data.component.string_props.maxStringLength; digit++) {
                     const SelectedComponent = getComponentById("StringNumber") as React.ComponentType<GenericTypeComponent>;
-                    elements.push(<SelectedComponent scale={scale} state={readDigits(state.toString(), data.string_props?.maxStringLength)[digit]} data={data} digitOffset={data.width * digit} />)
+                    elements.push(<SelectedComponent 
+                        scale={scale} 
+                        state={readDigits(state.toString(), data.component.string_props?.maxStringLength)[digit]} 
+                        data={data} 
+                        digitOffset={data.component.position.width * digit} />)
                 }
                 return (
-                    <ComponentStringContainer container_width={data.width * data.string_props?.maxStringLength} container_height={data.height} container_left={data.left} container_top={data.top}>
+                    <ComponentStringContainer 
+                    container_width={data.component.position.width * (data.component.string_props?.maxStringLength || 0)} 
+                    container_height={data.component.position.height} 
+                    container_left={data.component.position.left} 
+                    container_top={data.component.position.top}>
                         {elements.length > 0 && elements}
                     </ComponentStringContainer>
                 )
             } else {
                 const SelectedComponent = getComponentById("Error") as React.ComponentType<GenericTypeComponent>;
-                return <SelectedComponent scale={scale} state={state} data={data}>Error {data.backend_name} - maxStringLength not defined</SelectedComponent>;
+                return <SelectedComponent scale={scale} state={state} data={data}>Error {data.backend.key} - maxStringLength not defined</SelectedComponent>;
             }
         case "analog_rotation":
             {
                 const SelectedComponent = getComponentById("AnalogRotation") as React.ComponentType<GenericTypeComponent>;
-                return <SelectedComponent scale={scale} state={linearInterpolation(data.analog_props, Number(state))} data={data} />
+                return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analog_props, Number(state))} data={data} />
             }
         case "analog_vertical_translation":
             //console.log("analog_rotation")
             {
                 const SelectedComponent = getComponentById("AnalogVerticalTranslation") as React.ComponentType<GenericTypeComponent>;
-                return <SelectedComponent scale={scale} state={linearInterpolation(data.analog_props, Number(state))} data={data} />
+                return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analog_props, Number(state))} data={data} />
             }
         case "static":
             {
@@ -55,6 +63,6 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
 
         default:
             const SelectedComponent = getComponentById("Error") as React.ComponentType<GenericTypeComponent>;
-            return <SelectedComponent scale={scale} state={state} data={data}>Error {data.backend_name} - Type not defined</SelectedComponent>;
+            return <SelectedComponent scale={scale} state={state} data={data}>Error {data.backend.key} - Type not defined</SelectedComponent>;
     }
 }

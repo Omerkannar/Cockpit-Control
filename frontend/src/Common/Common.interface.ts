@@ -1,7 +1,9 @@
 
-type Type                       = "static" | "stateN" | "knobInteger" | "analog_rotation" | "analog_vertical_translation" | "analog_horizontal_translation" | "string" | "number";
-type State                      = boolean  | number    | string;
-export type ClickType           = "click"  | "LongPress";
+type Type = "static" | "stateN" | "knobInteger" | "analog_rotation" | "analog_vertical_translation" | "analog_horizontal_translation" | "string" | "number";
+type State = boolean | number | string;
+export type ClickType = "click" | "LongPress";
+type ElementType = "Double" | "Float" | "Integer" | "Boolean" | "String";
+
 
 export interface IncomingMessage {
     panel: string;
@@ -12,22 +14,22 @@ export interface IncomingMessage {
 
 export interface GenericPanelInterface {
     static_data: {
-        panel_name : string,
+        panel_name: string,
         panel_container: string;
-        panel_url : string,
+        panel_url: string,
         panel_data: string,
-        panel_resources : string,
+        panel_resources: string,
         panel_scale: number,
         panel_top: number,
         panel_left: number
     }
-    dynamic_data? : IncomingMessage;
-    handleSendRequest : (panelName: string, switchName: string, switchValue: string) => void;
+    dynamic_data?: IncomingMessage;
+    handleSendRequest: (panelName: string, switchName: string, switchValue: string) => void;
 }
 
 export interface PanelContainerInterface {
-    "container_url"?: string, 
-    "container_name": string, 
+    "container_url"?: string,
+    "container_name": string,
     "container_top": number,
     "container_left": number,
     "container_width": number,
@@ -43,10 +45,10 @@ export interface StringContainerInterface {
 }
 
 export interface ClickContainerInterface {
-    "height" : number,
+    "height": number,
     "width": number,
     "scale": number,
-    handleClick? : (clickPosition: string) => void
+    handleClick?: (clickPosition: string) => void
 }
 
 // state: boolean                       Component is on (true) or off (false)
@@ -63,47 +65,107 @@ export interface ClickContainerInterface {
 //         debugMode: boolean;          (Optional - Default false) Show debug data of the component
 //     }
 
+// interface BasicData {
+//     backend_name: string;
+//     type: Type;
+//     width: number;
+//     height: number;
+//     left: number;
+//     top: number;
+//     imageProps: {
+//         imageDefault: string;
+//         additionalImageData?: any;
+//     }; 
+//     debugMode?: boolean;
+//     isClickable: boolean;
+//     clickProps?: {
+//         clickBoundsHeightFactor: number; 
+//         clickBoundsWidthFactor: number;
+//         mapping: {
+//             center?: string;
+//             top?: string;
+//             bottom?: string;
+//             left?: string;
+//             right?: string;
+//         }
+//     };
+//     knob_props?: {
+//         rotation: any;
+//     };
+//     analog_props?: {
+//         conversion: any;
+//     };
+//     string_props?: {
+//         maxStringLength: number;
+//     };
+//     blinking?: {
+//         color: string;
+//     };
+//     logger? : {
+//         display: string;
+//     };
+//     dbsimProps?: {
+//         key?: string;
+//         stationName?: string;
+//         blockName: string;
+//         elementName: string;
+//         elementType: ElementType;
+//         mapping?: any;
+//     }
+// }
+
 interface BasicData {
-    backend_name: string;
     type: Type;
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-    imageProps: {
-        imageDefault: string;
-        additionalImageData?: any;
-    };
-    offset_on?: number;
-    offset_off?: number;
-    debugMode?: boolean;
-    isClickable: boolean;
-    clickProps?: {
-        clickBoundsHeightFactor: number; 
-        clickBoundsWidthFactor: number;
-        mapping: {
-            center?: string;
-            top?: string;
-            bottom?: string;
-            left?: string;
-            right?: string;
+    backend: {
+        key: string;
+        dbsimProps?: {
+            stationName: string;
+            blockName: string;
+            elementName: string;
+            elementType: ElementType;
+            enumMapping?: any;
         }
     };
-    knob_props?: {
-        rotation: any;
-    };
-    analog_props?: {
-        conversion: any;
-    };
-    string_props?: {
-        maxStringLength: number,
-    };
-    blinking?: {
-        color: string;
-    };
-    logger? : {
-        display: string;
-    };
+    component: {
+        debugMode?: boolean;
+        isClickable: boolean;
+        position: {
+            width: number;
+            height: number;
+            left: number;
+            top: number;
+        };
+        imageProps: {
+            imageDefault: string;
+            additionalImageData?: any;
+        };
+        clickProps?: {
+            clickBoundsHeightFactor: number;
+            clickBoundsWidthFactor: number;
+            mapping: {
+                center?: string;
+                top?: string;
+                bottom?: string;
+                left?: string;
+                right?: string;
+            };
+        };
+        knob_props?: {
+            rotation: any;
+        };
+        analog_props?: {
+            conversion: any;
+        };
+        string_props?: {
+            maxStringLength: number;
+        };
+        blinking?: {
+            color: string;
+        };
+        logger?: {
+            display: boolean;
+        };
+    }
 }
 
 export interface BasicTypeComponent {
@@ -112,14 +174,14 @@ export interface BasicTypeComponent {
 }
 
 
-export interface BasicComponentContainer extends BasicTypeComponent{
+export interface BasicComponentContainer extends BasicTypeComponent {
     isBlinking?: boolean;
-    handleClick? : (componentName: string, clickedName: string) => void;
-    handleLongPress? : (componentName: string, clickedName: string) => void;
+    handleClick?: (componentName: string, clickedName: string) => void;
+    handleLongPress?: (componentName: string, clickedName: string) => void;
 }
-  
+
 
 export interface GenericTypeComponent extends BasicTypeComponent {
     state: State;
-    [key: string] : any;
+    [key: string]: any;
 }
