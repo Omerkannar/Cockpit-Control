@@ -51,69 +51,6 @@ export interface ClickContainerInterface {
     handleClick?: (clickPosition: string) => void
 }
 
-// state: boolean                       Component is on (true) or off (false)
-// scale: number;                       [%] Default size is 100. Defines the size of the component
-//     data: {                          
-//         width: number;               [px] Default size of the component
-//         left: number;                [px] Left location of the component on the panel (from top- left corner) (0 - Left side of the panel)
-//         top: number;                 [px] Top location of the component on the panel (from top- left corner) (0 - Top side of the panel)
-//         offset_on: number;           [px] Offset addition to the top position when the component is set to on
-//         offset_off: number;          [px] Offset addition to the top position when the component is set to off
-//         backend_name: string;        The exect name as it define on backend
-//         imageOn: string;            The relative path to image when the component is set to on
-//         imageDefault: string;           The relative path to image when the component is set to off
-//         debugMode: boolean;          (Optional - Default false) Show debug data of the component
-//     }
-
-// interface BasicData {
-//     backend_name: string;
-//     type: Type;
-//     width: number;
-//     height: number;
-//     left: number;
-//     top: number;
-//     imageProps: {
-//         imageDefault: string;
-//         additionalImageData?: any;
-//     }; 
-//     debugMode?: boolean;
-//     isClickable: boolean;
-//     clickProps?: {
-//         clickBoundsHeightFactor: number; 
-//         clickBoundsWidthFactor: number;
-//         mapping: {
-//             center?: string;
-//             top?: string;
-//             bottom?: string;
-//             left?: string;
-//             right?: string;
-//         }
-//     };
-//     knob_props?: {
-//         rotation: any;
-//     };
-//     analog_props?: {
-//         conversion: any;
-//     };
-//     string_props?: {
-//         maxStringLength: number;
-//     };
-//     blinking?: {
-//         color: string;
-//     };
-//     logger? : {
-//         display: string;
-//     };
-//     dbsimProps?: {
-//         key?: string;
-//         stationName?: string;
-//         blockName: string;
-//         elementName: string;
-//         elementType: ElementType;
-//         mapping?: any;
-//     }
-// }
-
 interface BasicData {
     type: Type;
     backend: {
@@ -130,10 +67,12 @@ interface BasicData {
         debugMode?: boolean;
         isClickable: boolean;
         position: {
+            scale: number;
             width: number;
             height: number;
             left: number;
             top: number;
+            zIndex: number;
         };
         imageProps: {
             imageDefault: string;
