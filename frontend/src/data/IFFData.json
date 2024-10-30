@@ -57,5 +57,56 @@
                 "display": true
             }
         }
+    },
+    {
+        "type": "static",
+        "backend": {
+            "key": "MODE3_XY_SELECTOR_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "",
+                "elementName": "",
+                "elementType": "",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "width": "36",
+                "height": "36",
+                "left": "460",
+                "top": "343"
+            },
+            "imageProps": {
+                "imageDefault": "/IFFPanel/Small_Selector.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "right": "INCREASE",
+                    "left": "DECREASE"
+                }
+            },
+            "knob_props": {
+            "rotation": {
+                "OFF": -112,
+                "STBY": -70,
+                "LOW": -24,
+                "NORM": -5,
+                "EMER": 18
+            }
+        },
+            "analog_props": {},
+            "string_props": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
     }
 ]

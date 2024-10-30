@@ -9,6 +9,7 @@ export const CMDSInitialValues: Interface.CMDSInterface['input'] = {
 
 export const IFFInitialValues: Interface.IFFInterface['input'] = {
      "IFF_MASTER_KNOB_IN":	"",
+     "MODE3_XY_SELECTOR_IN":	"",
 }
 
 export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.InterfaceMap[K]['input'] } = {

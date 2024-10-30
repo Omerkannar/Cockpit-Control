@@ -11,6 +11,7 @@ export interface CMDSInterface {
 export interface IFFInterface {
   input: {
      "IFF_MASTER_KNOB_IN":	string,
+     "MODE3_XY_SELECTOR_IN":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }

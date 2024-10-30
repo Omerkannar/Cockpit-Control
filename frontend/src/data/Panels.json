@@ -12,7 +12,7 @@
     {
         "panel_name" : "IFF",
         "panel_container": "L1",
-        "panel_url" : "./IFFPanel/IFF_Panel.png",
+        "panel_url" : "./IFFPanel/Edited/IFF_Panel.png",
         "panel_data": "IFFData",
         "panel_resources" : "/IFFPanel/",
         "panel_scale": 100,

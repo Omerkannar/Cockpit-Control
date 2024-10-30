@@ -29,7 +29,6 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
             }
         };
         loadJson();
-        //console.log(jsonData)
         // eslint-disable-next-line
     }, [static_data.panel_data]);
 
@@ -79,7 +78,6 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         if (showOnLogger === "true") {
             console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
         }
-        //handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
         handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
     }
 
@@ -90,19 +88,28 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         if (showOnLogger === "true") {
             console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
         }
-        //handleSendRequest(static_data?.panel_name, componentName.replace("_IN", "_OUT"), newValueToSend);
         handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
     }
 
     const nextValueToSend = (componentName: string, clickedName: string, pressType: ClickType): [string, string] => {
-        const filteredName = jsonData?.filter((item: any) => {
+        const filteredName = jsonData?.find((item: any) => {
             return item.backend.key === componentName
-        })[0]
-        //console.log(componentName, clickedName, filteredName);
+        })
+        // // console.log(componentName, clickedName, filteredName);
         const currentValue = getValue(componentName);
-        console.log(currentValue, typeof (currentValue))
+        // // console.log(currentValue, typeof (currentValue))
         switch (filteredName.type) {
+            case "static":
+            case "stateN":
+                //  Cases that return the exect value that was pressed
+                // ! There is no difference if the user pressed long press or click
+                const nextValue = (Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0 ) ? clickedName : filteredName.backend.dbsimProps.enumMapping[clickedName]
+                return [ nextValue, filteredName.component.logger?.display || "true"];
             case "knobInteger":
+                //  In this case - According to the value that was pressed, the logic will search the next value based on knob_props data
+                //  If the user pressed DECREASE or CCW the logic will provide the previous value 
+                //  If the user pressed INCREASE or CW the logic will provide the next value 
+                // ! There is no difference if the user pressed long press or click
                 if (currentValue === "") {
                     return ["undefined", "false"];
                 }
@@ -120,10 +127,10 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                 }
                 // Find the next index, if we found the last item - return the first.
                 let nextIndex: number = -1;
-                if (clickedName === "DECREASE") {
+                if (clickedName === "DECREASE" || clickedName === "CCW") {
                     if (index === 0) { nextIndex = 0; }
                     else nextIndex = index - 1;
-                } else if (clickedName === "INCREASE") {
+                } else if (clickedName === "INCREASE" || clickedName === "CW") {
                     if (index === keys.length - 1) nextIndex = keys.length - 1;
                     else nextIndex = index + 1;
                 }
@@ -131,7 +138,11 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
             case "analog_rotation":
             case "analog_vertical_translation":
             case "analog_horizontal_translation":
-                if (clickedName === "DECREASE") {
+                //  In this case - According to the value that was pressed, the logic will provide the next value
+                //  If the user pressed DECREASE or CCW the logic will substract 1 if the user clicked and 10 (configuration) if the user long pressed 
+                //  If the user pressed DECREASE or CCW the logic will add 1 if the user clicked and 10 (configuration) if the user long pressed
+                // ! There is difference if the user pressed long press or click
+                if (clickedName === "DECREASE" || clickedName === "CCW") {
                     if (currentValue === "0") {
                         return ["0", filteredName.component.logger?.display || "true"];
                     }
@@ -146,7 +157,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                             }
                         }
                     }
-                } else if (clickedName === "INCREASE") {
+                } else if (clickedName === "INCREASE"  || clickedName === "CW") {
                     if (currentValue === "100") {
                         return ["100", filteredName.component.logger?.display || "true"];
                     }
@@ -165,7 +176,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                     return [clickedName, filteredName.component.logger?.display || "true"];
                 }
             default:
-                return [filteredName.backend.dbsimProps.enumMapping[clickedName], filteredName.component.logger?.display || "true"];
+                return [ clickedName, filteredName.component.logger?.display || "true"];
         }
     }
 

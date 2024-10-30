@@ -23,11 +23,11 @@ export const useWebSocket = (url: string) => {
         };
 
         socket.onopen = () => {
-            console.log('WebSocket connection established');
+            console.info('WebSocket connection established');
         };
 
         socket.onclose = () => {
-            console.log('WebSocket connection closed');
+            console.info('WebSocket connection closed');
         };
 
         setWs(socket);
