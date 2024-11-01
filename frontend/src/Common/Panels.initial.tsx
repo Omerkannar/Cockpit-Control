@@ -5,6 +5,7 @@ export const CMDSInitialValues: Interface.CMDSInterface['input'] = {
      "JMR_SWITCH_IN":	"",
      "MWS_SWITCH_IN":	"",
      "KNOB_PRGM_IN":	"",
+     "JETT_SWITCH_IN":	"",
 }
 
 export const IFFInitialValues: Interface.IFFInterface['input'] = {

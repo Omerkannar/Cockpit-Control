@@ -9,6 +9,7 @@ export interface IncomingMessage {
     panel: string;
     element: string;
     value: string;
+    blinking: boolean;
 }
 
 
@@ -23,7 +24,7 @@ export interface GenericPanelInterface {
         panel_top: number,
         panel_left: number
     }
-    dynamic_data?: IncomingMessage;
+    dynamic_data?: IncomingMessage[];
     handleSendRequest: (panelName: string, switchName: string, switchValue: string) => void;
 }
 

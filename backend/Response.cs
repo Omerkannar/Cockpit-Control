@@ -1,8 +1,8 @@
 ﻿using System;
 
 
-public class Response : IWebSocketMessage
+public class Response
 {
     public string Type { get; set; }
-    public MessageDetails Details { get; set; }
+    public List<MessageDetails> Details { get; set; }
 }

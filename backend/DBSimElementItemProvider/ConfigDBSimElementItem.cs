@@ -2,15 +2,15 @@
 {
     public class CConfigDBSimElementItem
     {
-        public string Key { get; set; }
-        public string StationName { get; set; }
-        public string BlockName { get; set; }
-        public string ElementName { get; set; }
-        public string ElementType { get; set; }
-        public string ElementFilter { get; set; }
-        public string ElementTitle { get; set; }
-        public string ElementEnable { get; set; }
-        public string ElementGroup { get; set; }
+        public string? Key { get; set; }
+        public string? StationName { get; set; }
+        public string? BlockName { get; set; }
+        public string? ElementName { get; set; }
+        public string? ElementType { get; set; }
+        public string? ElementFilter { get; set; }
+        public string? ElementTitle { get; set; }
+        public string? ElementEnable { get; set; }
+        public string? ElementGroup { get; set; }
 
         // Copy method
         public CConfigDBSimElementItem Copy()

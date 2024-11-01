@@ -207,5 +207,55 @@
                 "display": true
             }
         }
+    },
+    {
+        "type": "stateN",
+        "backend": {
+            "key": "JETT_SWITCH_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.CMDS",
+                "elementName": "Data.SWITCH_JETT",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "OFF": 0,
+                    "ON": 1
+                }
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": true,
+            "position": {
+                "width": "90",
+                "height": "90",
+                "left": "330",
+                "top": "440"
+            },
+                "imageProps": {
+                    "imageDefault": "/CMDSPanel/Switch1_Down.png",
+                    "additionalImageData": {
+                        "ON": "/CMDSPanel/Switch1_Up.png",
+                        "OFF": "/CMDSPanel/Switch1_Down.png"
+                    }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 2,
+                "clickBoundsWidthFactor": 1,
+                "mapping": {
+                    "top": "ON",
+                    "bottom": "OFF"
+                }
+            },
+            "knob_props": {},
+            "analog_props": {},
+            "string_props": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
     }
 ]

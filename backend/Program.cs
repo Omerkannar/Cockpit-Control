@@ -66,10 +66,21 @@ class Program
                 HttpListenerWebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
                 WebSocket webSocket = webSocketContext.WebSocket;
 
-                string clientId = GenerateClientId(Dns.GetHostName());
-                _clients.TryAdd(clientId, webSocket);
+                string clientId = Dns.GetHostName();
 
+                if (_clients.TryGetValue(clientId, out var existingSocket))
+                {
+                    Logger.LogInfo($"Client reconnected: {clientId}. Closing existing connection.");
+                    await existingSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Reconnecting", CancellationToken.None);
+                    _clients.TryRemove(clientId, out _); // Remove the old connection
+                    await Task.Delay(2000); // Wait for 2 seconds before allowing reconnection
+                }
+
+                // Add the new client connection
+                _clients.TryAdd(clientId, webSocket);
                 Logger.LogInfo($"Client connected: {clientId}");
+
+                await SendMessagesWithDelay(clientId);
 
                 _ = HandleWebSocketConnection(clientId, webSocket);
             }
@@ -79,6 +90,35 @@ class Program
                 context.Response.Close();
             }
         }
+    }
+
+    private static async Task SendMessagesWithDelay(string clientId)
+    {
+        var numOfKeys = _listOfKeys.Count;
+        List<MessageDetails> details = new List<MessageDetails>();
+        //var details = new MessageDetails[numOfKeys];
+
+        foreach (var (key, index) in _listOfKeys.Select((value, i) => (value, i)))
+        {
+            var val = GetValueByKey(key);
+            var bindElement = _mapKeyToBindDBSimElementItemCurrent.Search(key);
+            bindElement.m_sValue = val;
+
+            var Details = new MessageDetails
+            {
+                Panel = bindElement.cConfig.BlockName.Split(".")[1],
+                Element = key,
+                Value = val.Trim('\u0000')
+            };
+
+            details.Add(Details);
+
+            // Wait for 25 ms before sending the next message
+            //await Task.Delay(25);
+        }
+
+        await UpdateClientOnStartup(clientId, details);
+
     }
 
     static string GenerateClientId(string hostname)
@@ -139,84 +179,47 @@ class Program
         try
         {
             var request = System.Text.Json.JsonSerializer.Deserialize<Request>(message);
-            Response response;
+
 
             switch (request?.Type)
             {
-                //case "ECHO":
-                //    response = new Response 
-                //    { 
-                //        Type = "ECHO_RESPONSE", 
-                //        Details = new MessageDetails 
-                //        { 
-                //            Panel = request.Details.Panel, 
-                //            Element = request.Details.Element, 
-                //            Value = request.Details.Value
-                //        } 
-                //    };
-                //    break;
+
                 case "SET_NEW_VALUE":
-                    Logger.LogDebug($"Received new message {request.Details.Element}, {request.Details.Value}");
+                    Logger.LogDebug($"Received new message from App - Panel: {request.Details.Panel}, Element: {request.Details.Element}, Value: {request.Details.Value}");
                     SetValue(request.Details.Element, int.Parse(request.Details.Value));
+                    await Task.Delay(1);
                     break;
                     
-                case "UPDATE_CLIENTS":
-                case "BROADCAST_REQUEST":
-                    await BroadcastMessage(clientId, request.Details);
-                    response = new Response
-                    {
-                        Type = "BROADCAST_RESPONSE",
-                        Details = new MessageDetails
-                        {
-                            Panel = request.Details.Panel,
-                            Element = request.Details.Element,
-                            Value = request.Details.Value
-                        }
-                    };
-                    break;
                 default:
                     Logger.LogError($"Unknown request type received from {clientId}");
-                    response = new Response 
-                    { 
-                        Type = "Default", 
-                        Details = new MessageDetails 
-                        { 
-                            Panel = request.Details.Panel, 
-                            Element = request.Details.Element, 
-                            Value = request.Details.Value
-                        } 
-                    };
                     break;
             }
-
+            return;
             //await SendToClient(clientId, JsonSerializer.Serialize(response));
         }
         catch (System.Text.Json.JsonException)
         {
-            await SendToClient(clientId, System.Text.Json.JsonSerializer.Serialize(new Response {Type = "ECHO_RESPONSE", Details = new MessageDetails { Panel = "Fuel", Element = "PUMP_1_IN", Value = "True" } }));
+            //await SendToClient(clientId, System.Text.Json.JsonSerializer.Serialize(new Response {Type = "ECHO_RESPONSE", Details = new MessageDetails { Panel = "Fuel", Element = "PUMP_1_IN", Value = "True" } }));
+            return;
         }
     }
 
-    static async Task BroadcastMessage(string senderId, MessageDetails message)
+    static async Task BroadcastMessage(string senderId, List<MessageDetails> message)
     {
-        //var broadcastMessage = new Response { Type = "BROADCAST", Data = $"From {senderId}: {message}" };
         var broadcastMessage = new Response 
-            { 
+        { 
             Type = "BROADCAST_RESPONSE", 
-            Details = new MessageDetails 
-            { 
-                Panel = message.Panel, 
-                Element = message.Element, 
-                Value = message.Value 
-            } 
+            Details = message
         };
         var messageJson = System.Text.Json.JsonSerializer.Serialize(broadcastMessage);
+        var messageJsonDetails = System.Text.Json.JsonSerializer.Serialize(broadcastMessage.Details);
+        // Logger.LogDebug($"New Data received, Updating all clients. Data: {messageJsonDetails}");
         var tasks = new List<Task>();
 
         foreach (var client in _clients)
         {
             // Send to all clients exept the sender
-            if (client.Key != senderId && client.Value.State == WebSocketState.Open)
+            if (client.Value.State == WebSocketState.Open)
             {
                 tasks.Add(SendToClient(client.Key, messageJson));
             }
@@ -224,6 +227,25 @@ class Program
 
         await Task.WhenAll(tasks);
     }
+
+    static async Task UpdateClientOnStartup(string senderId, List<MessageDetails> message)
+    {
+        var broadcastMessage = new Response
+        {
+            Type = "UPDATE_CLIENT_ON_STARTUP",
+            Details = message
+        };
+        var messageJson = System.Text.Json.JsonSerializer.Serialize(broadcastMessage);
+        var messageJsonDetails = System.Text.Json.JsonSerializer.Serialize(broadcastMessage.Details);
+        Logger.LogInfo($"Update client {senderId} on startup. Data: {messageJsonDetails}");
+        var tasks = new List<Task>();
+
+        tasks.Add(SendToClient(senderId, messageJson));
+
+        await Task.WhenAll(tasks);
+    }
+
+
 
     static async Task SendToClient(string clientId, string message)
     {
@@ -381,15 +403,19 @@ class Program
     }
 
     static async Task CheckDBSIMChanges()
-    {
+    {  
         try
         {
-            foreach (string key in _listOfKeys)
+            //var details = new MessageDetails [];
+            List<MessageDetails> details = new List<MessageDetails>();
+            var count = 0;
+            foreach (var (key, index) in _listOfKeys.Select((value, i) => (value, i)))
             {
                 var val = GetValueByKey(key);
                 var bindElement = _mapKeyToBindDBSimElementItemCurrent.Search(key);
                 if (val == null || val == bindElement.m_sValue) continue;
-                Logger.LogDebug($"Panel: {bindElement.cConfig.BlockName.Split(".")[1]}, Element: {key}, Value: {val}");
+                count++;
+                //Logger.LogDebug($"Panel: {bindElement.cConfig.BlockName.Split(".")[1]}, Element: {key}, Value: {val}");
                 bindElement.m_sValue = val;
                 var Details = new MessageDetails
                 {
@@ -397,7 +423,11 @@ class Program
                     Element = key,
                     Value = val.Trim('\u0000')
                 };
-                await BroadcastMessage("clientId", Details);
+                details.Add(Details);
+            }
+            if (count > 0)
+            {
+                await BroadcastMessage("clientId", details);
             }
         }
         catch (Exception ex)

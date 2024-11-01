@@ -33,32 +33,41 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     }, [static_data.panel_data]);
 
     useEffect(() => {
-        if (static_data.panel_name === dynamic_data?.panel) {
-            try {
-                const elementName = dynamic_data?.element;
-                const elementData = jsonData.filter((item : BasicTypeComponent['data']) => {
-                    return elementName === item.backend.key;
-                })[0]
-                console.log(elementData)
-                console.log(dynamic_data?.value, typeof(dynamic_data?.value))
-                const newValue = Object.keys(elementData.backend.dbsimProps.enumMapping).find(key => 
-                    elementData.backend.dbsimProps.enumMapping[key as keyof typeof elementData.backend.dbsimProps.enumMapping] === Number(dynamic_data?.value)
-                );
-                //const newValue = dynamic_data?.value;
-                console.info(`Receive - Panel: ${dynamic_data?.panel}, Switch: ${elementName}, Value: ${newValue}`)
-                if (state) {
-                    if (elementName in state) {
-                        setState(prevState => prevState ? ({
-                            ...prevState,
-                            [elementName]: newValue
-                        }) : prevState);
-                        blinkingQueue.enqueue(elementName);
+        console.log(dynamic_data)
+        if (dynamic_data) {
+            for (let index = 0; index < dynamic_data.length; index++) {
+                if (static_data.panel_name === dynamic_data[index].panel) {
+                    try {
+                        const elementName: string = dynamic_data[index].element;
+                        const elementData = jsonData.filter((item: BasicTypeComponent['data']) => {
+                            return elementName === item.backend.key;
+                        })[0]
+                        console.log(elementData)
+                        console.log(dynamic_data[index].value, typeof (dynamic_data[index].value))
+                        const newValue = Object.keys(elementData.backend.dbsimProps.enumMapping).find(key =>
+                            elementData.backend.dbsimProps.enumMapping[key as keyof typeof elementData.backend.dbsimProps.enumMapping] === Number(dynamic_data[index].value)
+                        );
+                        //const newValue = dynamic_data?.value;
+                        console.info(`Receive - Panel: ${dynamic_data[index].panel}, Switch: ${elementName}, Value: ${newValue}`)
+                        if (state) {
+                            if (elementName in state) {
+                                setState(prevState => prevState ? ({
+                                    ...prevState,
+                                    [elementName]: newValue
+                                }) : prevState);
+                                if (dynamic_data[index].blinking === true) {
+                                    blinkingQueue.enqueue(elementName);
+                                }
+                            }
+                        }
+                    } catch (e) {
+                        console.log(e)
                     }
                 }
-            } catch (e) {
-                console.log(e)
             }
         }
+
+
         // eslint-disable-next-line
     }, [dynamic_data]);
 
@@ -103,8 +112,8 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
             case "stateN":
                 //  Cases that return the exect value that was pressed
                 // ! There is no difference if the user pressed long press or click
-                const nextValue = (Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0 ) ? clickedName : filteredName.backend.dbsimProps.enumMapping[clickedName]
-                return [ nextValue, filteredName.component.logger?.display || "true"];
+                const nextValue = (Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) ? clickedName : filteredName.backend.dbsimProps.enumMapping[clickedName]
+                return [nextValue, filteredName.component.logger?.display || "true"];
             case "knobInteger":
                 //  In this case - According to the value that was pressed, the logic will search the next value based on knob_props data
                 //  If the user pressed DECREASE or CCW the logic will provide the previous value 
@@ -157,7 +166,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                             }
                         }
                     }
-                } else if (clickedName === "INCREASE"  || clickedName === "CW") {
+                } else if (clickedName === "INCREASE" || clickedName === "CW") {
                     if (currentValue === "100") {
                         return ["100", filteredName.component.logger?.display || "true"];
                     }
@@ -176,7 +185,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                     return [clickedName, filteredName.component.logger?.display || "true"];
                 }
             default:
-                return [ clickedName, filteredName.component.logger?.display || "true"];
+                return [clickedName, filteredName.component.logger?.display || "true"];
         }
     }
 

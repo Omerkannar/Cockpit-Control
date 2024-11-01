@@ -1,8 +1,8 @@
 ﻿using System;
 
-public class Request : IWebSocketMessage
+public class Request
 {
-    public string Type { get; set; }
+    public string? Type { get; set; }
     //public string RequestedClient { get; set; }
     public MessageDetails Details { get; set; }
 }

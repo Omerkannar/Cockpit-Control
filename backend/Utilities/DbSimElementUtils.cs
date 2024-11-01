@@ -6,9 +6,7 @@ using System;
 namespace BackEndServices.Utilities
 {
     public class DbSimElementUtils
-    {
-        //private readonly ILogger<DbSimElementUtils> //_logger;
-
+    { 
         public DbSimElementUtils()
         {
             
@@ -27,7 +25,6 @@ namespace BackEndServices.Utilities
             }
             else
             {
-                //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
                 return false;
             }
         }
@@ -45,8 +42,7 @@ namespace BackEndServices.Utilities
             }
             else
             {
-               // //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
-                return 0;
+               return 0;
             }
         }
 
@@ -63,7 +59,6 @@ namespace BackEndServices.Utilities
             }
             else
             {
-               // //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
                 return 0;
             }
         }
@@ -81,7 +76,6 @@ namespace BackEndServices.Utilities
             }
             else
             {
-               // //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
                 return 0;
             }
         }
@@ -98,7 +92,6 @@ namespace BackEndServices.Utilities
             }
             else
             {
-                //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
                 return string.Empty;
             }
         }
@@ -111,7 +104,7 @@ namespace BackEndServices.Utilities
             succeeded &= OneSimLink.SetElementEngValueRequest(ref et, elementID, valueBytes, (uint)valueBytes.Length);
             if (!succeeded)
             {
-                //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
+                //
             }
         }
 
@@ -123,7 +116,7 @@ namespace BackEndServices.Utilities
             succeeded &= OneSimLink.SetElementEngValueRequest(ref et, elementID, valueBytes, (uint)valueBytes.Length);
             if (!succeeded)
             {
-                //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
+                //
             }
         }
 
@@ -135,7 +128,7 @@ namespace BackEndServices.Utilities
             succeeded &= OneSimLink.SetElementEngValueRequest(ref et, elementID, valueBytes, (uint)valueBytes.Length);
             if (!succeeded)
             {
-                //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
+                //
             }
         }
 
@@ -147,7 +140,7 @@ namespace BackEndServices.Utilities
             succeeded &= OneSimLink.SetElementEngValueRequest(ref et, elementID, valueBytes, (uint)valueBytes.Length);
             if (!succeeded)
             {
-                //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
+                //
             }
         }
 
@@ -159,31 +152,29 @@ namespace BackEndServices.Utilities
             succeeded &= OneSimLink.SetElementEngValueRequest(ref et, elementID, valueBytes, (uint)valueBytes.Length);
             if (!succeeded)
             {
-                //_logger.Log(LogLevel.Error, $"Error reading value of element {elementID}");
+                //
             }
         }
 
         public void FireEventOwnshipReposition(double nLon, double nLat)
         {
-            // ToDo
-            //_logger.Log(LogLevel.Debug, $"Fire Event Ownship Reposition Lon = {nLon}, Lat {nLat}\n");
+            //
         }
 
         public void FireEventOwnshipMalfunction(string sMalfunctionName, bool bActive)
         {
-            // ToDo 
-            //_logger.Log(LogLevel.Debug, $"Fire Event Ownship Malfunction Name = {sMalfunctionName}, Active {bActive}\n");
+            //
         }
 
         public void FireEvent(string sEventName, string sEventId, string sEventClass, int nEventEntityId, List<string> lstEventParams)
         {
             if (OneSimLink.IsEventsMetaDataInitialized() != true)
             {
-                //_logger.Log(LogLevel.Error, $"Error - Try Fire {0} Event, Simulation System Is Down... \n", sEventName);
+                //
                 return;
             }
 
-            //_logger.Log(LogLevel.Debug, $"Try Fire {0} Event ... \n", sEventName);
+            
 
             var nStationId      = OneSimLink.GetOwnStationId();
             var sStationNamePtr = OneSimLink.GetStationNameById(nStationId);
@@ -415,51 +406,6 @@ namespace BackEndServices.Utilities
             uint nTime = OneSimLink.GetSimTime();
             string sTime = ReadableTime((int)nTime);                   
             return sTime;
-        }
-
-        public string GetSimulationState()
-        {
-            string sSimState = "";
-            OneSimLink.SimStateType eSimState = OneSimLink.GetSimState();
-            switch (eSimState)
-            {
-                case OneSimLink.SimStateType.STATE_OFFLINE:
-                {
-                    sSimState = "OFFLINE";
-                    break;
-                }
-                case OneSimLink.SimStateType.STATE_RESET:
-                {
-                    sSimState = "RESET";
-                    break;
-                }
-                case OneSimLink.SimStateType.STATE_STOP:
-                {
-                    sSimState = "STOP";
-                    break;
-                }
-                case OneSimLink.SimStateType.STATE_FREEZE:
-                {
-                    sSimState = "FREEZE";
-                    break;
-                }
-                case OneSimLink.SimStateType.STATE_RUN:
-                {
-                    sSimState = "RUN";
-                    break;
-                }
-                case OneSimLink.SimStateType.STATE_INIT:
-                {
-                    sSimState = "INIT";
-                    break;
-                }
-                case OneSimLink.SimStateType.STATE_FIRST_INIT:
-                {
-                    sSimState = "FIRST_INIT";
-                    break;
-                }                
-            }
-            return sSimState;
         }
 
         public static string GetReadableTimeByMs(long ms)

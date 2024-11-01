@@ -4,6 +4,7 @@ export interface CMDSInterface {
      "JMR_SWITCH_IN":	string,
      "MWS_SWITCH_IN":	string,
      "KNOB_PRGM_IN":	string,
+     "JETT_SWITCH_IN":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
