@@ -38,9 +38,9 @@
                     "bottom": "OFF"
                 }
             },
-            "knob_props": {},
-            "analog_props": {},
-            "string_props": {},
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },
@@ -88,9 +88,9 @@
                     "bottom": "OFF"
                 }
             },
-            "knob_props": {},
-            "analog_props": {},
-            "string_props": {},
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },
@@ -138,9 +138,9 @@
                     "bottom": "OFF"
                 }
             },
-            "knob_props": {},
-            "analog_props": {},
-            "string_props": {},
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },
@@ -189,7 +189,7 @@
                     "left": "DECREASE"
                 }
             },
-            "knob_props": {
+            "knobProps": {
             "rotation": {
                 "BIT": -90,
                 "1": -55,
@@ -198,8 +198,8 @@
                 "4": 69
             }
         },
-            "analog_props": {},
-            "string_props": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },
@@ -247,9 +247,9 @@
                     "bottom": "OFF"
                 }
             },
-            "knob_props": {},
-            "analog_props": {},
-            "string_props": {},
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 using BackEndServices.Utilities;
 using BackEndServices.Interfaces;
 using OneSimLinkInterop;
-using System.IO;
-using System.Text.Json;
 using Newtonsoft.Json;
 using BackEndServices.Configuration;
 
@@ -25,12 +18,8 @@ namespace BackEndServices.Services
         private readonly DbSimElementUtils _DbSimElementUtils;
         private int _nTestWriteCounter = 1;
 
-
         private CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemPrimary = new CMapKeyToBindDBSimElementItem();
         private CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemSlave = new CMapKeyToBindDBSimElementItem();
-
-
-
 
         private uint[] global_elements = new uint[100];
 

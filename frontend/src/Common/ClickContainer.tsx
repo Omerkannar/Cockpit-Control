@@ -3,7 +3,8 @@ import React, { useState, useRef } from 'react';
 import styled, { keyframes, css } from "styled-components"
 import { BasicComponentContainer } from './Common.interface';
 
-const DEFAULT_BLINK_COLOR = 'rgba(0, 0, 0,0)'; // White
+const OPACITY: number = 0.2;
+const DEFAULT_BLINK_COLOR = 'rgba(0, 0, 0, 0)'; // White
 const REDUCE_FACTOR: number = 3; // = largeRectangle / smallRectangle
 
 // Function to validate if a string is a valid CSS color
@@ -33,8 +34,6 @@ const blink = (color: string) => keyframes`
   }
 `;
 
-
-
 // Styled component for the large square container
 const LargeSquare = styled.div<BasicComponentContainer>`
   position:               absolute;
@@ -55,7 +54,7 @@ const SmallSquare = styled.div<BasicComponentContainer>`
   position: absolute;
   width:                ${props => (props.scale * props.data.component.position.width * Number(props.data.component.clickProps?.clickBoundsWidthFactor) / 100 / REDUCE_FACTOR) | 0}px;
   height:               ${props => (props.scale * props.data.component.position.height * Number(props.data.component.clickProps?.clickBoundsHeightFactor) / 100 / REDUCE_FACTOR) | 0}px;
-  background-color:     ${props => (!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.center ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)")};
+  background-color:     ${props => (!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.center ? `rgba(0, 255, 0, ${OPACITY})` : `rgba(255, 0, 0, ${OPACITY})`)};
   cursor:               ${props => (props.data.component.clickProps?.mapping?.center ? "pointer" : "not-allowed")};
   top: 50%;
   left: 50%;
@@ -90,9 +89,11 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Duration to differentiate between short click and long press (ms)
-  const longPressThreshold = settings.components_behavior.analogLongPressDelay;
+  const longPressThreshold = settings.components_behavior.analogLongPressDelay || 200;
 
   const handleOnMouseDown = (event: any) => {
+    // const target = event.target as HTMLElement; // Cast to HTMLElement
+    // console.log(event.button)
     setIsLongPress(false);
     timeoutRef.current = setTimeout(() => {
       setIsLongPress(true);
@@ -160,13 +161,15 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.top ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.top ? `rgba(0, 255, 0, ${OPACITY})` : `rgba(255, 0, 0, ${OPACITY})`}
           cursor={props.data.component.clickProps?.mapping?.top ? true : false}
           clipPath={`polygon(
                     0 0, 
                     100% 0, 
-                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
-                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
+                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
+                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
           }
         />
@@ -189,13 +192,15 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.bottom ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.bottom ? `rgba(0, 255, 0, ${OPACITY})` : `rgba(255, 0, 0, ${OPACITY})`}
           cursor={props.data.component.clickProps?.mapping?.bottom ? true : false}
           clipPath={`polygon(
                     0 100%, 
                     100% 100%, 
-                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
-                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%
+                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
+                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
           }
         />
@@ -218,13 +223,15 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.left ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.left ? `rgba(0, 255, 0, ${OPACITY})` : `rgba(255, 0, 0, ${OPACITY})`}
           cursor={props.data.component.clickProps?.mapping?.left ? true : false}
           clipPath={`polygon(
                     0 0, 
                     0 100%, 
-                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
-                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
+                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
+                    ${(largeRectangleWidth / 2 - smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
           }
         />
@@ -247,13 +254,15 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
               handleOnMouseUp(e)
             }
           }}
-          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.right ? "rgba(0, 255, 0, 0.2)" : "rgba(255, 0, 0, 0.2)"}
+          zoneColor={!props.data.component.debugMode ? "" : props.data.component.clickProps?.mapping?.right ? `rgba(0, 255, 0, ${OPACITY})` : `rgba(255, 0, 0, ${OPACITY})`}
           cursor={props.data.component.clickProps?.mapping?.right ? true : false}
           clipPath={`polygon(
                     100% 0, 
                     100% 100%, 
-                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
-                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
+                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 + smallRectangleHeight / 2) / largeRectangleHeight * 100}%, 
+                    ${(largeRectangleWidth / 2 + smallRectangleWidth / 2) / largeRectangleWidth * 100}% 
+                    ${(largeRectangleHeight / 2 - smallRectangleHeight / 2) / largeRectangleHeight * 100}%
                   )`
           }
         />

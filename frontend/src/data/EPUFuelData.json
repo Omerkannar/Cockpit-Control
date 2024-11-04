@@ -18,7 +18,7 @@
             "clickBoundsHeightFactor": 1, 
             "clickBoundsWidthFactor": 1
         },
-        "analog_props": {
+        "analogProps": {
             "conversion": {
                 "0": -117,
                 "50": 0,

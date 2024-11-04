@@ -1,60 +1,87 @@
 [
     {
         "type": "analog_vertical_translation",
-        "backend_name": "LANDING_GEAR_HANDLE_IN",
-        "width": "100",
-        "height": "100",
-        "left": "1164",
-        "top": "750",
-        "offset_left": "0",
-        "offset_top": "0",
-        "imageProps": {
-            "imageDefault": "/LGControlPanel/Light_on.png"
-        },
-        "zero_rotation": "0",
-        "debugMode": false,
-        "isClickable": false,
-        "clickProps" : {
-            "clickBoundsHeightFactor": 1, 
-            "clickBoundsWidthFactor": 1
-        },
-        "analog_props": {
-            "conversion": {
-                "0": 0,
-                "100": -350
+        "backend": {
+            "key": "LANDING_GEAR_HANDLE_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.LGControl",
+                "elementName": "Data.LANDING_GEAR_HANDLE",
+                "elementType": "Float",
+                "enumMapping": {}
             }
         },
-        "logger": {
-            "display" : "false"
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "width": "100",
+                "height": "100",
+                "left": "1164",
+                "top": "750"
+            },
+            "imageProps": {
+                "imageDefault": "/LGControlPanel/Light_on.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 1
+            },
+            "knobProps": {},
+            "analogProps": {
+                "conversion": {
+                    "0": 0,
+                    "100": -350
+                }                
+            },
+            "stringProps": {},
+            "blinking": {},
+            "logger": {
+                "display": false
+            }
         }
-
     },
     {
         "type": "static",
-        "backend_name": "LANDING_GEAR_HANDLE_CLICK_IN",
-        "width": "100",
-        "height": "100",
-        "left": "1166",
-        "top": "580",
-        "offset_left": "0",
-        "offset_top": "0",
-        "imageProps": {
-            "imageDefault": "/Aux/Blank.png"
-        },
-        "debugMode": true,
-        "isClickable": true,
-        "clickProps" : {
-            "clickBoundsHeightFactor": 5.6, 
-            "clickBoundsWidthFactor": 1.5,
-            "mapping": {
-                "top" : "UP",
-                "bottom" : "DOWN"         
+        "backend": {
+            "key": "LANDING_GEAR_HANDLE_CLICK_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "",
+                "elementName": "",
+                "elementType": "",
+                "enumMapping": {}
             }
         },
-        "blinking": {
-
-            "color": "yellow"
+        "component": {
+            "debugMode": false,
+            "isClickable": true,
+            "position": {
+                "width": "100",
+                "height": "100",
+                "left": "1166",
+                "top": "580"
+            },
+            "imageProps": {
+                "imageDefault": "/Auxiliary/Blank.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 5.6,
+                "clickBoundsWidthFactor": 1.5,
+                "mapping": {
+                    "top": "INCREASE",
+                    "bottom": "DECREASE"
+                }           
+            },
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": false
+            }
         }
-
     }
 ]

@@ -21,7 +21,7 @@
                 "left" : "DECREASE"         
             }
         },
-        "analog_props": {
+        "analogProps": {
             "conversion": {
                 "0": -160,
                 "100": 160

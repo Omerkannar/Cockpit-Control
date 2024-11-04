@@ -1,4 +1,4 @@
-import blinkingMapping from '../data/BlinkingMapping.json'
+import blinkingMapping from '../data/mapping/BlinkingMapping.json'
 
 class BlinkingQueue {
 

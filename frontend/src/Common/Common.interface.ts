@@ -90,13 +90,14 @@ interface BasicData {
                 right?: string;
             };
         };
-        knob_props?: {
+        knobProps?: {
             rotation: any;
         };
-        analog_props?: {
+        analogProps?: {
             conversion: any;
+
         };
-        string_props?: {
+        stringProps?: {
             maxStringLength: number;
         };
         blinking?: {

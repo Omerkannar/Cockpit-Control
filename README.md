@@ -34,9 +34,9 @@
 |*component\clickProps\mapping\bottom*              |string 	| Defines the behavior of the bottom area|
 |*component\clickProps\mapping\left*                |string 	| Defines the behavior of the left area|
 |*component\clickProps\mapping\right*               |string 	| Defines the behavior of the right area|
-|*component\knob_props*                             |object 	|Defines the knob properties if type == "knobInteger"|
-|*component\analog_props*                           |object 	|Defines the component properties if type == "analog_rotation" \ "analog_vertical_translation" \ "analog_horizontal_translation"|
-|*component\string_props*                           |object 	|Defines the component properties if type == "string"|
+|*component\knobProps*                             |object 	|Defines the knob properties if type == "knobInteger"|
+|*component\analogProps*                           |object 	|Defines the component properties if type == "analog_rotation" \ "analog_vertical_translation" \ "analog_horizontal_translation"|
+|*component\stringProps*                           |object 	|Defines the component properties if type == "string"|
 |*component\blinking*                               |object 	|Defines the blinking properties when the component changes state|
 |*component\blinking\color*                         |string 	| Color of the blinking boundaries|
 |*component\logger*                                 |object 	|Defines the logger properties of the component|
@@ -85,9 +85,9 @@
                     "bottom": "OFF"
                 }
             },
-            "knob_props": {},
-            "analog_props": {},
-            "string_props": {},
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },
@@ -140,7 +140,7 @@
                     "left": "DECREASE"
                 }
             },
-            "knob_props": {
+            "knobProps": {
             "rotation": {
                 "BIT": -90,
                 "1": -55,
@@ -149,8 +149,8 @@
                 "4": 69
             }
         },
-            "analog_props": {},
-            "string_props": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },

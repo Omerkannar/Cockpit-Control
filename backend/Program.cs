@@ -1,22 +1,21 @@
-using System;
+//using System;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.WebSockets;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.IO;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+//using System.IO;
+//using System.Text.Json;
+//using System.Threading;
+//using System.Threading.Tasks;
 using BackEndServices.Configuration;
-
-//using BackEndServices.Models;
 using BackEndServices.Interfaces;
-using BackEndServices.Services;
-using Newtonsoft.Json.Serialization;
+//using BackEndServices.Services;
+//using Newtonsoft.Json.Serialization;
 using BackEndServices.Utilities;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 using OneSimLinkInterop;
+//using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 
 class Program
@@ -96,7 +95,6 @@ class Program
     {
         var numOfKeys = _listOfKeys.Count;
         List<MessageDetails> details = new List<MessageDetails>();
-        //var details = new MessageDetails[numOfKeys];
 
         foreach (var (key, index) in _listOfKeys.Select((value, i) => (value, i)))
         {
@@ -112,9 +110,6 @@ class Program
             };
 
             details.Add(Details);
-
-            // Wait for 25 ms before sending the next message
-            //await Task.Delay(25);
         }
 
         await UpdateClientOnStartup(clientId, details);
@@ -180,14 +175,12 @@ class Program
         {
             var request = System.Text.Json.JsonSerializer.Deserialize<Request>(message);
 
-
             switch (request?.Type)
             {
-
                 case "SET_NEW_VALUE":
                     Logger.LogDebug($"Received new message from App - Panel: {request.Details.Panel}, Element: {request.Details.Element}, Value: {request.Details.Value}");
-                    SetValue(request.Details.Element, int.Parse(request.Details.Value));
-                    await Task.Delay(1);
+                    await SetValue(request.Details.Element, request.Details.Value);
+                    // await Task.Delay(1);
                     break;
                     
                 default:
@@ -195,11 +188,9 @@ class Program
                     break;
             }
             return;
-            //await SendToClient(clientId, JsonSerializer.Serialize(response));
         }
         catch (System.Text.Json.JsonException)
         {
-            //await SendToClient(clientId, System.Text.Json.JsonSerializer.Serialize(new Response {Type = "ECHO_RESPONSE", Details = new MessageDetails { Panel = "Fuel", Element = "PUMP_1_IN", Value = "True" } }));
             return;
         }
     }
@@ -344,7 +335,6 @@ class Program
         while (true)
         {
             OneSimLink.ServerUpdate();
-            //OneSimLink.IsTriggeredForElementChanges(GetValueByKey("fgdh"));
             Thread.Sleep(100);
         }
     }
@@ -397,9 +387,12 @@ class Program
         {
             await CheckDBSIMChanges();
 
-            // Wait for a period (e.g., 10 seconds) before checking again
+            // Wait for a period (10msec) before checking again
             await Task.Delay(TimeSpan.FromSeconds(0.1));
+            
         }
+        await Task.Delay(TimeSpan.FromSeconds(0.1));
+
     }
 
     static async Task CheckDBSIMChanges()
@@ -415,7 +408,7 @@ class Program
                 var bindElement = _mapKeyToBindDBSimElementItemCurrent.Search(key);
                 if (val == null || val == bindElement.m_sValue) continue;
                 count++;
-                //Logger.LogDebug($"Panel: {bindElement.cConfig.BlockName.Split(".")[1]}, Element: {key}, Value: {val}");
+                Logger.LogDebug($"Panel: {bindElement.cConfig.BlockName.Split(".")[1]}, Element: {key}, Value: {val}");
                 bindElement.m_sValue = val;
                 var Details = new MessageDetails
                 {
@@ -437,12 +430,36 @@ class Program
     }
 
 
-    public static void SetValue(string key, int value)
+    static async Task SetValue(string key, string value)
     {
         CBindDBSimElementItem cBindDBSimElementItem = _mapKeyToBindDBSimElementItemCurrent.Search(key);
 
         if (cBindDBSimElementItem != null)
-            _DbSimElementUtils.SetIntValue((uint)cBindDBSimElementItem.m_nElementID, value); 
+            if (cBindDBSimElementItem.cConfig.ElementType.Equals("Integer"))
+            {
+                _DbSimElementUtils.SetIntValue((uint)cBindDBSimElementItem.m_nElementID, int.Parse(value));
+                await Task.Delay(100);
+            }
+            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Float"))
+            {
+                _DbSimElementUtils.SetFloatValue((uint)cBindDBSimElementItem.m_nElementID, float.Parse(value));
+                await Task.Delay(100);
+            }
+            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Double"))
+            {
+                _DbSimElementUtils.SetDoubleValue((uint)cBindDBSimElementItem.m_nElementID, double.Parse(value));
+                await Task.Delay(100);
+            }
+            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Boolean"))
+            {
+                _DbSimElementUtils.SetBoolValue((uint)cBindDBSimElementItem.m_nElementID, Boolean.Parse(value));
+                await Task.Delay(100);
+            }
+            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("String"))
+            {
+                _DbSimElementUtils.SetStringValue((uint)cBindDBSimElementItem.m_nElementID, value);
+                await Task.Delay(100);
+            }
     }
 
 }

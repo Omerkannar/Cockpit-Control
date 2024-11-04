@@ -18,6 +18,16 @@
         "panel_scale": 100,
         "panel_top": 250,
         "panel_left": 250
+    },
+    {
+        "panel_name" : "LGControl",
+        "panel_container": "L1",
+        "panel_url" : "./LGControlPanel/LG_Control.png",
+        "panel_data": "LGControlData",
+        "panel_resources" : "/LGControlPanel/",
+        "panel_scale": 100,
+        "panel_top": 32,
+        "panel_left": 115
     }
 ]
 

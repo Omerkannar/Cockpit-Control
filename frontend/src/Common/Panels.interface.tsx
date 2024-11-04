@@ -17,9 +17,18 @@ export interface IFFInterface {
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
 
+export interface LGControlInterface {
+  input: {
+     "LANDING_GEAR_HANDLE_IN":	string,
+     "LANDING_GEAR_HANDLE_CLICK_IN":	string,
+  }
+  handleSendRequest?: (switchName: string, switchValue: string) => void;
+}
+
 export type InterfaceMap = {
      "CMDS":	CMDSInterface;
      "IFF":	IFFInterface;
+     "LGControl":	LGControlInterface;
 }
 
 export type InterfaceKey = keyof InterfaceMap;

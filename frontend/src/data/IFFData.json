@@ -39,7 +39,7 @@
                     "left": "DECREASE"
                 }
             },
-            "knob_props": {
+            "knobProps": {
             "rotation": {
                 "OFF": -112,
                 "STBY": -70,
@@ -48,8 +48,8 @@
                 "EMER": 18
             }
         },
-            "analog_props": {},
-            "string_props": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },
@@ -90,7 +90,7 @@
                     "left": "DECREASE"
                 }
             },
-            "knob_props": {
+            "knobProps": {
             "rotation": {
                 "OFF": -112,
                 "STBY": -70,
@@ -99,8 +99,8 @@
                 "EMER": 18
             }
         },
-            "analog_props": {},
-            "string_props": {},
+            "analogProps": {},
+            "stringProps": {},
             "blinking": {
                 "color": "yellow"
             },

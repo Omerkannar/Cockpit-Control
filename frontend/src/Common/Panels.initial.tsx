@@ -13,8 +13,14 @@ export const IFFInitialValues: Interface.IFFInterface['input'] = {
      "MODE3_XY_SELECTOR_IN":	"",
 }
 
+export const LGControlInitialValues: Interface.LGControlInterface['input'] = {
+     "LANDING_GEAR_HANDLE_IN":	"",
+     "LANDING_GEAR_HANDLE_CLICK_IN":	"",
+}
+
 export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.InterfaceMap[K]['input'] } = {
 	"CMDS":	CMDSInitialValues,
 	"IFF":	IFFInitialValues,
+	"LGControl":	LGControlInitialValues,
 }
 

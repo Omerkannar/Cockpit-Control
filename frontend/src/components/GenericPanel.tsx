@@ -7,6 +7,9 @@ import useDynamicState from '../useDynamicState';
 import { InterfaceMap } from '../Common/Panels.interface'
 import { Panel } from '../Common/Common.styles'
 import ClickContainer from '../Common/ClickContainer';
+import clickingMapping from '../data/mapping/ClickingMapping.json'
+import { getParsedCommandLineOfConfigFile } from 'typescript';
+
 
 const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_data, handleSendRequest }) => {
 
@@ -16,6 +19,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [jsonData, setJsonData] = useState<any>(null);
     const [state, setState] = useDynamicState(static_data.panel_name as keyof InterfaceMap);
+    const [lastValueSent, setLastValueSent] = useState<string>("")
 
 
     useEffect(() => {
@@ -39,22 +43,28 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                 if (static_data.panel_name === dynamic_data[index].panel) {
                     try {
                         const elementName: string = dynamic_data[index].element;
-                        const elementData = jsonData.filter((item: BasicTypeComponent['data']) => {
+                        const elementData = jsonData.find((item: BasicTypeComponent['data']) => {
                             return elementName === item.backend.key;
-                        })[0]
+                        })
                         console.log(elementData)
                         console.log(dynamic_data[index].value, typeof (dynamic_data[index].value))
-                        const newValue = Object.keys(elementData.backend.dbsimProps.enumMapping).find(key =>
-                            elementData.backend.dbsimProps.enumMapping[key as keyof typeof elementData.backend.dbsimProps.enumMapping] === Number(dynamic_data[index].value)
-                        );
-                        //const newValue = dynamic_data?.value;
+                        let newValue: string | undefined = "";
+                        if (Object.keys(elementData.backend.dbsimProps.enumMapping).length === 0) {
+                            console.log(`No dbsim enum mapping found, new value is ${dynamic_data[index].value}`)
+                            newValue = dynamic_data[index].value
+                        } else {
+                            newValue = Object.keys(elementData.backend.dbsimProps.enumMapping).find(key =>
+                                elementData.backend.dbsimProps.enumMapping[key as keyof typeof elementData.backend.dbsimProps.enumMapping] === Number(dynamic_data[index].value)
+                            );
+                        }
                         console.info(`Receive - Panel: ${dynamic_data[index].panel}, Switch: ${elementName}, Value: ${newValue}`)
+                        console.log(state, elementName in state)
                         if (state) {
                             if (elementName in state) {
-                                setState(prevState => prevState ? ({
+                                setState(prevState => ({
                                     ...prevState,
                                     [elementName]: newValue
-                                }) : prevState);
+                                }));
                                 if (dynamic_data[index].blinking === true) {
                                     blinkingQueue.enqueue(elementName);
                                 }
@@ -66,8 +76,6 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                 }
             }
         }
-
-
         // eslint-disable-next-line
     }, [dynamic_data]);
 
@@ -83,21 +91,47 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
 
 
     const handleOnClick = (componentName: string, clickedName: string) => {
-        const [newValueToSend, showOnLogger]: [string, string] = nextValueToSend(componentName, clickedName, "click");
-        if (showOnLogger === "true") {
-            console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+
+        let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
+        const clickMap = clickingMapping.filter((obj: any) => {
+            return componentName === obj.key;
+        })
+
+        if (clickMap.length > 0) {
+            [newValueToSend, showOnLogger] = nextValueToSend(clickMap[0].source, clickedName, "click");
+            if (showOnLogger === "true") {
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap[0].source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+            }
+            handleSendRequest(static_data?.panel_name, clickMap[0].source, newValueToSend);
+        } else {
+            [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "click");
+            if (showOnLogger === "true") {
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+            }
+            handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
         }
-        handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
     }
 
     const handleOnLongPress = (componentName: string, clickedName: string) => {
 
-        console.log(`On Long press ${componentName} - ${clickedName}`)
-        const [newValueToSend, showOnLogger]: [string, string] = nextValueToSend(componentName, clickedName, "LongPress");
-        if (showOnLogger === "true") {
-            console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+        let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
+        const clickMap = clickingMapping.filter((obj: any) => {
+            return componentName === obj.key;
+        })
+
+        if (clickMap.length > 0) {
+            [newValueToSend, showOnLogger] = nextValueToSend(clickMap[0].source, clickedName, "LongPress");
+            if (showOnLogger === "true") {
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap[0].source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+            }
+            handleSendRequest(static_data?.panel_name, clickMap[0].source, newValueToSend);
+        } else {
+            [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "LongPress");
+            if (showOnLogger === "true") {
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+            }
+            handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
         }
-        handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
     }
 
     const nextValueToSend = (componentName: string, clickedName: string, pressType: ClickType): [string, string] => {
@@ -106,7 +140,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         })
         // // console.log(componentName, clickedName, filteredName);
         const currentValue = getValue(componentName);
-        // // console.log(currentValue, typeof (currentValue))
+        console.log(currentValue, typeof (currentValue))
         switch (filteredName.type) {
             case "static":
             case "stateN":
@@ -115,18 +149,18 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                 const nextValue = (Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) ? clickedName : filteredName.backend.dbsimProps.enumMapping[clickedName]
                 return [nextValue, filteredName.component.logger?.display || "true"];
             case "knobInteger":
-                //  In this case - According to the value that was pressed, the logic will search the next value based on knob_props data
+                //  In this case - According to the value that was pressed, the logic will search the next value based on knobProps data
                 //  If the user pressed DECREASE or CCW the logic will provide the previous value 
                 //  If the user pressed INCREASE or CW the logic will provide the next value 
                 // ! There is no difference if the user pressed long press or click
                 if (currentValue === "") {
                     return ["undefined", "false"];
                 }
-                // In this case we have knob_props properties
+                // In this case we have knobProps properties
                 // Sort the available knob rotation according to their values
-                const keys = Object.keys(filteredName.component.knob_props.rotation).sort((a, b) => {
-                    const valueA = filteredName.component.knob_props.rotation[a];
-                    const valueB = filteredName.component.knob_props.rotation[b];
+                const keys = Object.keys(filteredName.component.knobProps.rotation).sort((a, b) => {
+                    const valueA = filteredName.component.knobProps.rotation[a];
+                    const valueB = filteredName.component.knobProps.rotation[b];
                     return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
                 })
                 console.log(keys)
@@ -157,6 +191,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                     }
                     else {
                         if (pressType === 'click') {
+                            console.log(`click on ${filteredName.component}`)
                             return [String(Number(currentValue) - 1), filteredName.logger?.display || "true"];
                         } else { // 'Long Press'
                             if (Number(currentValue) < settings.components_behavior.analogLongPressStep) {
