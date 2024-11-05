@@ -140,7 +140,7 @@ class Program
                     string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
                     //Logger.LogDebug($"Received new message from {clientId}: \n {message}");
 
-                    await ProcessMessage(clientId, message);
+                    ProcessMessage(clientId, message);
                 }
                 else if (result.MessageType == WebSocketMessageType.Close)
                 {
@@ -169,7 +169,7 @@ class Program
         }
     }
 
-    static async Task ProcessMessage(string clientId, string message)
+    static public void ProcessMessage(string clientId, string message)
     {
         try
         {
@@ -179,8 +179,8 @@ class Program
             {
                 case "SET_NEW_VALUE":
                     Logger.LogDebug($"Received new message from App - Panel: {request.Details.Panel}, Element: {request.Details.Element}, Value: {request.Details.Value}");
-                    await SetValue(request.Details.Element, request.Details.Value);
-                    // await Task.Delay(1);
+                    SetValue(request.Details.Element, request.Details.Value);
+                    //await Task.Delay(1);
                     break;
                     
                 default:
@@ -430,7 +430,7 @@ class Program
     }
 
 
-    static async Task SetValue(string key, string value)
+    public static void SetValue(string key, string value)
     {
         CBindDBSimElementItem cBindDBSimElementItem = _mapKeyToBindDBSimElementItemCurrent.Search(key);
 
@@ -438,27 +438,27 @@ class Program
             if (cBindDBSimElementItem.cConfig.ElementType.Equals("Integer"))
             {
                 _DbSimElementUtils.SetIntValue((uint)cBindDBSimElementItem.m_nElementID, int.Parse(value));
-                await Task.Delay(100);
+                //await Task.Delay(100);
             }
             else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Float"))
             {
                 _DbSimElementUtils.SetFloatValue((uint)cBindDBSimElementItem.m_nElementID, float.Parse(value));
-                await Task.Delay(100);
+                //await Task.Delay(100);
             }
             else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Double"))
             {
                 _DbSimElementUtils.SetDoubleValue((uint)cBindDBSimElementItem.m_nElementID, double.Parse(value));
-                await Task.Delay(100);
+                //await Task.Delay(100);
             }
             else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Boolean"))
             {
                 _DbSimElementUtils.SetBoolValue((uint)cBindDBSimElementItem.m_nElementID, Boolean.Parse(value));
-                await Task.Delay(100);
+                //await Task.Delay(100);
             }
             else if (cBindDBSimElementItem.cConfig.ElementType.Equals("String"))
             {
                 _DbSimElementUtils.SetStringValue((uint)cBindDBSimElementItem.m_nElementID, value);
-                await Task.Delay(100);
+                //await Task.Delay(100);
             }
     }
 

@@ -8,8 +8,6 @@ import { InterfaceMap } from '../Common/Panels.interface'
 import { Panel } from '../Common/Common.styles'
 import ClickContainer from '../Common/ClickContainer';
 import clickingMapping from '../data/mapping/ClickingMapping.json'
-import { getParsedCommandLineOfConfigFile } from 'typescript';
-
 
 const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_data, handleSendRequest }) => {
 
@@ -19,7 +17,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [jsonData, setJsonData] = useState<any>(null);
     const [state, setState] = useDynamicState(static_data.panel_name as keyof InterfaceMap);
-    const [lastValueSent, setLastValueSent] = useState<string>("")
+    //const [lastValueSent, setLastValueSent] = useState<string>("")
 
 
     useEffect(() => {
@@ -93,16 +91,16 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const handleOnClick = (componentName: string, clickedName: string) => {
 
         let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
-        const clickMap = clickingMapping.filter((obj: any) => {
+        const clickMap: any = clickingMapping.find((obj: any) => {
             return componentName === obj.key;
         })
 
-        if (clickMap.length > 0) {
-            [newValueToSend, showOnLogger] = nextValueToSend(clickMap[0].source, clickedName, "click");
+        if (clickMap && clickMap.length > 0) {
+            [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "click");
             if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap[0].source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
             }
-            handleSendRequest(static_data?.panel_name, clickMap[0].source, newValueToSend);
+            handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
             [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "click");
             if (showOnLogger === "true") {
@@ -115,16 +113,16 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const handleOnLongPress = (componentName: string, clickedName: string) => {
 
         let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
-        const clickMap = clickingMapping.filter((obj: any) => {
+        const clickMap: any = clickingMapping.find((obj: any) => {
             return componentName === obj.key;
         })
 
         if (clickMap.length > 0) {
-            [newValueToSend, showOnLogger] = nextValueToSend(clickMap[0].source, clickedName, "LongPress");
+            [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "LongPress");
             if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap[0].source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
             }
-            handleSendRequest(static_data?.panel_name, clickMap[0].source, newValueToSend);
+            handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
             [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "LongPress");
             if (showOnLogger === "true") {
