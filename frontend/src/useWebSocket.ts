@@ -11,10 +11,10 @@ export const useWebSocket = (url: string) => {
         const socket = new WebSocket(url);
         
         socket.onmessage = (event) => {
-            console.log(event.data)
+            // // console.log(event.data)
             try {
                 const data = JSON.parse(event.data)
-                console.log(data['Details'], data['Details'].length)
+                // // console.log(data['Details'], data['Details'].length)
                 const incomingMessages = data['Details'].map((detail: any) => ({
                     panel: detail.Panel,
                     element: detail.Element,

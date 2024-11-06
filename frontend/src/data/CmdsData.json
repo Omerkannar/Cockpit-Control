@@ -190,14 +190,14 @@
                 }
             },
             "knobProps": {
-            "rotation": {
-                "BIT": -90,
-                "1": -55,
-                "2": -15,
-                "3": 25,
-                "4": 69
-            }
-        },
+                "rotation": {
+                    "BIT": -90,
+                    "1": -55,
+                    "2": -15,
+                    "3": 25,
+                    "4": 69
+                }
+            },
             "analogProps": {},
             "stringProps": {},
             "blinking": {
@@ -232,12 +232,12 @@
                 "left": "330",
                 "top": "440"
             },
-                "imageProps": {
-                    "imageDefault": "/CMDSPanel/Switch1_Down.png",
-                    "additionalImageData": {
-                        "ON": "/CMDSPanel/Switch1_Up.png",
-                        "OFF": "/CMDSPanel/Switch1_Down.png"
-                    }
+            "imageProps": {
+                "imageDefault": "/CMDSPanel/Switch1_Down.png",
+                "additionalImageData": {
+                    "ON": "/CMDSPanel/Switch1_Up.png",
+                    "OFF": "/CMDSPanel/Switch1_Down.png"
+                }
             },
             "clickProps": {
                 "clickBoundsHeightFactor": 2,

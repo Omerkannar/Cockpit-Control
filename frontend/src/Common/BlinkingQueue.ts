@@ -6,12 +6,12 @@ class BlinkingQueue {
   private timeouts: NodeJS.Timeout[] = [];
 
   enqueue(item: string): void {
-    const blinkMap : any = blinkingMapping.find((obj: any) => {
+    const blinkMap : any = blinkingMapping.filter((obj: any) => {
       return obj.key === item
     })
-    if (blinkMap && blinkMap.length > 0) {
-      this.queue.push(blinkMap.source);  
-      console.log(`Enqueued: ${blinkMap.source}`);
+    if (blinkMap.length > 0) {
+      this.queue.push(blinkMap[0].source);  
+      console.log(`Enqueued: ${blinkMap[0].source}`);
     } else {
       this.queue.push(item);
       console.log(`Enqueued: ${item}`);
@@ -34,11 +34,11 @@ class BlinkingQueue {
   }
 
   search(target: string): boolean {
-    const blinkMap : any = blinkingMapping.find((obj: any) => {
+    const blinkMap : any = blinkingMapping.filter((obj: any) => {
       return obj.key === target
     })
-    if (blinkMap && blinkMap.length > 0) {
-      return this.queue.includes(blinkMap.source);  
+    if (blinkMap.length > 0) {
+      return this.queue.includes(blinkMap[0].source);  
     } else {
       return this.queue.includes(target);
     }

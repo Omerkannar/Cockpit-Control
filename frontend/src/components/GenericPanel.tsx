@@ -35,17 +35,17 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     }, [static_data.panel_data]);
 
     useEffect(() => {
-        console.log(dynamic_data)
+        // //console.log(dynamic_data)
         if (dynamic_data) {
             for (let index = 0; index < dynamic_data.length; index++) {
                 if (static_data.panel_name === dynamic_data[index].panel) {
                     try {
                         const elementName: string = dynamic_data[index].element;
-                        const elementData = jsonData.find((item: BasicTypeComponent['data']) => {
+                        const elementData = jsonData.filter((item: BasicTypeComponent['data']) => {
                             return elementName === item.backend.key;
-                        })
-                        console.log(elementData)
-                        console.log(dynamic_data[index].value, typeof (dynamic_data[index].value))
+                        })[0]
+                        // // console.log(elementData)
+                        // // console.log(dynamic_data[index].value, typeof (dynamic_data[index].value))
                         let newValue: string | undefined = "";
                         if (Object.keys(elementData.backend.dbsimProps.enumMapping).length === 0) {
                             console.log(`No dbsim enum mapping found, new value is ${dynamic_data[index].value}`)
@@ -56,13 +56,14 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                             );
                         }
                         console.info(`Receive - Panel: ${dynamic_data[index].panel}, Switch: ${elementName}, Value: ${newValue}`)
-                        console.log(state, elementName in state)
+                        // // console.log(state, elementName in state)
                         if (state) {
                             if (elementName in state) {
                                 setState(prevState => ({
                                     ...prevState,
                                     [elementName]: newValue
                                 }));
+                                console.log(dynamic_data[index].blinking)
                                 if (dynamic_data[index].blinking === true) {
                                     blinkingQueue.enqueue(elementName);
                                 }
@@ -91,20 +92,20 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const handleOnClick = (componentName: string, clickedName: string) => {
 
         let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
-        const clickMap: any = clickingMapping.find((obj: any) => {
+        const clickMap: any = clickingMapping.filter((obj: any) => {
             return componentName === obj.key;
-        })
+        })[0]
 
-        if (clickMap && clickMap.length > 0) {
+        if (clickMap) {
             [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "click");
             if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source}, Value: ${newValueToSend}`)
             }
             handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
             [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "click");
             if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
             }
             handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
         }
@@ -113,32 +114,32 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const handleOnLongPress = (componentName: string, clickedName: string) => {
 
         let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
-        const clickMap: any = clickingMapping.find((obj: any) => {
+        const clickMap: any = clickingMapping.filter((obj: any) => {
             return componentName === obj.key;
-        })
+        })[0]
 
-        if (clickMap.length > 0) {
+        if (clickMap) {
             [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "LongPress");
             if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source}, Value: ${newValueToSend}`)
             }
             handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
             [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "LongPress");
             if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName.replace("_IN", "_OUT")}, Value: ${newValueToSend}`)
+                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
             }
             handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
         }
     }
 
     const nextValueToSend = (componentName: string, clickedName: string, pressType: ClickType): [string, string] => {
-        const filteredName = jsonData?.find((item: any) => {
+        const filteredName = jsonData?.filter((item: any) => {
             return item.backend.key === componentName
-        })
+        })[0]
         // // console.log(componentName, clickedName, filteredName);
         const currentValue = getValue(componentName);
-        console.log(currentValue, typeof (currentValue))
+        //console.log(currentValue, typeof (currentValue))
         switch (filteredName.type) {
             case "static":
             case "stateN":
