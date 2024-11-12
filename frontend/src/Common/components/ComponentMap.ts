@@ -1,6 +1,10 @@
 import React from 'react';
 import { GenericTypeComponent } from '../Common.interface'
-import { ComponentRotationAnalog, ComponentVerticalTranslationAnalog, ComponentHorizontalTranslationAnalog} from './AnalogComponents'
+import { ComponentRotationAnalog, 
+    ComponentVerticalTranslationAnalog, 
+    ComponentHorizontalTranslationAnalog,
+    ComponentVerticalTranslationCyclicAnalog,
+    ComponentHorizontalTranslationCyclicAnalog} from './AnalogComponents'
 import { ComponentIntegerKnob, ComponentMultiStateSwitch } from './IntegerComponents';
 import { ComponentError } from './ErrorComponent';
 import { ComponentStringNumber } from './StringComponents';
@@ -10,11 +14,12 @@ type ComponentMap = {
     [key: string]: React.ComponentType<GenericTypeComponent>;
 };
 
-
 const componentMap: ComponentMap = {
     "AnalogRotation": ComponentRotationAnalog,
     "AnalogVerticalTranslation": ComponentVerticalTranslationAnalog,
     "AnalogHorizontalTranslation": ComponentHorizontalTranslationAnalog,
+    "AnalogVerticalCyclicTranslation": ComponentVerticalTranslationCyclicAnalog,
+    "AnalogHorizontalCyclicTranslation": ComponentHorizontalTranslationCyclicAnalog,
     "IntegerKnob": ComponentIntegerKnob,
     "MultiStateSwitch": ComponentMultiStateSwitch,
     "StringNumber" : ComponentStringNumber,

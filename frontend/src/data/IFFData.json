@@ -40,14 +40,14 @@
                 }
             },
             "knobProps": {
-            "rotation": {
-                "OFF": -112,
-                "STBY": -70,
-                "LOW": -24,
-                "NORM": -5,
-                "EMER": 18
-            }
-        },
+                "rotation": {
+                    "OFF": -112,
+                    "STBY": -70,
+                    "LOW": -24,
+                    "NORM": -5,
+                    "EMER": 18
+                }
+            },
             "analogProps": {},
             "stringProps": {},
             "blinking": {
@@ -86,19 +86,238 @@
                 "clickBoundsHeightFactor": 1,
                 "clickBoundsWidthFactor": 2,
                 "mapping": {
-                    "right": "INCREASE",
-                    "left": "DECREASE"
+                    "right": "X",
+                    "left": "Y"
                 }
             },
-            "knobProps": {
-            "rotation": {
-                "OFF": -112,
-                "STBY": -70,
-                "LOW": -24,
-                "NORM": -5,
-                "EMER": 18
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "stateN",
+        "backend": {
+            "key": "MODE3_TACAN_BAND_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.IFF",
+                "elementName": "Data.TACAN_BAND",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "X": 0,
+                    "Y": 1
+                }
             }
         },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "width": "55",
+                "height": "39",
+                "left": "384",
+                "top": "343"
+            },
+            "imageProps": {
+                "imageDefault": "/IFFPanel/Blank.png",
+                "additionalImageData": {
+                    "X": "/IFFPanel/NumberX.png",
+                    "Y": "/IFFPanel/NumberY.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 1
+            },
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "stateN",
+        "backend": {
+            "key": "MODE3_TACAN_FREQ_ONES_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.IFF",
+                "elementName": "Data.TACAN_FREQ_ONES",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "0": 0,
+                    "1": 1,
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9
+                }
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "width": "55",
+                "height": "39",
+                "left": "384",
+                "top": "406"
+            },
+            "imageProps": {
+            "imageDefault": "/IFFPanel/Blank.png",
+            "additionalImageData": {
+                "None": "/IFFPanel/Blank.png",
+                "0": "/IFFPanel/Number0.png",
+                "1": "/IFFPanel/Number1.png",
+                "2": "/IFFPanel/Number2.png",
+                "3": "/IFFPanel/Number3.png",
+                "4": "/IFFPanel/Number4.png",
+                "5": "/IFFPanel/Number5.png",
+                "6": "/IFFPanel/Number6.png",
+                "7": "/IFFPanel/Number7.png",
+                "8": "/IFFPanel/Number8.png",
+                "9": "/IFFPanel/Number9.png"
+            }
+        },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 1
+            },
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "stateN",
+        "backend": {
+            "key": "MODE1_TACAN_FREQ_TENS_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.IFF",
+                "elementName": "Data.TACAN_FREQ_TENS",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "0": 0,
+                    "1": 1,
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9
+                }
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "width": "55",
+                "height": "39",
+                "left": "384",
+                "top": "473"
+            },
+            "imageProps": {
+            "imageDefault": "/IFFPanel/Blank.png",
+            "additionalImageData": {
+                "None": "/IFFPanel/Blank.png",
+                "0": "/IFFPanel/Number0.png",
+                "1": "/IFFPanel/Number1.png",
+                "2": "/IFFPanel/Number2.png",
+                "3": "/IFFPanel/Number3.png",
+                "4": "/IFFPanel/Number4.png",
+                "5": "/IFFPanel/Number5.png",
+                "6": "/IFFPanel/Number6.png",
+                "7": "/IFFPanel/Number7.png",
+                "8": "/IFFPanel/Number8.png",
+                "9": "/IFFPanel/Number9.png"
+            }
+        },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 1
+            },
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "stateN",
+        "backend": {
+            "key": "MODE1_TACAN_FREQ_HUNDREDS_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.IFF",
+                "elementName": "Data.TACAN_FREQ_HUNDREDS",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "0": 0,
+                    "1": 1,
+                    "2": 2,
+                    "3": 3,
+                    "4": 4,
+                    "5": 5,
+                    "6": 6,
+                    "7": 7,
+                    "8": 8,
+                    "9": 9
+                }
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "width": "55",
+                "height": "39",
+                "left": "385",
+                "top": "538"
+            },
+            "imageProps": {
+            "imageDefault": "/IFFPanel/Blank.png",
+            "additionalImageData": {
+                "None": "/IFFPanel/Blank.png",
+                "0": "/IFFPanel/Number0.png",
+                "1": "/IFFPanel/Number1.png"
+            }
+        },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 1
+            },
+            "knobProps": {},
             "analogProps": {},
             "stringProps": {},
             "blinking": {

@@ -2,5 +2,9 @@
     {
         "key" : "LANDING_GEAR_HANDLE_CLICK_IN",
         "source" : "LANDING_GEAR_HANDLE_IN"
+    },
+    {
+        "key" : "MODE3_XY_SELECTOR_IN",
+        "source" : "MODE3_TACAN_BAND_IN"
     }
 ]

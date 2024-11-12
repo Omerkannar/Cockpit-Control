@@ -1,5 +1,6 @@
 
-type Type = "static" | "stateN" | "knobInteger" | "analog_rotation" | "analog_vertical_translation" | "analog_horizontal_translation" | "string" | "number";
+type Type = "static" | "stateN" | "knobInteger" | "analog_rotation" | "analog_vertical_translation" |
+ "analog_horizontal_translation" | "analog_horizontal_translation_cyclic" | "analog_vertical_translation_cyclic" |"string" | "number";
 type State = boolean | number | string;
 export type ClickType = "click" | "LongPress";
 type ElementType = "Double" | "Float" | "Integer" | "Boolean" | "String";

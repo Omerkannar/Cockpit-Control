@@ -25,18 +25,18 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
             if (data.component.stringProps?.maxStringLength) {
                 for (let digit = 0; digit < data.component.stringProps.maxStringLength; digit++) {
                     const SelectedComponent = getComponentById("StringNumber") as React.ComponentType<GenericTypeComponent>;
-                    elements.push(<SelectedComponent 
-                        scale={scale} 
-                        state={readDigits(state.toString(), data.component.stringProps?.maxStringLength)[digit]} 
-                        data={data} 
+                    elements.push(<SelectedComponent
+                        scale={scale}
+                        state={readDigits(state.toString(), data.component.stringProps?.maxStringLength)[digit]}
+                        data={data}
                         digitOffset={data.component.position.width * digit} />)
                 }
                 return (
-                    <ComponentStringContainer 
-                    container_width={data.component.position.width * (data.component.stringProps?.maxStringLength || 0)} 
-                    container_height={data.component.position.height} 
-                    container_left={data.component.position.left} 
-                    container_top={data.component.position.top}>
+                    <ComponentStringContainer
+                        container_width={data.component.position.width * (data.component.stringProps?.maxStringLength || 0)}
+                        container_height={data.component.position.height}
+                        container_left={data.component.position.left}
+                        container_top={data.component.position.top}>
                         {elements.length > 0 && elements}
                     </ComponentStringContainer>
                 )
@@ -58,6 +58,11 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
         case "analog_horizontal_translation":
             {
                 const SelectedComponent = getComponentById("AnalogHorizontalTranslation") as React.ComponentType<GenericTypeComponent>;
+                return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analogProps, Number(state))} data={data} />
+            }
+        case "analog_horizontal_translation_cyclic":
+            {
+                const SelectedComponent = getComponentById("AnalogHorizontalCyclicTranslation") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analogProps, Number(state))} data={data} />
             }
         case "static":

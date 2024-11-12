@@ -44,7 +44,7 @@ const LargeSquare = styled.div<BasicComponentContainer>`
   height:                 ${props => (props.scale * props.data.component.position.height * Number(props.data.component.clickProps?.clickBoundsHeightFactor) / 100) | 0}px;
   background-color: rgba(255,255,255,0);
   border: 2px solid transparent;
-  ${props => (props.isBlinking && props.data.type !== "number" &&props.data.component.blinking?.color) && css`
+  ${props => (props.isBlinking && props.data.type !== "number" && props.data.component.blinking?.color) && css`
      animation: ${blink(props.data.component.blinking.color)} 0.8s infinite;
    `}
 `;

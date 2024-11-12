@@ -243,7 +243,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
             {jsonData?.map((item: GenericTypeComponent['data']) =>
                 <div>
                     {ComponentWrapper(defaultScale, getValue(item.backend.key), item)}
-                    <ClickContainer
+                     < ClickContainer
                         scale={defaultScale}
                         data={item}
                         isBlinking={blinkingQueue.search(item.backend.key)}

@@ -13,6 +13,10 @@ export interface IFFInterface {
   input: {
      "IFF_MASTER_KNOB_IN":	string,
      "MODE3_XY_SELECTOR_IN":	string,
+     "MODE3_TACAN_BAND_IN":	string,
+     "MODE3_TACAN_FREQ_ONES_IN":	string,
+     "MODE1_TACAN_FREQ_TENS_IN":	string,
+     "MODE1_TACAN_FREQ_HUNDREDS_IN":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
@@ -21,6 +25,9 @@ export interface LGControlInterface {
   input: {
      "LANDING_GEAR_HANDLE_IN":	string,
      "LANDING_GEAR_HANDLE_CLICK_IN":	string,
+     "FRONT_WHEEL_IN":	string,
+     "RIGHT_WHEEL_IN":	string,
+     "LEFT_WHEEL_IN":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }

@@ -168,7 +168,7 @@
             }
         },
         "component": {
-            "debugMode": false,
+            "debugMode": true,
             "isClickable": true,
             "position": {
                 "width": "78",
@@ -224,7 +224,7 @@
             }
         },
         "component": {
-            "debugMode": false,
+            "debugMode": true,
             "isClickable": true,
             "position": {
                 "width": "90",

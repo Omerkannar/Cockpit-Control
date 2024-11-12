@@ -1,5 +1,4 @@
 import json
-from typing import Any
 
 base_folder = "../frontend/src/data/"
 # Map JSON types to TypeScript types
@@ -20,15 +19,22 @@ initial_values_str = "import * as Interface from './Panels.interface'\n\n"
 panel_name = ""
 
 for panel in panels_data:
-    panel_name = ""
     panel_name = panel["panel_name"]
     panel_data_file = panel["panel_data"]
     interface_str += "export interface " + panel_name + "Interface {\n"
     interface_map_str += f"     \"{panel_name}\":\t{panel_name}Interface;\n"
     initial_values_str += f"export const {panel_name}InitialValues: Interface.{panel_name}Interface['input'] = {{\n"
     interface_str += "  input: {\n"
-    with open(f'{base_folder}{panel_data_file}.json', 'r') as file:
-        panel_data = json.load(file)
+    try:
+        with open(f'{base_folder}{panel_data_file}.json', 'r') as file:
+            panel_data = json.load(file)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file '{base_folder}{panel_data_file}.json' was not found.")
+    except json.JSONDecodeError:
+        raise ValueError(f"The file '{base_folder}{panel_data_file}.json' contains invalid JSON.")
+    except Exception as e:
+        # Catch any other exceptions
+        raise RuntimeError(f"An unexpected error occurred: {e}")
     for item in panel_data:
         backend_data = item["backend"]
         backend_name = backend_data["key"]
