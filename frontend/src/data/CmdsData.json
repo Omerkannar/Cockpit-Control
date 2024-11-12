@@ -1,6 +1,6 @@
 [
     {
-        "type": "stateN",
+        "type": "toggle",
         "backend": {
             "key": "RWR_SWITCH_IN",
             "dbsimProps": {
@@ -34,8 +34,11 @@
                 "clickBoundsHeightFactor": 1,
                 "clickBoundsWidthFactor": 2,
                 "mapping": {
-                    "top": "ON",
-                    "bottom": "OFF"
+                    "top": "TOGGLE",
+                    "bottom": "TOGGLE",
+                    "left": "TOGGLE",
+                    "right": "TOGGLE",
+                    "center": "TOGGLE"
                 }
             },
             "knobProps": {},

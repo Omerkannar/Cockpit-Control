@@ -146,7 +146,23 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                 //  Cases that return the exect value that was pressed
                 // ! There is no difference if the user pressed long press or click
                 const nextValue = (Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) ? clickedName : filteredName.backend.dbsimProps.enumMapping[clickedName]
+                console.log(nextValue, typeof(nextValue))
                 return [nextValue, filteredName.component.logger?.display || "true"];
+            case "toggle":
+                if(Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) {
+                    return ["", "false"];
+                } else {
+                    function getNextEnumValue(currentValue: keyof typeof filteredName.backend.dbsimProps.enumMapping): keyof typeof filteredName.backend.dbsimProps.enumMapping {
+                        const enumMapping = filteredName.backend.dbsimProps.enumMapping;
+                        const enumKeys = Object.keys(enumMapping) as Array<keyof typeof enumMapping>;
+                        const currentIndex = enumKeys.indexOf(currentValue);
+                        const nextIndex = (currentIndex + 1) % enumKeys.length;
+                        const nextKey = enumKeys[nextIndex];
+                        return enumMapping[nextKey];
+                      }
+                      console.log(String(getNextEnumValue(currentValue)), typeof(String(getNextEnumValue(currentValue))))
+                      return [String(getNextEnumValue(currentValue)), filteredName.component.logger?.display || "true"];
+                }
             case "knobInteger":
                 //  In this case - According to the value that was pressed, the logic will search the next value based on knobProps data
                 //  If the user pressed DECREASE or CCW the logic will provide the previous value 

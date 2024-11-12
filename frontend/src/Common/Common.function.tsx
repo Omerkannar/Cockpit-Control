@@ -16,6 +16,7 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
                 return <SelectedComponent scale={scale} state={rot} data={data} />
             }
         case "stateN":
+        case "toggle":
             {
                 const SelectedComponent = getComponentById("MultiStateSwitch") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={state} data={data} />
