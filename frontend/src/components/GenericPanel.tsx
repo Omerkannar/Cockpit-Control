@@ -1,13 +1,14 @@
-import settings from '../settings.json'
+
 import React, { useState, useEffect } from 'react';
 import BlinkingQueue from '../Common/BlinkingQueue';
-import { GenericPanelInterface, GenericTypeComponent, ClickType, BasicTypeComponent } from '../Common/Common.interface'
+import { GenericPanelInterface, GenericTypeComponent, BasicTypeComponent } from '../Common/Common.interface'
 import { ComponentWrapper } from '../Common/Common.function';
 import useDynamicState from '../useDynamicState';
 import { InterfaceMap } from '../Common/Panels.interface'
 import { Panel } from '../Common/Common.styles'
 import ClickContainer from '../Common/ClickContainer/ClickContainer';
 import clickingMapping from '../data/mapping/ClickingMapping.json'
+import { getValue, nextValueToSend } from './GenericPanel.function';
 
 const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_data, handleSendRequest }) => {
 
@@ -17,9 +18,8 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [jsonData, setJsonData] = useState<any>(null);
     const [state, setState] = useDynamicState(static_data.panel_name as keyof InterfaceMap);
-    //const [lastValueSent, setLastValueSent] = useState<string>("")
 
-
+    // Load JSON on the first render according to panel name
     useEffect(() => {
         // Dynamic import with try-catch for better error handling
         const loadJson = async () => {
@@ -34,8 +34,9 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         // eslint-disable-next-line
     }, [static_data.panel_data]);
 
+
+    // Once new data arrives - update dynamic state
     useEffect(() => {
-        // //console.log(dynamic_data)
         if (dynamic_data) {
             for (let index = 0; index < dynamic_data.length; index++) {
                 if (static_data.panel_name === dynamic_data[index].panel) {
@@ -44,8 +45,6 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                         const elementData = jsonData.filter((item: BasicTypeComponent['data']) => {
                             return elementName === item.backend.key;
                         })[0]
-                        // // console.log(elementData)
-                        // // console.log(dynamic_data[index].value, typeof (dynamic_data[index].value))
                         let newValue: string | undefined = "";
                         if (Object.keys(elementData.backend.dbsimProps.enumMapping).length === 0) {
                             console.log(`No dbsim enum mapping found, new value is ${dynamic_data[index].value}`)
@@ -56,7 +55,6 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                             );
                         }
                         console.info(`Receive - Panel: ${dynamic_data[index].panel}, Switch: ${elementName}, Value: ${newValue}`)
-                        // // console.log(state, elementName in state)
                         if (state) {
                             if (elementName in state) {
                                 setState(prevState => ({
@@ -78,7 +76,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         // eslint-disable-next-line
     }, [dynamic_data]);
 
-
+    // Set panel dimensions according to panel original size
     useEffect(() => {
         const img = new Image();
         img.src = static_data.panel_url
@@ -97,13 +95,13 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         })[0]
 
         if (clickMap) {
-            [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "click");
+            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, clickMap.source, clickedName, "click");
             if (showOnLogger === "true") {
                 console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source}, Value: ${newValueToSend}`)
             }
             handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
-            [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "click");
+            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, clickedName, "click");
             if (showOnLogger === "true") {
                 console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
             }
@@ -119,13 +117,13 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         })[0]
 
         if (clickMap) {
-            [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "longPress");
+            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, clickMap.source, clickedName, "longPress");
             if (showOnLogger === "true") {
                 console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source}, Value: ${newValueToSend}`)
             }
             handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
-            [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "longPress");
+            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, clickedName, "longPress");
             if (showOnLogger === "true") {
                 console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
             }
@@ -133,119 +131,6 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         }
     }
 
-    const nextValueToSend = (componentName: string, clickedName: string, pressType: ClickType): [string, string] => {
-        const filteredName = jsonData?.filter((item: any) => {
-            return item.backend.key === componentName
-        })[0]
-        // // console.log(componentName, clickedName, filteredName);
-        const currentValue = getValue(componentName);
-        //console.log(currentValue, typeof (currentValue))
-        switch (filteredName.type) {
-            case "static":
-            case "stateN":
-                //  Cases that return the exect value that was pressed
-                // ! There is no difference if the user pressed long press or click
-                const nextValue = (Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) ? clickedName : filteredName.backend.dbsimProps.enumMapping[clickedName]
-                console.log(nextValue, typeof(nextValue))
-                return [nextValue, filteredName.component.logger?.display || "true"];
-            case "toggle":
-                if(Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) {
-                    return ["", "false"];
-                } else {
-                    const getNextEnumValue = (currentValue: keyof typeof filteredName.backend.dbsimProps.enumMapping): keyof typeof filteredName.backend.dbsimProps.enumMapping => {
-                        const enumMapping = filteredName.backend.dbsimProps.enumMapping;
-                        const enumKeys = Object.keys(enumMapping) as Array<keyof typeof enumMapping>;
-                        const currentIndex = enumKeys.indexOf(currentValue);
-                        const nextIndex = (currentIndex + 1) % enumKeys.length;
-                        const nextKey = enumKeys[nextIndex];
-                        return enumMapping[nextKey];
-                      }
-                      console.log(String(getNextEnumValue(currentValue)), typeof(String(getNextEnumValue(currentValue))))
-                      return [String(getNextEnumValue(currentValue)), filteredName.component.logger?.display || "true"];
-                }
-            case "knobInteger":
-                //  In this case - According to the value that was pressed, the logic will search the next value based on knobProps data
-                //  If the user pressed DECREASE or CCW the logic will provide the previous value 
-                //  If the user pressed INCREASE or CW the logic will provide the next value 
-                // ! There is no difference if the user pressed long press or click
-                if (currentValue === "") {
-                    return ["undefined", "false"];
-                }
-                // In this case we have knobProps properties
-                // Sort the available knob rotation according to their values
-                const keys = Object.keys(filteredName.component.knobProps.rotation).sort((a, b) => {
-                    const valueA = filteredName.component.knobProps.rotation[a];
-                    const valueB = filteredName.component.knobProps.rotation[b];
-                    return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
-                })
-                console.log(keys)
-                const index = keys.indexOf(currentValue.toString());
-                if (index === -1) {
-                    throw new Error(`Key "${currentValue.toString()}" not found in the ${filteredName.backend.key}`);
-                }
-                // Find the next index, if we found the last item - return the first.
-                let nextIndex: number = -1;
-                if (clickedName === "DECREASE" || clickedName === "CCW") {
-                    if (index === 0) { nextIndex = 0; }
-                    else nextIndex = index - 1;
-                } else if (clickedName === "INCREASE" || clickedName === "CW") {
-                    if (index === keys.length - 1) nextIndex = keys.length - 1;
-                    else nextIndex = index + 1;
-                }
-                return [nextIndex.toString(), filteredName.component.logger?.display || "true"];
-            case "analog_rotation":
-            case "analog_vertical_translation":
-            case "analog_horizontal_translation":
-                //  In this case - According to the value that was pressed, the logic will provide the next value
-                //  If the user pressed DECREASE or CCW the logic will substract 1 if the user clicked and 10 (configuration) if the user long pressed 
-                //  If the user pressed DECREASE or CCW the logic will add 1 if the user clicked and 10 (configuration) if the user long pressed
-                // ! There is difference if the user pressed long press or click
-                if (clickedName === "DECREASE" || clickedName === "CCW") {
-                    if (currentValue === "0") {
-                        return ["0", filteredName.component.logger?.display || "true"];
-                    }
-                    else {
-                        if (pressType === 'click') {
-                            console.log(`click on ${filteredName.component}`)
-                            return [String(Number(currentValue) - 1), filteredName.logger?.display || "true"];
-                        } else { // 'Long Press'
-                            if (Number(currentValue) < settings.components_behavior.analogLongPressStep) {
-                                return ["0", filteredName.component.logger?.display || "true"];
-                            } else {
-                                return [String(Number(currentValue) - settings.components_behavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
-                            }
-                        }
-                    }
-                } else if (clickedName === "INCREASE" || clickedName === "CW") {
-                    if (currentValue === "100") {
-                        return ["100", filteredName.component.logger?.display || "true"];
-                    }
-                    else {
-                        if (pressType === 'click') {
-                            return [String(Number(currentValue) + 1), filteredName.component.logger?.display || "true"];
-                        } else {
-                            if ((100 - Number(currentValue)) < settings.components_behavior.analogLongPressStep) {
-                                return ["100", filteredName.component.logger?.display || "true"];
-                            } else {
-                                return [String(Number(currentValue) + settings.components_behavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
-                            }
-                        }
-                    }
-                } else {
-                    return [clickedName, filteredName.component.logger?.display || "true"];
-                }
-            default:
-                return [clickedName, filteredName.component.logger?.display || "true"];
-        }
-    }
-
-    function getValueByKey<T extends Record<string, any>>(obj: T, key: string): any {
-        return obj[key as keyof T];  // Type assertion
-    }
-
-    const getValue = (name: string): string => {
-        return getValueByKey(state, name);
-    }
 
     return (
         <Panel
@@ -258,7 +143,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         >
             {jsonData?.map((item: GenericTypeComponent['data']) =>
                 <div>
-                    {ComponentWrapper(defaultScale, getValue(item.backend.key), item)}
+                    {ComponentWrapper(defaultScale, getValue(state, item.backend.key), item)}
                      < ClickContainer
                         scale={defaultScale}
                         data={item}

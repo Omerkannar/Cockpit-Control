@@ -100,6 +100,7 @@ interface BasicData {
                 left?: string;
                 right?: string;
             };
+            clickType?: OpertaionType;
         };
         knobProps?: {
             rotation: any;
