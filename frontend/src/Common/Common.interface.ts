@@ -11,7 +11,8 @@ type Type = "static" |
             "number" |
             "toggle";
 type State = boolean | number | string;
-export type ClickType = "click" | "LongPress";
+export type ClickType = "click" | "longPress";
+export type OpertaionType = "toggle" | "clickByValue"
 type ElementType = "Double" | "Float" | "Integer" | "Boolean" | "String";
 
 

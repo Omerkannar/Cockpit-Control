@@ -6,7 +6,7 @@ import { ComponentWrapper } from '../Common/Common.function';
 import useDynamicState from '../useDynamicState';
 import { InterfaceMap } from '../Common/Panels.interface'
 import { Panel } from '../Common/Common.styles'
-import ClickContainer from '../Common/ClickContainer';
+import ClickContainer from '../Common/ClickContainer/ClickContainer';
 import clickingMapping from '../data/mapping/ClickingMapping.json'
 
 const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_data, handleSendRequest }) => {
@@ -119,13 +119,13 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         })[0]
 
         if (clickMap) {
-            [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "LongPress");
+            [newValueToSend, showOnLogger] = nextValueToSend(clickMap.source, clickedName, "longPress");
             if (showOnLogger === "true") {
                 console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${clickMap.source}, Value: ${newValueToSend}`)
             }
             handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
-            [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "LongPress");
+            [newValueToSend, showOnLogger] = nextValueToSend(componentName, clickedName, "longPress");
             if (showOnLogger === "true") {
                 console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
             }
@@ -152,7 +152,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                 if(Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) {
                     return ["", "false"];
                 } else {
-                    function getNextEnumValue(currentValue: keyof typeof filteredName.backend.dbsimProps.enumMapping): keyof typeof filteredName.backend.dbsimProps.enumMapping {
+                    const getNextEnumValue = (currentValue: keyof typeof filteredName.backend.dbsimProps.enumMapping): keyof typeof filteredName.backend.dbsimProps.enumMapping => {
                         const enumMapping = filteredName.backend.dbsimProps.enumMapping;
                         const enumKeys = Object.keys(enumMapping) as Array<keyof typeof enumMapping>;
                         const currentIndex = enumKeys.indexOf(currentValue);
