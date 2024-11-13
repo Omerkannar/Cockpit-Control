@@ -1,5 +1,5 @@
-import  settings from '../settings.json' 
-import { ClickType } from '../Common/Common.interface'
+import settings from '../settings.json'
+import { ClickType, OpertaionType } from '../Common/Common.interface'
 
 
 function getValueByKey<T extends Record<string, any>>(obj: T, key: string): any {
@@ -10,66 +10,25 @@ export const getValue = (state: any, name: string): string => {
     return getValueByKey(state, name);
 }
 
+// ! There are 3 parameters to determine what will be the next value:
+// ! 1) Component type - Every type has unique behavior
+// ! 2) Click or Long press
+// ! 3) Click behavior type - Component is toggle or press by value (value determined where the user pressed)
 export const nextValueToSend = (jsonData: any, state: any, componentName: string, clickedName: string, pressType: ClickType): [string, string] => {
+
     const filteredName = jsonData?.filter((item: any) => {
         return item.backend.key === componentName
     })[0]
-    // // console.log(componentName, clickedName, filteredName);
+
     const currentValue = getValue(state, componentName);
-    //console.log(currentValue, typeof (currentValue))
+    const clickBehaviorType: OpertaionType = filteredName.component.clickProps.clickType || "clickByValue"; // Click behavior is "Click by value" by default
+    const showInLogger: string = filteredName.component.logger?.display || "true"; // Show changed value in logger by default
     switch (filteredName.type) {
         case "static":
         case "stateN":
-            //  Cases that return the exect value that was pressed
-            // ! There is no difference if the user pressed long press or click
-            const nextValue = (Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) ? clickedName : filteredName.backend.dbsimProps.enumMapping[clickedName]
-            console.log(nextValue, typeof(nextValue))
-            return [nextValue, filteredName.component.logger?.display || "true"];
-        case "toggle":
-            if(Object.keys(filteredName.backend.dbsimProps.enumMapping).length === 0) {
-                return ["", "false"];
-            } else {
-                const getNextEnumValue = (currentValue: keyof typeof filteredName.backend.dbsimProps.enumMapping): keyof typeof filteredName.backend.dbsimProps.enumMapping => {
-                    const enumMapping = filteredName.backend.dbsimProps.enumMapping;
-                    const enumKeys = Object.keys(enumMapping) as Array<keyof typeof enumMapping>;
-                    const currentIndex = enumKeys.indexOf(currentValue);
-                    const nextIndex = (currentIndex + 1) % enumKeys.length;
-                    const nextKey = enumKeys[nextIndex];
-                    return enumMapping[nextKey];
-                  }
-                  console.log(String(getNextEnumValue(currentValue)), typeof(String(getNextEnumValue(currentValue))))
-                  return [String(getNextEnumValue(currentValue)), filteredName.component.logger?.display || "true"];
-            }
+            return [handleSimpleComponentNextValue(filteredName, clickedName, clickBehaviorType, currentValue), showInLogger];
         case "knobInteger":
-            //  In this case - According to the value that was pressed, the logic will search the next value based on knobProps data
-            //  If the user pressed DECREASE or CCW the logic will provide the previous value 
-            //  If the user pressed INCREASE or CW the logic will provide the next value 
-            // ! There is no difference if the user pressed long press or click
-            if (currentValue === "") {
-                return ["undefined", "false"];
-            }
-            // In this case we have knobProps properties
-            // Sort the available knob rotation according to their values
-            const keys = Object.keys(filteredName.component.knobProps.rotation).sort((a, b) => {
-                const valueA = filteredName.component.knobProps.rotation[a];
-                const valueB = filteredName.component.knobProps.rotation[b];
-                return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
-            })
-            console.log(keys)
-            const index = keys.indexOf(currentValue.toString());
-            if (index === -1) {
-                throw new Error(`Key "${currentValue.toString()}" not found in the ${filteredName.backend.key}`);
-            }
-            // Find the next index, if we found the last item - return the first.
-            let nextIndex: number = -1;
-            if (clickedName === "DECREASE" || clickedName === "CCW") {
-                if (index === 0) { nextIndex = 0; }
-                else nextIndex = index - 1;
-            } else if (clickedName === "INCREASE" || clickedName === "CW") {
-                if (index === keys.length - 1) nextIndex = keys.length - 1;
-                else nextIndex = index + 1;
-            }
-            return [nextIndex.toString(), filteredName.component.logger?.display || "true"];
+            return [handleKnobNextValue(filteredName, clickedName, clickBehaviorType, currentValue), showInLogger];
         case "analog_rotation":
         case "analog_vertical_translation":
         case "analog_horizontal_translation":
@@ -113,5 +72,81 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
             }
         default:
             return [clickedName, filteredName.component.logger?.display || "true"];
+    }
+}
+
+
+//  Cases that return the exect value that was pressed
+// ! There is no difference if the user pressed long press or click
+const handleSimpleComponentNextValue = (selectedComponent: any, clickedName: string, clickBehaviorType: OpertaionType, currentValue: string): string => {
+    let nextValue = ""
+    if (clickBehaviorType === "clickByValue") {
+        nextValue = (Object.keys(selectedComponent.backend.dbsimProps.enumMapping).length === 0) ?
+            clickedName : selectedComponent.backend.dbsimProps.enumMapping[clickedName]
+        console.log(nextValue, typeof (nextValue))
+        return nextValue;
+    } else if (clickBehaviorType === "toggle") {
+        if (Object.keys(selectedComponent.backend.dbsimProps.enumMapping).length === 0) {
+            return "";
+        } else {
+            const getNextEnumValue = (currentValue: keyof typeof selectedComponent.backend.dbsimProps.enumMapping): keyof typeof selectedComponent.backend.dbsimProps.enumMapping => {
+                const enumMapping = selectedComponent.backend.dbsimProps.enumMapping;
+                const enumKeys = Object.keys(enumMapping) as Array<keyof typeof enumMapping>;
+                const currentIndex = enumKeys.indexOf(currentValue);
+                const nextIndex = (currentIndex + 1) % enumKeys.length;
+                const nextKey = enumKeys[nextIndex];
+                return enumMapping[nextKey];
+            }
+            console.log(String(getNextEnumValue(currentValue)), typeof (String(getNextEnumValue(currentValue))))
+            return String(getNextEnumValue(currentValue));
+        }
+    } else {
+        return ""
+    }
+}
+
+//  Cases that handles knob changes (Enum value changes)
+// ! There is no difference if the user pressed long press or click
+const handleKnobNextValue = (selectedComponent: any, clickedName: string, clickBehaviorType: OpertaionType, currentValue: string): string => {
+    //  In this case - According to the value that was pressed, the logic will search the next value based on knobProps data
+    //  If the user pressed DECREASE or CCW the logic will provide the previous value 
+    //  If the user pressed INCREASE or CW the logic will provide the next value 
+    // ! There is no difference if the user pressed long press or click
+    let nextValue = ""
+    if (currentValue === "") {
+        return nextValue
+    }
+
+    // In this case we have knobProps properties
+    // Sort the available knob rotation according to their values
+    const keys = Object.keys(selectedComponent.component.knobProps.rotation).sort((a, b) => {
+        const valueA = selectedComponent.component.knobProps.rotation[a];
+        const valueB = selectedComponent.component.knobProps.rotation[b];
+        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+    })
+    const index = keys.indexOf(currentValue.toString());
+    const knobPropsRotationLength: number = Object.keys(selectedComponent.component.knobProps.rotation).length;
+    if (index === -1) {
+        throw new Error(`Key "${currentValue.toString()}" not found in the ${selectedComponent.backend.key}`);
+    }
+
+    // Find the next index, if we found the last item - return the first.
+    let nextIndex: number = -1;
+
+    if (clickBehaviorType === "clickByValue") {
+
+        if (clickedName === "DECREASE" || clickedName === "CCW") {
+            if (index === 0) nextIndex = 0;
+            else nextIndex = index - 1;
+        } else if (clickedName === "INCREASE" || clickedName === "CW") {
+            if (index === keys.length - 1) nextIndex = keys.length - 1;
+            else nextIndex = index + 1;
+        }
+        return String(nextIndex);
+    } else if (clickBehaviorType === "toggle") {
+        nextIndex = (index + 1) % knobPropsRotationLength;
+        return String(nextIndex);
+    } else {
+        return ""
     }
 }
