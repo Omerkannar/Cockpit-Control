@@ -33,12 +33,11 @@
                 "clickBoundsHeightFactor": 2,
                 "clickBoundsWidthFactor": 2,
                 "mapping": {
-                    "top": "INCREASE",
+                    "top": "TOGGLE_INCREASE",
                     "right": "INCREASE",
-                    "bottom": "DECREASE",
+                    "bottom": "TOGGLE_DECREASE",
                     "left": "DECREASE"
-                },
-                "clickType": "clickByValue"
+                }
             },
             "knobProps": {
                 "rotation": {
@@ -368,9 +367,10 @@
                 "mapping": {
                     "top": "A",
                     "right": "OUT",
-                    "left": "B"
-                },
-                "clickType": "clickByValue"
+                    "left": "B",
+                    "bottom": "TOGGLE_INCREASE",
+                    "center": "TOGGLE_DECREASE"
+                }
             },
             "knobProps": {},
             "analogProps": {},

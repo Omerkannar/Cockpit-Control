@@ -8,8 +8,7 @@ type Type = "static" |
             "analog_horizontal_translation_cyclic" | 
             "analog_vertical_translation_cyclic" |
             "string" | 
-            "number" |
-            "toggle";
+            "number";
 type State = boolean | number | string;
 export type ClickType = "click" | "longPress";
 export type OpertaionType = "toggle" | "clickByValue"
@@ -100,7 +99,7 @@ interface BasicData {
                 left?: string;
                 right?: string;
             };
-            clickType?: OpertaionType;
+            clickType?: OpertaionType; // "toggle" OR "clickByValue"
         };
         knobProps?: {
             rotation: any;

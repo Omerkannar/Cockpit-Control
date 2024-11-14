@@ -40,9 +40,7 @@ const App = () => {
               }
               )}
           </Container>
-        )
-      })
-      }
+        )})}
     </MainContainer>
   );
 }

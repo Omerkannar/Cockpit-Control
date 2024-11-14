@@ -1,5 +1,5 @@
 import settings from '../settings.json'
-import { ClickType, OpertaionType } from '../Common/Common.interface'
+import { ClickType } from '../Common/Common.interface'
 
 
 function getValueByKey<T extends Record<string, any>>(obj: T, key: string): any {
@@ -21,14 +21,13 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
     })[0]
 
     const currentValue = getValue(state, componentName);
-    const clickBehaviorType: OpertaionType = filteredName.component.clickProps.clickType || "clickByValue"; // Click behavior is "Click by value" by default
     const showInLogger: string = filteredName.component.logger?.display || "true"; // Show changed value in logger by default
     switch (filteredName.type) {
         case "static":
         case "stateN":
-            return [handleSimpleComponentNextValue(filteredName, clickedName, clickBehaviorType, currentValue), showInLogger];
+            return [handleSimpleComponentNextValue(filteredName, clickedName, currentValue), showInLogger];
         case "knobInteger":
-            return [handleKnobNextValue(filteredName, clickedName, clickBehaviorType, currentValue), showInLogger];
+            return [handleKnobNextValue(filteredName, clickedName, currentValue), showInLogger];
         case "analog_rotation":
         case "analog_vertical_translation":
         case "analog_horizontal_translation":
@@ -78,8 +77,9 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
 
 //  Cases that return the exect value that was pressed
 // ! There is no difference if the user pressed long press or click
-const handleSimpleComponentNextValue = (selectedComponent: any, clickedName: string, clickBehaviorType: OpertaionType, currentValue: string): string => {
+const handleSimpleComponentNextValue = (selectedComponent: any, clickedName: string, currentValue: string): string => {
     let nextValue = ""
+    const clickBehaviorType = clickedName.toLowerCase().startsWith("toggle") ? "toggle" : "clickByValue";
     if (clickBehaviorType === "clickByValue") {
         nextValue = (Object.keys(selectedComponent.backend.dbsimProps.enumMapping).length === 0) ?
             clickedName : selectedComponent.backend.dbsimProps.enumMapping[clickedName]
@@ -93,7 +93,11 @@ const handleSimpleComponentNextValue = (selectedComponent: any, clickedName: str
                 const enumMapping = selectedComponent.backend.dbsimProps.enumMapping;
                 const enumKeys = Object.keys(enumMapping) as Array<keyof typeof enumMapping>;
                 const currentIndex = enumKeys.indexOf(currentValue);
-                const nextIndex = (currentIndex + 1) % enumKeys.length;
+                // If value == "toggle_increase" increase the next value
+                // Else if value == "toggle_decrease" decrease the next value
+                // else increase the next value by default
+                const increaseOrDecreaseIndex: number = clickedName.toLowerCase().search("increase") > 0 ? 1 : clickedName.toLowerCase().search("decrease") > 0 ? -1 : 1;
+                const nextIndex = (currentIndex + increaseOrDecreaseIndex + enumKeys.length) % enumKeys.length;
                 const nextKey = enumKeys[nextIndex];
                 return enumMapping[nextKey];
             }
@@ -107,7 +111,7 @@ const handleSimpleComponentNextValue = (selectedComponent: any, clickedName: str
 
 //  Cases that handles knob changes (Enum value changes)
 // ! There is no difference if the user pressed long press or click
-const handleKnobNextValue = (selectedComponent: any, clickedName: string, clickBehaviorType: OpertaionType, currentValue: string): string => {
+const handleKnobNextValue = (selectedComponent: any, clickedName: string, currentValue: string): string => {
     //  In this case - According to the value that was pressed, the logic will search the next value based on knobProps data
     //  If the user pressed DECREASE or CCW the logic will provide the previous value 
     //  If the user pressed INCREASE or CW the logic will provide the next value 
@@ -130,6 +134,8 @@ const handleKnobNextValue = (selectedComponent: any, clickedName: string, clickB
         throw new Error(`Key "${currentValue.toString()}" not found in the ${selectedComponent.backend.key}`);
     }
 
+    const clickBehaviorType = clickedName.toLowerCase().startsWith("toggle") ? "toggle" : "clickByValue";
+
     // Find the next index, if we found the last item - return the first.
     let nextIndex: number = -1;
 
@@ -144,7 +150,11 @@ const handleKnobNextValue = (selectedComponent: any, clickedName: string, clickB
         }
         return String(nextIndex);
     } else if (clickBehaviorType === "toggle") {
-        nextIndex = (index + 1) % knobPropsRotationLength;
+        // If value == "toggle_increase" increase the next value
+        // Else if value == "toggle_decrease" decrease the next value
+        // else increase the next value by default
+        const increaseOrDecreaseIndex: number = clickedName.toLowerCase().search("increase") > 0 ? 1 : clickedName.toLowerCase().search("decrease") > 0 ? -1 : 1;
+        nextIndex = (index + increaseOrDecreaseIndex + knobPropsRotationLength) % knobPropsRotationLength;
         return String(nextIndex);
     } else {
         return ""
