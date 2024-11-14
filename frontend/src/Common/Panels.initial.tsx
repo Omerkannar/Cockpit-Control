@@ -15,6 +15,7 @@ export const IFFInitialValues: Interface.IFFInterface['input'] = {
      "MODE3_TACAN_FREQ_ONES_IN":	"",
      "MODE1_TACAN_FREQ_TENS_IN":	"",
      "MODE1_TACAN_FREQ_HUNDREDS_IN":	"",
+     "MODE4_REPLY_IN":	"",
 }
 
 export const LGControlInitialValues: Interface.LGControlInterface['input'] = {

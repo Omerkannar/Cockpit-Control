@@ -17,6 +17,7 @@ export interface IFFInterface {
      "MODE3_TACAN_FREQ_ONES_IN":	string,
      "MODE1_TACAN_FREQ_TENS_IN":	string,
      "MODE1_TACAN_FREQ_HUNDREDS_IN":	string,
+     "MODE4_REPLY_IN":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }

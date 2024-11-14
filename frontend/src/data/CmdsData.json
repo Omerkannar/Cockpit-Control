@@ -1,6 +1,6 @@
 [
     {
-        "type": "toggle",
+        "type": "stateN",
         "backend": {
             "key": "RWR_SWITCH_IN",
             "dbsimProps": {
@@ -39,7 +39,8 @@
                     "left": "TOGGLE",
                     "right": "TOGGLE",
                     "center": "TOGGLE"
-                }
+                },
+                "clickType": "toggle"
             },
             "knobProps": {},
             "analogProps": {},
@@ -189,8 +190,10 @@
                     "top": "INCREASE",
                     "right": "INCREASE",
                     "bottom": "DECREASE",
-                    "left": "DECREASE"
-                }
+                    "left": "DECREASE",
+                    "center": "DECREASE"
+                },
+                "clickType": "toggle"
             },
             "knobProps": {
                 "rotation": {
