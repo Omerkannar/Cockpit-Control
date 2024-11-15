@@ -25,7 +25,7 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Duration to differentiate between short click and long press (ms)
-  const longPressThreshold = settings.components_behavior.analogLongPressDelay || 200;
+  const longPressThreshold = settings.componentsBehavior.analogLongPressDelay || 200;
 
   const handleOnMouseDown = (event: any) => {
     // const target = event.target as HTMLElement; // Cast to HTMLElement

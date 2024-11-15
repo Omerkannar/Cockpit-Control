@@ -39,8 +39,7 @@
                     "left": "TOGGLE",
                     "right": "TOGGLE",
                     "center": "TOGGLE"
-                },
-                "clickType": "toggle"
+                }
             },
             "knobProps": {},
             "analogProps": {},

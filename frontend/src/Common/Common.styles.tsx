@@ -39,3 +39,25 @@ export const Container = styled.div<PanelContainerInterface>`
     height: ${props => (props.container_scale * props.container_height) / 100}px;
     display: grid;
 `;
+
+export const LayoutNavigation = styled.div<{ zoomScale: number }>`
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: ${({ zoomScale }) => `scale(${zoomScale})`}; /* Adjust based on zoom scale */
+  z-index: 9999;
+  border-radius: 5px;
+  width: 900px; // Fixed width for consistency
+  height: auto;
+  transform-origin: top left;
+`;
+
+export const LayoutButton = styled.button`
+  padding: 10px 20px;
+  font-size: ${settings.layoutNavigation.textSize}; // Fixed size in px for consistent appearance: ;
+  background-color: ${settings.layoutNavigation.backgroundColor};
+  color:${settings.layoutNavigation.textColor};
+  border-radius: 4px;
+  text-align: 'center';
+  min-width: '100px';
+`;

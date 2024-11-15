@@ -44,10 +44,10 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
                         console.log(`click on ${filteredName.component}`)
                         return [String(Number(currentValue) - 1), filteredName.logger?.display || "true"];
                     } else { // 'Long Press'
-                        if (Number(currentValue) < settings.components_behavior.analogLongPressStep) {
+                        if (Number(currentValue) < settings.componentsBehavior.analogLongPressStep) {
                             return ["0", filteredName.component.logger?.display || "true"];
                         } else {
-                            return [String(Number(currentValue) - settings.components_behavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
+                            return [String(Number(currentValue) - settings.componentsBehavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
                         }
                     }
                 }
@@ -59,10 +59,10 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
                     if (pressType === 'click') {
                         return [String(Number(currentValue) + 1), filteredName.component.logger?.display || "true"];
                     } else {
-                        if ((100 - Number(currentValue)) < settings.components_behavior.analogLongPressStep) {
+                        if ((100 - Number(currentValue)) < settings.componentsBehavior.analogLongPressStep) {
                             return ["100", filteredName.component.logger?.display || "true"];
                         } else {
-                            return [String(Number(currentValue) + settings.components_behavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
+                            return [String(Number(currentValue) + settings.componentsBehavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
                         }
                     }
                 }
