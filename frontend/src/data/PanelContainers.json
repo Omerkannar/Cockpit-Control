@@ -1,46 +1,66 @@
 [
     {
-        "container_url" : "./Containers/L1.png",
-        "container_name": "L1", 
-        "container_top": 400,
-        "container_left": 70,
-        "container_width": 2648,
-        "container_height": 2922,
-        "container_scale": 90
-    },
-    {
-        "container_url" : "./Containers/L2.png",
-        "container_name": "L2", 
-        "container_top": 915,
+        "container_name": "INSTRUMENTS_L1", 
+        "container_top": 20,
         "container_left": 20,
-        "container_width": 2278,
-        "container_height": 5568,
+        "container_width": 600,
+        "container_height": 300,
         "container_scale": 100
     },
     {
-        "container_url" : "./Containers/Mid.png",
-        "container_name": "MID", 
-        "container_top": 50,
-        "container_left": 320,
-        "container_width": 4468,
-        "container_height": 2824,
+        "container_name": "INSTRUMENTS_L2", 
+        "container_top": 100,
+        "container_left": 20,
+        "container_width": 600,
+        "container_height": 300,
         "container_scale": 100
     },
     {
-        "container_url" : "./Containers/R1.png",
-        "container_name": "R1", 
-        "container_top": 388,
-        "container_left": 987,
-        "container_width": 2648,
-        "container_height": 2922,
-        "container_scale": 90
+        "container_name": "INSTRUMENTS_MID1", 
+        "container_top": 20,
+        "container_left": 170,
+        "container_width": 500,
+        "container_height": 300,
+        "container_scale": 100
     },
     {
-        "container_name": "R2", 
-        "container_top": 1000,
-        "container_left": 1050,
-        "container_width": 1500,
-        "container_height": 4500,
+        "container_name": "INSTRUMENTS_MID2", 
+        "container_top": 100,
+        "container_left": 170,
+        "container_width": 500,
+        "container_height": 300,
+        "container_scale": 100
+    },
+    {
+        "container_name": "INSTRUMENTS_R1",
+        "container_top": 20,
+        "container_left": 280,
+        "container_width": 500,
+        "container_height": 300,
+        "container_scale": 100
+    },
+    {
+        "container_name": "INSTRUMENTS_R2", 
+        "container_top": 100,
+        "container_left": 280,
+        "container_width": 500,
+        "container_height": 300,
+        "container_scale": 100
+    },
+    {
+        "container_name": "LEFT_AUXILIARY_AND_CONSOLE_LANDING_GEAR", 
+        "container_top": 20,
+        "container_left": 20,
+        "container_width": 600,
+        "container_height": 400,
+        "container_scale": 100
+    },
+    {
+        "container_name": "LEFT_AUXILIARY_AND_CONSOLE_CMDS", 
+        "container_top": 110,
+        "container_left": 20,
+        "container_width": 600,
+        "container_height": 400,
         "container_scale": 100
     }
 ]

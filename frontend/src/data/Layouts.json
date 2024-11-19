@@ -1,6 +1,14 @@
 [
-    {
-      "layout_name": "Instruments Panel",
-      "containers": ["L1", "MID", "L2", "R1", "R2"]
-    }
-  ]
+  {
+    "layout_name": "Instruments Panel",
+    "containers": ["INSTRUMENTS_L1", "INSTRUMENTS_L2", "INSTRUMENTS_MID1", "INSTRUMENTS_MID2", "INSTRUMENTS_R1", "INSTRUMENTS_R2"]
+  },
+  {
+    "layout_name": "Left Auxiliary and Console",
+    "containers": ["LEFT_AUXILIARY_AND_CONSOLE_LANDING_GEAR", "LEFT_AUXILIARY_AND_CONSOLE_CMDS"]
+  },
+  {
+    "layout_name": "Right Auxiliary and Console",
+    "containers": ["INSTRUMENTS_L2", "INSTRUMENTS_R2"]
+  }
+]

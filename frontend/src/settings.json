@@ -1,7 +1,7 @@
 {
     "general": {
-        "height": 10500,
-        "width": 7500,
+        "height": 1080,
+        "width": 1920,
         "gridDensity" : 5
     },
     "layoutNavigation": {
@@ -10,7 +10,7 @@
         "textSize": "18px"
     },
     "logger": {
-        "showLogger" : true,
+        "showLogger" : false,
         "properties": {
         "width" : 700,
         "maxHeight": 200,

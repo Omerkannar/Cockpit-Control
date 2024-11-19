@@ -1,0 +1,62 @@
+[
+    {
+        "type": "knobInteger",
+        "backend": {
+            "key": "KNOB_PRGM_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "IOToHost.CMDS",
+                "elementName": "Data.KNOB_PRGM",
+                "elementType": "Integer",
+                "enumMapping": {
+                    "BIT": 0,
+                    "1": 1,
+                    "2": 2,
+                    "3": 3,
+                    "4": 4
+                }
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "width": "78",
+                "height": "78",
+                "left": "75",
+                "top": "78"
+            },
+            "imageProps": {
+                "imageDefault": "/CMDSPanel/Knob_Plus.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 2,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "top": "INCREASE",
+                    "right": "INCREASE",
+                    "bottom": "DECREASE",
+                    "left": "DECREASE",
+                    "center": "DECREASE"
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "BIT": -90,
+                    "1": -55,
+                    "2": -15,
+                    "3": 25,
+                    "4": 69
+                }
+            },
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    }
+]

@@ -1,4 +1,5 @@
 import json
+import os
 
 base_folder = "../frontend/src/data/"
 # Map JSON types to TypeScript types
@@ -16,22 +17,23 @@ file.close()
 interface_str = ""
 interface_map_str = "export type InterfaceMap = {\n"
 initial_values_str = "import * as Interface from './Panels.interface'\n\n"
+backend_config_str = ""
 panel_name = ""
 
 for panel in panels_data:
     panel_name = panel["panel_name"]
-    panel_data_file = panel["panel_data"]
     interface_str += "export interface " + panel_name + "Interface {\n"
     interface_map_str += f"     \"{panel_name}\":\t{panel_name}Interface;\n"
     initial_values_str += f"export const {panel_name}InitialValues: Interface.{panel_name}Interface['input'] = {{\n"
     interface_str += "  input: {\n"
+    backend_config_str += os.path.abspath(base_folder) + panel_name + ".json\n"
     try:
-        with open(f'{base_folder}{panel_data_file}.json', 'r') as file:
+        with open(f'{base_folder}{panel_name}.json', 'r') as file:
             panel_data = json.load(file)
     except FileNotFoundError:
-        raise FileNotFoundError(f"The file '{base_folder}{panel_data_file}.json' was not found.")
+        raise FileNotFoundError(f"The file '{base_folder}{panel_name}.json' was not found.")
     except json.JSONDecodeError:
-        raise ValueError(f"The file '{base_folder}{panel_data_file}.json' contains invalid JSON.")
+        raise ValueError(f"The file '{base_folder}{panel_name}.json' contains invalid JSON.")
     except Exception as e:
         # Catch any other exceptions
         raise RuntimeError(f"An unexpected error occurred: {e}")
@@ -68,12 +70,15 @@ with open(f"{base_folder}../Common/Panels.interface.tsx", "w") as interface_file
 with open(f"{base_folder}../Common/Panels.initial.tsx", "w") as initial_file:
     initial_file.write(initial_values_str)
 
-
+with open(f"../config/backendConfig.txt", "w") as backend_config_file:
+    backend_config_file.write(backend_config_str)
 # with open(f"{base_folder}../Common/InterfaceMap.interface.tsx", "w") as interface_map_file:
 #     interface_map_file.write(interface_map_str)
 
 
 interface_file.close()
+initial_file.close()
+backend_config_file.close()
 # interface_map_file.close()
 
 

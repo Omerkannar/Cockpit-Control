@@ -4,6 +4,9 @@
     {
         public CConfigDBSimElementItem cConfig { get; set; } = new CConfigDBSimElementItem(); // Initialized with a new instance
 
+
+        // Panel
+        public string m_sPanelName;
         // Value
         public string? m_sValue;
 
@@ -12,8 +15,9 @@
         public int m_nElementID;
 
         // Constructor (Optional) for further initialization
-        public CBindDBSimElementItem(string? value = null, int stationBlockID = 0, int elementID = 0)
+        public CBindDBSimElementItem(string? panel = null, string? value = null, int stationBlockID = 0, int elementID = 0)
         {
+            m_sPanelName = panel;
             m_sValue = value;
             m_nStationBlockID = stationBlockID;
             m_nElementID = elementID;
@@ -26,6 +30,7 @@
             {
                 // Assuming CConfigDBSimElementItem has a Copy method
                 cConfig = cConfig?.Copy(), // Use null-conditional operator to avoid null reference
+                m_sPanelName = m_sPanelName,
                 m_sValue = m_sValue,
                 m_nStationBlockID = m_nStationBlockID,
                 m_nElementID = m_nElementID

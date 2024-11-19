@@ -104,7 +104,7 @@ class Program
 
             var Details = new MessageDetails
             {
-                Panel = bindElement.cConfig.BlockName.Split(".")[1],
+                Panel = bindElement.m_sPanelName,
                 Element = key,
                 Value = val.Trim('\u0000')
             };
@@ -271,7 +271,7 @@ class Program
             if (stationName != null)
             {
                 Logger.LogDebug("Start Reading map files...");
-                string configFilePath = "C:\\Users\\ATH_O\\Documents\\OmerK\\WebSocket\\Cockpit-Control\\config\\backend.config";
+                string configFilePath = "C:\\Users\\ATH_O\\Documents\\OmerK\\WebSocket\\Cockpit-Control\\config\\backendConfig.txt";
                 string[] arrFileNames = File.ReadAllLines(configFilePath);
 
                 foreach (string sConfigFile in arrFileNames)
@@ -305,6 +305,7 @@ class Program
 
                             cBindDBSimElementItem.m_nStationBlockID = OneSimLink.GetBlockIdByName(sBlockFullName);
                             cBindDBSimElementItem.m_nElementID = OneSimLink.RegisterElement(sBlockFullName, cBindDBSimElementItem.cConfig.ElementName);
+                            cBindDBSimElementItem.m_sPanelName = Path.GetFileNameWithoutExtension(sConfigFile);
                             cBindDBSimElementItem.m_sValue = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
 
                             if ((cBindDBSimElementItem.m_nStationBlockID != -1) && (cBindDBSimElementItem.m_nElementID != -1))
@@ -408,11 +409,11 @@ class Program
                 var bindElement = _mapKeyToBindDBSimElementItemCurrent.Search(key);
                 if (val == null || val == bindElement.m_sValue) continue;
                 count++;
-                Logger.LogDebug($"Panel: {bindElement.cConfig.BlockName.Split(".")[1]}, Element: {key}, Value: {val}");
+                Logger.LogDebug($"Panel: {bindElement.m_sPanelName}, Element: {key}, Value: {val}");
                 bindElement.m_sValue = val;
                 var Details = new MessageDetails
                 {
-                    Panel = bindElement.cConfig.BlockName.Split(".")[1],
+                    Panel = bindElement.m_sPanelName,
                     Element = key,
                     Value = val.Trim('\u0000')
                 };

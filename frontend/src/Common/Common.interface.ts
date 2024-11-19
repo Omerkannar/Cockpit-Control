@@ -28,7 +28,6 @@ export interface GenericPanelInterface {
         panel_name: string,
         panel_container: string;
         panel_url: string;
-        panel_data: string;
         panel_resources: string;
         panel_scale: number;
         panel_top: number;
