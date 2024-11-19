@@ -2,13 +2,5 @@
     {
       "layout_name": "Instruments Panel",
       "containers": ["L1", "MID", "L2", "R1", "R2"]
-    },
-    {
-      "layout_name": "Left Auxiliary and Console",
-      "containers": ["L2", "R1"]
-    },
-    {
-      "layout_name": "Right Auxiliary and Console",
-      "containers": ["R2"]
     }
   ]

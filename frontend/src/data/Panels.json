@@ -7,7 +7,11 @@
         "panel_resources" : "/CMDSPanel/",
         "panel_scale": 100,
         "panel_top": 250,
-        "panel_left": 50
+        "panel_left": 100,
+        "enlargeProps": {
+            "enable": true,
+            "scale": 60
+        }
     },
     {
         "panel_name" : "IFF",
@@ -17,7 +21,11 @@
         "panel_resources" : "/IFFPanel/",
         "panel_scale": 100,
         "panel_top": 250,
-        "panel_left": 250
+        "panel_left": 300,
+        "enlargeProps": {
+            "enable": true,
+            "scale": 60
+        }
     },
     {
         "panel_name" : "LGControl",
@@ -26,8 +34,12 @@
         "panel_data": "LGControlData",
         "panel_resources" : "/LGControlPanel/",
         "panel_scale": 100,
-        "panel_top": 32,
-        "panel_left": 115
+        "panel_top": 20,
+        "panel_left": 120,
+        "enlargeProps": {
+            "enable": true,
+            "scale": 60
+        }
     }
 ]
 

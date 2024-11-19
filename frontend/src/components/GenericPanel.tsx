@@ -9,6 +9,7 @@ import { Panel } from '../Common/Common.styles'
 import ClickContainer from '../Common/ClickContainer/ClickContainer';
 import clickingMapping from '../data/mapping/ClickingMapping.json'
 import { getValue, nextValueToSend } from './GenericPanel.function';
+import Modal from '../Modal/Modal';
 
 const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_data, handleSendRequest }) => {
 
@@ -18,6 +19,11 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [jsonData, setJsonData] = useState<any>(null);
     const [state, setState] = useDynamicState(static_data.panel_name as keyof InterfaceMap);
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    const handleOpenModal = () => setIsModalOpen(true && static_data.enlargeProps.enable);
+    const handleCloseModal = () => setIsModalOpen(false);
 
     // Load JSON on the first render according to panel name
     useEffect(() => {
@@ -132,28 +138,59 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     }
 
 
+
     return (
-        <Panel
-            url={static_data.panel_url}
-            scale={defaultScale}
-            width={dimensions.width}
-            height={dimensions.height}
-            top={static_data.panel_top}
-            left={static_data.panel_left}
-        >
-            {jsonData?.map((item: GenericTypeComponent['data']) =>
-                <div>
-                    {ComponentWrapper(defaultScale, getValue(state, item.backend.key), item)}
-                     < ClickContainer
-                        scale={defaultScale}
-                        data={item}
-                        isBlinking={blinkingQueue.search(item.backend.key)}
-                        handleClick={handleOnClick}
-                        handleLongPress={handleOnLongPress}
-                    />
-                </div>
-            )}
-        </Panel>
+        <>
+            <Panel
+                url={static_data.panel_url}
+                scale={defaultScale}
+                width={dimensions.width}
+                height={dimensions.height}
+                top={static_data.panel_top}
+                left={static_data.panel_left}
+                onClick={handleOpenModal}
+            >
+                {jsonData?.map((item: GenericTypeComponent['data']) =>
+                    <div>
+                        {ComponentWrapper(defaultScale, getValue(state, item.backend.key), item)}
+                        < ClickContainer
+                            scale={defaultScale}
+                            data={item}
+                            isBlinking={blinkingQueue.search(item.backend.key)}
+                            handleClick={handleOnClick}
+                            handleLongPress={handleOnLongPress}
+                        />
+                    </div>
+                )}
+            </Panel>
+            <Modal
+                isOpen={isModalOpen}
+                width={dimensions.width * (static_data.enlargeProps.scale) / 100}
+                height={dimensions.height * (static_data.enlargeProps.scale) / 100}
+                onClose={handleCloseModal}>
+                <Panel
+                    url={static_data.panel_url}
+                    scale={static_data.enlargeProps.scale}
+                    width={dimensions.width}
+                    height={dimensions.height}
+                    top={static_data.panel_top}
+                    left={static_data.panel_left}
+                >
+                    {jsonData?.map((item: GenericTypeComponent['data']) =>
+                        <div>
+                            {ComponentWrapper(static_data.enlargeProps.scale, getValue(state, item.backend.key), item)}
+                            < ClickContainer
+                                scale={static_data.enlargeProps.scale}
+                                data={item}
+                                isBlinking={blinkingQueue.search(item.backend.key)}
+                                handleClick={handleOnClick}
+                                handleLongPress={handleOnLongPress}
+                            />
+                        </div>
+                    )}
+                </Panel>
+            </Modal>
+        </>
     )
 };
 

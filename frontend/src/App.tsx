@@ -69,7 +69,8 @@ const App = () => {
         </LayoutNavigation>
       )}
       {visibleContainers.map((container: PanelContainerInterface) => (
-        <Container key={container.container_name} {...container}>
+        <Container 
+        key={container.container_name} {...container}>
           {panelsStaticData
             .filter((data: GenericPanelInterface['static_data']) => data.panel_container === container.container_name)
             .map((data: GenericPanelInterface['static_data']) => (
