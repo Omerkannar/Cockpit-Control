@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { PanelContainerInterface } from "./Common.interface";
 
 export const MainContainer = styled.div`
-  background-color: #282c34;
+  background-color: ${settings.general.mainScreenBackgroundColor};
   display: grid;
   grid-template-columns: repeat(${settings.general.width / settings.general.gridDensity}, ${settings.general.gridDensity}px);
   grid-template-rows: repeat(${settings.general.height / settings.general.gridDensity}, ${settings.general.gridDensity}px);
@@ -26,8 +26,9 @@ export const Panel = styled.div<{ url: string; scale: number, width: number; hei
 
 // Define styled containers
 export const Container = styled.div<PanelContainerInterface>`
-    background-image: ${props => props.container_url? `url(${props.container_url})` : null};
-    background-color:  ${props => props.container_url? null : '#525864'};
+    background-image: ${props => props.container_url ? `url(${props.container_url})` : null};
+    background-color: ${props => props.container_url ? null : settings.general.containerBackgroundColor};
+    border-radius: ${props => props.container_url ? 0 : settings.general.containerBorderRadius}px;
     background-repeat: no-repeat;
     background-size: contain;
     grid-column-start: ${props => props.container_left};
@@ -38,8 +39,23 @@ export const Container = styled.div<PanelContainerInterface>`
     width: ${props => (props.container_scale * props.container_width) / 100}px;
     height: ${props => (props.container_scale * props.container_height) / 100}px;
     display: grid;
+
+    // Add a child text area
+    .text-area {
+        position: absolute;
+        bottom: 0; /* Stick to the bottom of the container */
+        width: 100%; /* Full width of the container */
+        color: ${settings.general.containerTextColor || 'rgba(0, 0, 0, 1)'}; // Text color
+        text-align: center; /* Center the text */
+        padding: 5px; /* Add some padding for the text */
+        font-size: 18px; /* Adjust font size */
+        font-weight: bolder;
+        border-radius: 0 0 ${props => props.container_url ? 0 : settings.general.containerBorderRadius}px ${props => props.container_url ? 0 : settings.general.containerBorderRadius}px;
+    }
 `;
 
+
+// Layouts selector
 export const LayoutNavigation = styled.div<{ zoomScale: number }>`
   position: fixed;
   top: 20px;

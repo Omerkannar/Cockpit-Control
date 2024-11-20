@@ -49,6 +49,7 @@
     },
     {
         "container_name": "LEFT_AUXILIARY_AND_CONSOLE_LANDING_GEAR", 
+        "container_text": "Landing Gear", 
         "container_top": 20,
         "container_left": 20,
         "container_width": 600,
@@ -57,6 +58,7 @@
     },
     {
         "container_name": "LEFT_AUXILIARY_AND_CONSOLE_CMDS", 
+        "container_text": "CMDS", 
         "container_top": 110,
         "container_left": 20,
         "container_width": 600,

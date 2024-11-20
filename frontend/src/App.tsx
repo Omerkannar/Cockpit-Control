@@ -81,6 +81,9 @@ const App = () => {
                 handleSendRequest={handleSendRequest}
               />
             ))}
+            <div className="text-area">
+              {container.container_text? container.container_text : null}
+            </div>
         </Container>
       ))}
     </MainContainer>

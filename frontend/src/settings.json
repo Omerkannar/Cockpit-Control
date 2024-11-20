@@ -1,5 +1,9 @@
 {
     "general": {
+        "mainScreenBackgroundColor": "rgba(40, 44, 52, 1)",
+        "containerBackgroundColor": "rgba(82, 88, 100, 1)",
+        "containerBorderRadius": 5,
+        "containerTextColor": "rgba(0, 0, 0, 1)",
         "height": 1080,
         "width": 1920,
         "gridDensity" : 5
