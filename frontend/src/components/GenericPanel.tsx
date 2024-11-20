@@ -30,7 +30,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         // Dynamic import with try-catch for better error handling
         const loadJson = async () => {
             try {
-                const module = await import(`../data/${static_data.panel_data}.json`)
+                const module = await import(`../data/${static_data.panel_name}.json`)
                 setJsonData(module.default);
             } catch (err) {
                 console.error("Error loading JSON file:", err);
@@ -38,7 +38,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         };
         loadJson();
         // eslint-disable-next-line
-    }, [static_data.panel_data]);
+    }, [static_data.panel_name]);
 
 
     // Once new data arrives - update dynamic state
