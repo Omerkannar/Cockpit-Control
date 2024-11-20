@@ -45,7 +45,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     useEffect(() => {
         if (dynamic_data) {
             for (let index = 0; index < dynamic_data.length; index++) {
-                if (static_data.panel_name === dynamic_data[index].panel) {
+                if (static_data.panel_name.toLowerCase() === dynamic_data[index].panel.toLowerCase()) {
                     try {
                         const elementName: string = dynamic_data[index].element;
                         const elementData = jsonData.filter((item: BasicTypeComponent['data']) => {
