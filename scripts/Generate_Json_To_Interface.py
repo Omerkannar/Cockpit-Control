@@ -70,6 +70,9 @@ with open(f"{base_folder}../Common/Panels.interface.tsx", "w") as interface_file
 with open(f"{base_folder}../Common/Panels.initial.tsx", "w") as initial_file:
     initial_file.write(initial_values_str)
 
+# Ensure the directory exists
+os.makedirs("../config", exist_ok=True)
+
 with open(f"../config/backendConfig.txt", "w") as backend_config_file:
     backend_config_file.write(backend_config_str)
 # with open(f"{base_folder}../Common/InterfaceMap.interface.tsx", "w") as interface_map_file:
