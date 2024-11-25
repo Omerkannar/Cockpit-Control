@@ -7,9 +7,9 @@ export const ComponentStatic = styled.img.attrs<GenericTypeComponent>(({ state, 
     id: data.backend.key,
 })) <GenericTypeComponent>`
     position: absolute;
-    width: ${(props) => (props.scale * props.data.component.position.width / 100)}px;
-    height: ${(props) => (props.scale * props.data.component.position.height / 100)}px;
-    top: ${props => (props.scale * props.data.component.position.top / 100)}px;
-    left: ${props => (props.scale * props.data.component.position.left / 100)}px;
+    width: ${(props) => (props.scale * props.data.component.position.imgWidth / 100)}px;
+    height: ${(props) => (props.scale * props.data.component.position.imgHeight / 100)}px;
+    top: ${props => (props.scale * props.data.component.position.posTop / 100)}px;
+    left: ${props => (props.scale * props.data.component.position.posLeft / 100)}px;
 `
 

@@ -9,16 +9,17 @@ import TrapezoidZone from './TrapezoidZone';
 
 const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
 
-  const largeRectangleHeight: number = Number(props.data.component.clickProps?.clickBoundsHeightFactor) * Number(props.data.component.position.height) * props.scale / 100;
-  const largeRectangleWidth: number = Number(props.data.component.clickProps?.clickBoundsWidthFactor) * Number(props.data.component.position.width) * props.scale / 100;
-  const smallRectangleHeight: number = Number(props.data.component.clickProps?.clickBoundsHeightFactor) * Number(props.data.component.position.height) * props.scale / 100 / REDUCE_FACTOR;
-  const smallRectangleWidth: number = Number(props.data.component.clickProps?.clickBoundsWidthFactor) * Number(props.data.component.position.width) * props.scale / 100 / REDUCE_FACTOR;
+  const largeRectangleHeight: number = Number(props.data.component.clickProps?.clickBoundsHeightFactor) * Number(props.data.component.position.imgHeight) * props.scale / 100;
+  const largeRectangleWidth: number = Number(props.data.component.clickProps?.clickBoundsWidthFactor) * Number(props.data.component.position.imgWidth) * props.scale / 100;
+  const smallRectangleHeight: number = Number(props.data.component.clickProps?.clickBoundsHeightFactor) * Number(props.data.component.position.imgHeight) * props.scale / 100 / REDUCE_FACTOR;
+  const smallRectangleWidth: number = Number(props.data.component.clickProps?.clickBoundsWidthFactor) * Number(props.data.component.position.imgWidth) * props.scale / 100 / REDUCE_FACTOR;
 
-  const isCenterMapping = props.data.component.clickProps?.mapping?.center;
-  const isTopMapping = props.data.component.clickProps?.mapping?.top;
-  const isBottomMapping = props.data.component.clickProps?.mapping?.bottom;
-  const isRightMapping = props.data.component.clickProps?.mapping?.right;
-  const isLeftMapping = props.data.component.clickProps?.mapping?.left;
+  const isCenter1Mapping = props.data.component.clickProps?.mapping?.mapPressPull1; // 1st center zone
+  const isCenter2Mapping = props.data.component.clickProps?.mapping?.mapPressPull2; // 2nd center zone (optional)
+  const isTopMapping = props.data.component.clickProps?.mapping?.mapTop;
+  const isBottomMapping = props.data.component.clickProps?.mapping?.mapBottom;
+  const isRightMapping = props.data.component.clickProps?.mapping?.mapRight;
+  const isLeftMapping = props.data.component.clickProps?.mapping?.mapLeft;
 
   const [isLongPress, setIsLongPress] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -61,10 +62,10 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
     <LargeSquare {...props}>
       {!props.data.component.isClickable ? null :
         <SmallSquare {...props}
-          id={isCenterMapping}
-          onMouseDown={(e) => isCenterMapping && handleOnMouseDown(e)}
-          onMouseUp={(e) => isCenterMapping && handleOnMouseUp(e)}
-          onMouseLeave={(e) => isCenterMapping && handleOnMouseUp(e)} 
+          id={isCenter1Mapping}
+          onMouseDown={(e) => isCenter1Mapping && handleOnMouseDown(e)}
+          onMouseUp={(e) => isCenter1Mapping && handleOnMouseUp(e)}
+          onMouseLeave={(e) => isCenter1Mapping && handleOnMouseUp(e)} 
           />
       }
       {!props.data.component.isClickable ? null :

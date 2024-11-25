@@ -17,8 +17,8 @@ export const ComponentStringNumber = styled.img.attrs<GenericTypeComponent>(({ s
     id: data.backend.key,
 })) <GenericTypeComponent>`
     position: absolute;
-    width: ${(props) => (props.scale * Number(props.data.component.position.width) / 100)}px;
-    height: ${(props) => (props.scale * Number(props.data.component.position.height) / 100)}px;
+    width: ${(props) => (props.scale * Number(props.data.component.position.imgWidth) / 100)}px;
+    height: ${(props) => (props.scale * Number(props.data.component.position.imgHeight) / 100)}px;
     top: ${props =>  (props.scale * 0 / 100)}px;
     left: ${props => (props.scale *  Number(props.digitOffset) / 100)}px;
 `

@@ -81,11 +81,11 @@ interface BasicData {
         debugMode?: boolean;
         isClickable: boolean;
         position: {
-            scale: number;
-            width: number;
-            height: number;
-            left: number;
-            top: number;
+            imgScale: number;
+            imgWidth: number;
+            imgHeight: number;
+            posLeft: number;
+            posTop: number;
             zIndex: number;
         };
         imageProps: {
@@ -96,11 +96,12 @@ interface BasicData {
             clickBoundsHeightFactor: number;
             clickBoundsWidthFactor: number;
             mapping: {
-                center?: string;
-                top?: string;
-                bottom?: string;
-                left?: string;
-                right?: string;
+                mapPressPull1?: string;
+                mapPressPull2?: string;
+                mapTop?: string;
+                mapBottom?: string;
+                mapLeft?: string;
+                mapRight?: string;
             };
             clickType?: OpertaionType; // "toggle" OR "clickByValue"
         };
@@ -109,7 +110,6 @@ interface BasicData {
         };
         analogProps?: {
             conversion: any;
-
         };
         stringProps?: {
             maxStringLength: number;
