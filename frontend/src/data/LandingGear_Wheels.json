@@ -18,10 +18,10 @@
             "debugMode": false,
             "isClickable": false,
             "position": {
-                "width": "70",
-                "height": "70",
-                "left": "48",
-                "top": "143"
+                "imgWidth": "70",
+                "imgHeight": "70",
+                "posLeft": "48",
+                "posTop": "143"
             },
             "imageProps": {
                 "imageDefault": "/LGControlPanel/Light_off.png",

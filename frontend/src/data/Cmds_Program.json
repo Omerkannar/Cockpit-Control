@@ -21,10 +21,10 @@
             "debugMode": true,
             "isClickable": true,
             "position": {
-                "width": "78",
-                "height": "78",
-                "left": "75",
-                "top": "78"
+                "imgWidth": "78",
+                "imgHeight": "78",
+                "posLeft": "75",
+                "posTop": "78"
             },
             "imageProps": {
                 "imageDefault": "/CMDSPanel/Knob_Plus.png"
@@ -33,11 +33,11 @@
                 "clickBoundsHeightFactor": 2,
                 "clickBoundsWidthFactor": 2,
                 "mapping": {
-                    "top": "INCREASE",
-                    "right": "INCREASE",
-                    "bottom": "DECREASE",
-                    "left": "DECREASE",
-                    "center": "DECREASE"
+                    "mapTop": "INCREASE",
+                    "mapRight": "INCREASE",
+                    "mapBottom": "DECREASE",
+                    "mapLeft": "DECREASE",
+                    "mapPressPull1": "DECREASE"
                 }
             },
             "knobProps": {

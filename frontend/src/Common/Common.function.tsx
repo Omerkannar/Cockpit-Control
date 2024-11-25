@@ -29,14 +29,14 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
                         scale={scale}
                         state={readDigits(state.toString(), data.component.stringProps?.maxStringLength)[digit]}
                         data={data}
-                        digitOffset={data.component.position.width * digit} />)
+                        digitOffset={data.component.position.imgWidth * digit} />)
                 }
                 return (
                     <ComponentStringContainer
-                        container_width={data.component.position.width * (data.component.stringProps?.maxStringLength || 0)}
-                        container_height={data.component.position.height}
-                        container_left={data.component.position.left}
-                        container_top={data.component.position.top}>
+                        container_width={data.component.position.imgWidth * (data.component.stringProps?.maxStringLength || 0)}
+                        container_height={data.component.position.imgHeight}
+                        container_left={data.component.position.posLeft}
+                        container_top={data.component.position.posTop}>
                         {elements.length > 0 && elements}
                     </ComponentStringContainer>
                 )
