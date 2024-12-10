@@ -1,0 +1,3955 @@
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling} % Allows customization of the title page
+\title{\Huge \textbf{Cockpit Control / Vico \\ SW Manual} \\ \vspace{1cm} \Large Version 0.1}
+\author{Omer.Kannar@elbitsystems-us.com} % Author and email address
+\date{December 5, 2024} % Fixed date
+% Define custom title page
+\pretitle{\begin{center}\Huge\bfseries}
+\posttitle{\end{center}\vspace{5cm}}
+\predate{\begin{center}\large}
+\postdate{\end{center}\vspace{5cm}}
+\preauthor{\begin{center}\Large}
+\postauthor{\end{center}\vspace{5cm}}
+
+\usepackage{lipsum}
+\usepackage[margin=1in]{geometry}
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\footnotesize, % Monospaced font (Courier-like), small size
+    keywordstyle=\color{blue},        % Keywords in blue
+    commentstyle=\color{gray},        % Comments in gray
+    stringstyle=\color{red},          % Strings in red
+    numbers=left,                    % Line numbers on the left
+    numberstyle=\tiny,               % Line number font size
+    stepnumber=1,                    % Number every line
+    tabsize=4,                        % Tab width
+    frame=single,                    % Box around the code
+    breaklines=true                   % Automatic line breaking
+}
+\usepackage{tikz}
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\alph*)} % Lowercase letters: a), b), c)
+\setlist[enumerate,2]{label=\roman*)} % Roman numerals: i), ii), iii)
+\setlist[enumerate,3]{label=\Alph*)} % Uppercase letters: A), B), C)
+\graphicspath{{assets/}}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children no
+\language american
+\language_package default
+\inputencoding utf8
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement class
+\float_alignment class
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008080
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="10cm">
+<column alignment="center" valignment="top" width="0pt">
+<row interlinespace="default">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Date
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Description of Change 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Author 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12/5/2024
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Initial draft created 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Omer Kannar
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row endhead="true">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Visual layouts
+\end_layout
+
+\begin_layout Enumerate
+Main Container:
+ Defines the main screen size,
+ background color and grid density.
+\end_layout
+
+\begin_layout Enumerate
+Panels Container:
+ A container placed over the main container and contains a list of panels.
+\end_layout
+
+\begin_layout Enumerate
+Layout:
+ List of panels’ containers that predefined.
+\end_layout
+
+\begin_layout Enumerate
+Panel
+\end_layout
+
+\begin_layout Enumerate
+Component:
+ Anything that is supposed to interact with the user (Switch,
+ Knob,
+ Display,
+ etc..)
+\end_layout
+
+\begin_layout Section
+Configuration files
+\end_layout
+
+\begin_layout Enumerate
+settings.json
+\end_layout
+
+\begin_layout Enumerate
+PanelConfiguration.json
+\end_layout
+
+\begin_layout Enumerate
+Layouts.json
+\end_layout
+
+\begin_layout Enumerate
+Panels.json
+\end_layout
+
+\begin_layout Enumerate
+Component_xxx.json
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Basic data interface
+\end_layout
+
+\begin_layout Standard
+Each component is defined by its own basic data.
+ The basic data is an interface which allows the user to control the component’s behavior,
+ position,
+ size and connectivity to simulation.
+ The interface is defined as:
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+interface BasicData {
+\end_layout
+
+\begin_layout Plain Layout
+
+    type:
+ Type;
+\end_layout
+
+\begin_layout Plain Layout
+
+    backend:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+        key:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+        dbsimProps?:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            stationName:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+            blockName:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+            elementName:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+            elementType:
+ ElementType;
+\end_layout
+
+\begin_layout Plain Layout
+
+            enumMapping?:
+ any;
+\end_layout
+
+\begin_layout Plain Layout
+
+        }
+\end_layout
+
+\begin_layout Plain Layout
+
+    };
+\end_layout
+
+\begin_layout Plain Layout
+
+    component:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+        debugMode?:
+ boolean;
+\end_layout
+
+\begin_layout Plain Layout
+
+        isClickable:
+ boolean;
+\end_layout
+
+\begin_layout Plain Layout
+
+        position:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            imgScale:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+            imgWidth:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+            imgHeight:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+            posLeft:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+            posTop:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+            zIndex:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        imageProps:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            imageDefault:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+            additionalImageData?:
+ any;
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        clickProps?:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            clickBoundsHeightFactor:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+            clickBoundsWidthFactor:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+            mapping:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+                mapPressPull1?:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+                mapPressPull2?:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+                mapTop?:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+                mapBottom?:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+                mapLeft?:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+                mapRight?:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+            };
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        knobProps?:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            rotation:
+ any;
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        analogProps?:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            conversion:
+ any;
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        stringProps?:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            maxStringLength:
+ number;
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        blinking?:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            color:
+ string;
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+        logger?:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            display:
+ boolean;
+\end_layout
+
+\begin_layout Plain Layout
+
+        };
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+type
+\end_layout
+
+\begin_layout Standard
+Can be one of the following:
+\end_layout
+
+\begin_layout Itemize
+"static" – The component does not change its image.
+ Typically,
+ this type is used to allow the user to click on it without triggering any other specific behavior.
+\end_layout
+
+\begin_layout Itemize
+"stateN" – This is the most common type.
+ The designer is responsible for updating the image whenever new data is received from the simulation.
+ The designer should have all the images related to this specific component.
+ For example,
+ a 3-position switch (up/center/down) is a stateN type,
+ and the designer should have images for each position:
+ up,
+ center,
+ and down.
+\end_layout
+
+\begin_layout Itemize
+"knobInteger" – This type is used for knobs with N (2 or more) rotation positions.
+ The designer should have an image of the knob,
+ and based on data from the simulation,
+ the knob will rotate by X degrees from its default position (negative X degrees indicates counterclockwise rotation,
+ while positive X degrees indicate clockwise rotation).
+\end_layout
+
+\begin_layout Itemize
+“analogRotation” – This type is very similar to “knobInteger” except that this type receives analog input and using linear interpolation,
+ convert the data to rotation.
+ The knob is then rotated to the desired position.
+\end_layout
+
+\begin_layout Itemize
+“analogVerticalTranslation” – Received analog values from the simulation and responsible to move the image up and down according to linear conversion.
+\end_layout
+
+\begin_layout Itemize
+“analogHorizontalTranslation” – Similar to “analogVerticalTranslation” while in this case – the image moves from left to right according to linear conversion.
+\end_layout
+
+\begin_layout Itemize
+“number” – Display a number received from the simulation.
+ The designer is responsible for providing a list of images corresponding to each number and the maximum length of the number.
+\end_layout
+
+\begin_layout Subsection
+backend
+\end_layout
+
+\begin_layout Standard
+This object defines all the properties of the component related to the simulation.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+key
+\begin_inset Quotes erd
+\end_inset
+
+ - Logical name to describe the component.
+ Will be used for logging purposes.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+dbsimProps
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all dbsim properties
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+stationName
+\begin_inset Quotes erd
+\end_inset
+
+ - Host name
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+blockName
+\begin_inset Quotes erd
+\end_inset
+
+ - LRUs block name connected to component
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+elementName
+\begin_inset Quotes erd
+\end_inset
+
+ - LRUs element name connected to component
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+elementType
+\begin_inset Quotes erd
+\end_inset
+
+ - Type of the element.
+ Can be one of the following:
+ "Double",
+ "Float",
+ "Integer",
+ "Boolean" or "String"
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+enumMapping
+\begin_inset Quotes erd
+\end_inset
+
+ - With assumption that most of the components are 4 bytes and will be enumartions,
+ this object defines the enum mapping that was configure with DBSim.
+ The structure of this object should be as follows:
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Enum 1
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ value1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Enum 2
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ value2,
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Enum 3
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ value3,
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+component
+\end_layout
+
+\begin_layout Standard
+This object defines all the functional and visual properties of a component.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+debugMode
+\begin_inset Quotes erd
+\end_inset
+
+ - [boolean] Defines whether a component is in debug mode or not.
+ Debug mode gives the user additional data about the component behavior.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+isClickable
+\begin_inset Quotes erd
+\end_inset
+
+ - [Boolean] Defines whether a component is clickable or not.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+position
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all properties about component's position and size
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+imgScale
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] [% / 100] Defines the scale of an image (1 = 100%,
+ 2 = 200%,
+ 0.5 = 50%...)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+imgWidth
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] [px] Defines image width
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+imgHeight
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] [px] Defines image height
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+posLeft
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] [px] Defines horizontally image position from the left- top corner 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+posTop
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] [px] Defines vertically image position from the left- top corner
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+zIndex
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] Defines the 
+\begin_inset Quotes eld
+\end_inset
+
+layer
+\begin_inset Quotes erd
+\end_inset
+
+ of an image (If there several images in the same position,
+ this property defines which image is going to be stack.
+ The higher zIndex - The higher the image is)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+imageProp
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all properties about component's image
+\backslash
+s
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+imgDefault
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines the path of the default image
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+additionalImageData
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all other images associated to the component.
+ (In case there are several images,
+ this object will defines them all)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+clickProps
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all properties about component's click behavior
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+clickBoundsHeightFactor
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] [% / 100] Defines the click zone height of a component (from original component height) (1 = 100%,
+ 2 = 200%,
+ 0.5 = 50%...)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+clickBoundsWidthFactor
+\begin_inset Quotes erd
+\end_inset
+
+ - [number] [% / 100] Defines the click zone width of a component (from original component width) (1 = 100%,
+ 2 = 200%,
+ 0.5 = 50%...)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mapping
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all zones where click is available and the behavior of each zone (See 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Appendix-1--"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add the image
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[anchor=south west,
+ inner sep=0] (image) at (5,0) {
+\backslash
+includegraphics[width=5cm]{clickMapping.png}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=yellow!50,
+  text width=3cm,
+ align=left] at (2,
+ 4.5) {Top zone};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (3.6,
+ 4.5) -- (7,
+ 4.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+% Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=yellow!50,
+  text width=3cm,
+ align=left] at (2,
+ 2.5) {Left zone};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (3.6,
+ 2.5) -- (5.8,
+ 2.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=yellow!50,
+  text width=3cm,
+ align=left] at (2,
+ 0.5) {Bottom zone};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (3.6,
+ 0.5) -- (7,
+ 0.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=yellow!50,
+  text width=3cm,
+ align=left] at (13,
+ 3) {Center (PressPull) zone};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (11.4,
+ 3) -- (7.3,
+ 3);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+% Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=yellow!50,
+  text width=3cm,
+ align=left] at (13,
+ 0.5) {Right zone};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (11.4,
+ 0.5) -- (9,
+ 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+According the requested behavior,
+ the values should be one of the following:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+TOGGLE_INCREASE
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+TOGGLE_DECREASE
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+EXPLICIT VALUE
+\begin_inset Quotes erd
+\end_inset
+
+,
+ INCREASE 
+\backslash
+ CW or DECREASE 
+\backslash
+ CCW
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mapPressPull1
+\begin_inset Quotes erd
+\end_inset
+
+ - Center square,
+ Defines as 1/3 area from the outer square
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mapPressPull2
+\begin_inset Quotes erd
+\end_inset
+
+ - Reserved - not used
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mapTop
+\begin_inset Quotes erd
+\end_inset
+
+ - Top trapezoid
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mapBottom
+\begin_inset Quotes erd
+\end_inset
+
+ - Bottom trapezoid
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mapLeft
+\begin_inset Quotes erd
+\end_inset
+
+ - Left trapezoid
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+mapRight
+\begin_inset Quotes erd
+\end_inset
+
+ - Right trapezoid
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+knobProps
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all properties of knob component when type is 
+\begin_inset Quotes eld
+\end_inset
+
+knobInteger
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+rotation
+\begin_inset Quotes erd
+\end_inset
+
+ - The structure of this object should be as follows (See 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Appendix-1--"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+):
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Key 1
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ Rotation value1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Key 2
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ Rotation value2,
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Key 3
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ Rotation value3,
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+analogProps
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all properties of the analog component when type is 
+\begin_inset Quotes eld
+\end_inset
+
+analogRotation
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+analogVerticalTranslation
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+analogHorizontalTranslation
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+conversion
+\begin_inset Quotes erd
+\end_inset
+
+ - Assuming linear conversion,
+ the structure of this object should be as follows:
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Key 1
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ Conversion value1,
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Key 2
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ Conversion value2,
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+Key 3
+\begin_inset Quotes erd
+\end_inset
+
+ :
+ Conversion value3,
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+stringProps
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all properties of the string component when type is 
+\begin_inset Quotes eld
+\end_inset
+
+string
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+maxStringLength
+\begin_inset Quotes erd
+\end_inset
+
+ - Deines the maximum length of a string 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+blinking
+\begin_inset Quotes erd
+\end_inset
+
+ - Defines all blinking properties
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+color
+\begin_inset Quotes erd
+\end_inset
+
+ - [Explicit value (
+\begin_inset Quotes eld
+\end_inset
+
+black
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+green
+\begin_inset Quotes erd
+\end_inset
+
+,
+ ...),
+ RGB,
+ RGBA,
+ HEX,
+ HSL,
+ HWB,
+ CMYK,
+ NCOL]
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+logger
+\begin_inset Quotes erd
+\end_inset
+
+ - Defins wether the component will appear in loggor or not.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+display
+\begin_inset Quotes erd
+\end_inset
+
+ - [boolean]
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Appendix-1--"
+
+\end_inset
+
+Appendix 1 - Examples
+\end_layout
+
+\begin_layout Subsection
+stateN
+\end_layout
+
+\begin_layout Standard
+The following is applied for component with 2 to unlimited states.
+\end_layout
+
+\begin_layout Standard
+Assume 3 states switch with the following images:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename assets/pasted1.emf
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And these images should populate the following panel:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename assets/pasted2.emf
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In addition,
+ Let’s assume that the values from DBSIM are as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename assets/pasted3.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case the images mapping will be as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes eld
+\end_inset
+
+component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+imageProps
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+imageDefault
+\begin_inset Quotes erd
+\end_inset
+
+:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+pathDefault
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 		   // Path to default image (Usually one of the 											  // paths below
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\begin_inset Quotes eld
+\end_inset
+
+additionalImageData
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+			"OFF":
+ 
+\begin_inset Quotes eld
+\end_inset
+
+pathDown",
+ 			   // path to switch down
+\end_layout
+
+\begin_layout Plain Layout
+
+			"ANTISKID":
+ "pathMiddle",
+ 		// path to switch middle
+\end_layout
+
+\begin_layout Plain Layout
+
+			"BRAKE":
+ "pathUp" 				// path to switch up
+\end_layout
+
+\begin_layout Plain Layout
+
+		} 									// close "additionalImageData"
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 										// close “imageProps”
+\end_layout
+
+\begin_layout Plain Layout
+
+} 											// close “component”
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now,
+ according to requirements,
+ the click behavior should be defined.
+ If explicit behavior is required,
+ each click zone should contain the explicit value.
+ In this case:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes eld
+\end_inset
+
+component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+clickProps
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+mapping
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\begin_inset Quotes eld
+\end_inset
+
+mapTop
+\begin_inset Quotes erd
+\end_inset
+
+:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+BRAKE
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 			   // will inject the value “BRAKE”
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\begin_inset Quotes eld
+\end_inset
+
+mapPressPull1
+\begin_inset Quotes erd
+\end_inset
+
+:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+ANTISKID
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 	 // will inject the value “ANTISKID”
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\begin_inset Quotes eld
+\end_inset
+
+mapBottom
+\begin_inset Quotes erd
+\end_inset
+
+:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+OFF
+\begin_inset Quotes erd
+\end_inset
+
+ 			   // will inject the value “OFF”
+\end_layout
+
+\begin_layout Plain Layout
+
+		} 								// close “mapping”
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 									// close “clickProps”
+\end_layout
+
+\begin_layout Plain Layout
+
+} 										// close “component”
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And the following will result:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add the image
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[anchor=south west,
+ inner sep=0] (image) at (6,0) {
+\backslash
+includegraphics[width=5cm]{pasted4.png}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+  text width=4cm,
+ align=left] at (2,
+ 3) {Click here will inject “BRAKE”};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.1,
+ 3) -- (7,
+ 2.75);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+ text width=4cm,
+ align=left] at (2,
+ 1.5) {Click here will inject “ANTISKID”};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.1,
+ 1.5) -- (7.3,
+ 1.7);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+ text width=4cm,
+ align=left] at (2,
+ 0) {Click here will inject “OFF”};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.1,
+ 0) -- (7,
+ 0.75);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=red!20,
+ text width=2.5cm,
+ align=left] at (13,
+ 1.5) {Click here (red zones) 
+\end_layout
+
+\begin_layout Plain Layout
+
+will do nothing};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=orange] (11.6,
+ 1.5) -- (6.8,
+ 1.2);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=orange] (11.6,
+ 1.5) -- (8.8,
+ 2.2);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Click on the upper trapezoid will inject the value “BRAKE”,
+ click on the lower trapezoid will inject the value “OFF” and click on the center square will inject the value “ANTISKID”.
+ It was possible to define the left and right trapezoids by mapping “mapLeft” and “mapRight” but in this case it isn’t necessary.
+\end_layout
+
+\begin_layout Standard
+If toggle behavior is required,
+ each click zone should contain the value “TOGGLE_X” (Where X = INCREASE or DECREASE).
+ In case a toggle increase is required,
+ the value should be as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	"clickProps
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+		"mapping
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapTop":
+ “TOGGLE_INCREASE",		// will toggle to next value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapPressPull1":
+ “TOGGLE_INCREASE",
+ // will toggle to next value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapBottom":
+ “TOGGLE_INCREASE",	// will toggle to next value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapLeft":
+ “TOGGLE_INCREASE",		// will toggle to next value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapRight":
+ “TOGGLE_INCREASE",	// will toggle to next value
+\end_layout
+
+\begin_layout Plain Layout
+
+		} 									// close 
+\begin_inset Quotes eld
+\end_inset
+
+mapping"
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 										// close 
+\begin_inset Quotes eld
+\end_inset
+
+clickProps"
+\end_layout
+
+\begin_layout Plain Layout
+
+} 											// close 
+\begin_inset Quotes eld
+\end_inset
+
+component"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And the following will result:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add the image
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[anchor=south west,
+ inner sep=0] (image) at (6,0) {
+\backslash
+includegraphics[width=5cm]{pasted5.png}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+  text width=4cm,
+ align=left] at (2,
+ 2) {Because all zones were defined,
+ no matter where  The click is – the next value will be injected};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.1,
+ 2) -- (7,
+ 1.8);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The logic will be “OFF” –> “ANTISKID” –> “BRAKE” –> “OFF” –> “ANTISKID” –> ...
+\end_layout
+
+\begin_layout Standard
+In case a toggle decrease is required,
+ the value should be as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	"clickProps
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\begin_inset Quotes eld
+\end_inset
+
+mapping
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapTop":
+ “TOGGLE_DECREASE",		// will toggle to previous value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapPressPull1":
+ “TOGGLE_DECREASE",
+ // will toggle to previous value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapBottom":
+ “TOGGLE_DECREASE",	// will toggle to previous value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapLeft":
+ “TOGGLE_DECREASE",		// will toggle to previous value
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapRight":
+ “TOGGLE_DECREASE",	// will toggle to previous value
+\end_layout
+
+\begin_layout Plain Layout
+
+		} 									// close 
+\begin_inset Quotes eld
+\end_inset
+
+mapping"
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 										// close 
+\begin_inset Quotes eld
+\end_inset
+
+clickProps"
+\end_layout
+
+\begin_layout Plain Layout
+
+} 											// close 
+\begin_inset Quotes eld
+\end_inset
+
+component"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And the following will result:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add the image
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[anchor=south west,
+ inner sep=0] (image) at (6,0) {
+\backslash
+includegraphics[width=5cm]{pasted6.png}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+  text width=4cm,
+ align=left] at (2,
+ 2) {Because all zones were defined,
+ no matter where  The click is – the previos value will be injected};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.1,
+ 2) -- (7,
+ 1.8);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The logic will be “OFF” –> “BRAKE” –> “ANTISKID” –> “OFF” –> “BRAKE” –> ...
+\end_layout
+
+\begin_layout Standard
+It is also possible to combine behaviors so one or more zones will implement explicit value,
+ and other zones will implement toggle behavior.
+\end_layout
+
+\begin_layout Subsection
+knobInteger
+\end_layout
+
+\begin_layout Standard
+The following is applied for components with one image.
+\end_layout
+
+\begin_layout Standard
+Assume a knob with the following images:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename assets/pasted7.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And these images should populate the following panel:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename assets/pasted8.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In addition,
+ Let’s assume that the values from DBSIM are as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename assets/pasted9.emf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case we should include only the knob image and image mapping will be as follows:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes eld
+\end_inset
+
+component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+imageProps
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\begin_inset Quotes eld
+\end_inset
+
+imageDefault
+\begin_inset Quotes erd
+\end_inset
+
+:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+path
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 		   	   // Path to knob image 
+\end_layout
+
+\begin_layout Plain Layout
+
+	} 										// close “imageProps”
+\end_layout
+
+\begin_layout Plain Layout
+
+} 											// close “component”
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In addition,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+knobPrpos
+\begin_inset Quotes erd
+\end_inset
+
+ should be defined as well:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Quotes eld
+\end_inset
+
+component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+        ...
+\end_layout
+
+\begin_layout Plain Layout
+
+        
+\begin_inset Quotes eld
+\end_inset
+
+knobProps":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+            "rotation":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+				    "BIT":
+ -90,	   // "BIT" is -90deg from defualt knob position
+\end_layout
+
+\begin_layout Plain Layout
+
+                    "1":
+ -55,		 // "1" is -55deg from defualt knob position	
+\end_layout
+
+\begin_layout Plain Layout
+
+                    "2":
+ -15,		 // "2" is -15deg from defualt knob position
+\end_layout
+
+\begin_layout Plain Layout
+
+                    "3":
+ 25,		  // "3" is 25deg from defualt knob position
+\end_layout
+
+\begin_layout Plain Layout
+
+                    "4":
+ 69		   // "4" is 69deg from defualt knob position
+\end_layout
+
+\begin_layout Plain Layout
+
+                }					 // close "rotation"
+\end_layout
+
+\begin_layout Plain Layout
+
+			}						 // close "knobProps"
+\end_layout
+
+\begin_layout Plain Layout
+
+        }							 // close "component"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that positive rotation (+Xdeg) is CW rotation and negative rotation (-Xdeg) is CCW rotation.
+\end_layout
+
+\begin_layout Standard
+Now,
+ according to requirements,
+ the click behavior should be defined.
+ If explicit behavior is required,
+ each click zone should contain the explicit value.
+ In this case:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	"clickProps":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+		"mapping":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapTop":
+ “INCREASE",
+ // will inject the next value (can be also the value “CW")
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapRight":
+ “INCREASE",
+ // will inject the next value (can be also the value “CW")
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapBottom":
+ “DECREASE",
+ // will inject the previous value (can be also the value “CCW")
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapLeft":
+ “DECREASE" // will inject the previous value (can be also the value “CCW")
+\end_layout
+
+\begin_layout Plain Layout
+
+		} // close "mapping"
+\end_layout
+
+\begin_layout Plain Layout
+
+	} // close "clickProps"
+\end_layout
+
+\begin_layout Plain Layout
+
+} // close "component"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And the following will result:
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add the image
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[anchor=south west,
+ inner sep=0] (image) at (6,0) {
+\backslash
+includegraphics[width=5cm]{pasted10.png}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+  text width=4.5cm,
+ align=left] at (2,
+ 3) {Click here (Top abd Right) will inject the next value (INCREASE / CW)};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.35,
+ 3) -- (9.5,
+ 2.75);
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.35,
+ 3) -- (8,
+ 3.15);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+ text width=4.5cm,
+ align=left] at (2,
+ 0) {Click here (Bottom and left) will inject the previous value (DECREASE / CCW)};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.35,
+ 0) -- (8.5,
+ 0.75);
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.35,
+ 0) -- (7.5,
+ 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=red!20,
+ text width=4cm,
+ align=left] at (13.5,
+ 1.5) {Click here (red zone) will do nothing};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=orange] (11.35,
+ 1.5) -- (8.5,
+ 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To summarize,
+ click on the right and top trapezoids will implement the following logic:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+BIT
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+1
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+2
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+3
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+4
+\begin_inset Quotes erd
+\end_inset
+
+ (more clicks will do nothing – the value will remain 
+\begin_inset Quotes eld
+\end_inset
+
+4
+\begin_inset Quotes erd
+\end_inset
+
+).
+ click on the left and bottom trapezoids will implement the following logic:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+4
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+3
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+2
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+1
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+BIT
+\begin_inset Quotes erd
+\end_inset
+
+ (more clicks will do nothing – the value will remain 
+\begin_inset Quotes eld
+\end_inset
+
+1
+\begin_inset Quotes erd
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+If toggle behavior is required,
+ each click zone should contain the value “TOGGLE_X” (Where X = INCREASE or DECREASE).
+ In case a toggle increase is required,
+ the value should be as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	"clickProps":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+		"mapping":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapTop":
+ “TOGGLE_INCREASE",
+ // will toggle the next value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapRight":
+ “TOGGLE_INCREASE",
+ // will inject the next value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapBottom":
+ “TOGGLE_INCREASE",
+ // will inject the next value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapLeft":
+ “TOGGLE_INCREASE",
+ // will inject the next value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapPressPull1
+\begin_inset Quotes erd
+\end_inset
+
+:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+TOGGLE_INCREASE
+\begin_inset Quotes erd
+\end_inset
+
+ // will inject the next value 
+\end_layout
+
+\begin_layout Plain Layout
+
+		} // close "mapping"
+\end_layout
+
+\begin_layout Plain Layout
+
+	} // close "clickProps"
+\end_layout
+
+\begin_layout Plain Layout
+
+} // close "component"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And the following will result:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add the image
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[anchor=south west,
+ inner sep=0] (image) at (6,0) {
+\backslash
+includegraphics[width=5cm]{pasted11.png}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+  text width=4.5cm,
+ align=left] at (2,
+ 3) {Because all zones were defined,
+ no matter where the click is – the next value will be injected};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.35,
+ 3) -- (8.5,
+ 1.75);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case,
+ the logic will be 
+\begin_inset Quotes eld
+\end_inset
+
+BIT
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+1
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+2
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+3
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+4
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+BIT
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+1
+\begin_inset Quotes erd
+\end_inset
+
+ –> ...
+\end_layout
+
+\begin_layout Standard
+In case a toggle decrease is required,
+ the value should be as follows:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+"component
+\begin_inset Quotes erd
+\end_inset
+
+:
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+	"clickProps":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+		"mapping":
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapTop":
+ “TOGGLE_DECREASE",
+ // will toggle the previous value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapRight":
+ “TOGGLE_DECREASE",
+ // will inject the previous value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapBottom":
+ “TOGGLE_DECREASE",
+ // will inject the previous value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			"mapLeft":
+ “TOGGLE_DECREASE",
+ // will inject the previous value 
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\begin_inset Quotes eld
+\end_inset
+
+mapPressPull1
+\begin_inset Quotes erd
+\end_inset
+
+:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+TOGGLE_DECREASE
+\begin_inset Quotes erd
+\end_inset
+
+ // will inject the previous value 
+\end_layout
+
+\begin_layout Plain Layout
+
+		} // close "mapping"
+\end_layout
+
+\begin_layout Plain Layout
+
+	} // close "clickProps"
+\end_layout
+
+\begin_layout Plain Layout
+
+} // close "component"
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And the following will result:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add the image
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[anchor=south west,
+ inner sep=0] (image) at (6,0) {
+\backslash
+includegraphics[width=5cm]{pasted11.png}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add a text box
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+node[draw,
+ fill=blue!20,
+  text width=4.5cm,
+ align=left] at (2,
+ 3) {Because all zones were defined,
+ no matter where the click is – the previous value will be injected};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % Add arrows
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->,
+ line width=2pt,
+ color=blue] (4.35,
+ 3) -- (8.5,
+ 1.75);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case,
+ the logic will be 
+\begin_inset Quotes eld
+\end_inset
+
+BIT
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+4
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+3
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+2
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+1
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+BIT
+\begin_inset Quotes erd
+\end_inset
+
+ –> 
+\begin_inset Quotes eld
+\end_inset
+
+4
+\begin_inset Quotes erd
+\end_inset
+
+ –> ...
+\end_layout
+
+\end_body
+\end_document
