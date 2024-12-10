@@ -1,0 +1,50 @@
+[
+    {
+        "type": "analogRotation",
+        "backend": {
+            "key": "EPU_FUEL_IN",
+            "dbsimProps": {
+                "stationName": "",
+                "blockName": "",
+                "elementName": "",
+                "elementType": "Float",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": false,
+            "position": {
+                "imgWidth": "375",
+                "imgHeight": "375",
+                "posLeft": "0",
+                "posTop": "0"
+            },
+            "imageProps": {
+                "imageDefault": "/EPUFuelPanel/EPU_Fuel_1.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 2,
+                "clickBoundsWidthFactor": 2,
+                "mapping": { }
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {
+                    "0": -117,
+                    "50": 0,
+                    "100": 117
+                }
+            },
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    }
+]

@@ -15,11 +15,37 @@
     {
         "panel_name" : "Cmds_Program",
         "panel_container": "LEFT_AUXILIARY_AND_CONSOLE_CMDS",
-        "panel_url" : "./CMDSPanel/PRGM.png",
+        "panel_url" : "./CMDSPanel/PRGM1.png",
         "panel_resources" : "/CMDSPanel/",
         "panel_scale": 50,
         "panel_top": 10,
         "panel_left": 60,
+        "enlargeProps": {
+            "enable": false,
+            "scale": 60
+        }
+    },
+    {
+        "panel_name" : "Epu_Fuel",
+        "panel_container": "RIGHT_AUXILIARY_AND_CONSOLE_EPU_FUEL",
+        "panel_url" : "./EPUFuelPanel/Edit/EPU_Fuel_New.png",
+        "panel_resources" : "/CMDSPanel/",
+        "panel_scale": 70,
+        "panel_top": 0,
+        "panel_left": 0,
+        "enlargeProps": {
+            "enable": false,
+            "scale": 60
+        }
+    },
+    {
+        "panel_name" : "Lg_Parking",
+        "panel_container": "LEFT_AUXILIARY_AND_CONSOLE_LANDING_GEAR",
+        "panel_url" : "./LGControlPanel/AntiSkid.png",
+        "panel_resources" : "/LGControlPanel/",
+        "panel_scale": 50,
+        "panel_top": 10,
+        "panel_left": 10,
         "enlargeProps": {
             "enable": false,
             "scale": 60

@@ -14,6 +14,11 @@
 # production
 /build
 
+
+../config
+/src/Common/Panels.initial.tsx
+/src/Common/Panels.interface.tsx
+
 # misc
 .DS_Store
 .env.local

@@ -1,6 +1,6 @@
 [
     {
-        "type": "analog_vertical_translation",
+        "type": "analogVerticalTranslation",
         "backend": {
             "key": "LANDING_GEAR_HANDLE_IN",
             "dbsimProps": {

@@ -5,7 +5,7 @@
 
 | Property		| Type		| Comment|
 |---------------|-----------|--------|
-|*type*                                             |string 	|Type of the component. Can be one of the follwowing options (static", "stateN", "knobInteger", "analog_rotation", "analog_vertical_translation", "analog_horizontal_translation", "string", "number")|
+|*type*                                             |string 	|Type of the component. Can be one of the follwowing options (static", "stateN", "knobInteger", "analogRotation", "analogVerticalTranslation", "analogHorizontalTranslation", "string", "number")|
 |*backend*                                          |object		|Defines all properties to Backend|
 |*backend\key*                                      |string		|Logical name of the component|
 |*backend\dbsimProps*                               |object		|Defines all properties to DBSIM|
@@ -35,7 +35,7 @@
 |*component\clickProps\mapping\left*                |string 	| Defines the behavior of the left area|
 |*component\clickProps\mapping\right*               |string 	| Defines the behavior of the right area|
 |*component\knobProps*                             |object 	|Defines the knob properties if type == "knobInteger"|
-|*component\analogProps*                           |object 	|Defines the component properties if type == "analog_rotation" \ "analog_vertical_translation" \ "analog_horizontal_translation"|
+|*component\analogProps*                           |object 	|Defines the component properties if type == "analogRotation" \ "analogVerticalTranslation" \ "analogHorizontalTranslation"|
 |*component\stringProps*                           |object 	|Defines the component properties if type == "string"|
 |*component\blinking*                               |object 	|Defines the blinking properties when the component changes state|
 |*component\blinking\color*                         |string 	| Color of the blinking boundaries|

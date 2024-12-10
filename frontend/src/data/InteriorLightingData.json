@@ -1,6 +1,6 @@
 [
     {
-        "type": "analog_rotation",
+        "type": "analogRotation",
         "backend_name": "PRIMARY_CONSOLES_BRT_IN",
         "width": "100",
         "height": "100",

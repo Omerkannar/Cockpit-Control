@@ -9,6 +9,6 @@
   },
   {
     "layout_name": "Right Auxiliary and Console",
-    "containers": ["INSTRUMENTS_L2", "INSTRUMENTS_R2"]
+    "containers": ["RIGHT_AUXILIARY_AND_CONSOLE_EPU_FUEL"]
   }
 ]
