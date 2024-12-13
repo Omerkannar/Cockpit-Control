@@ -64,15 +64,6 @@
         "container_width": 600,
         "container_height": 400,
         "container_scale": 100
-    },
-    {
-        "container_name": "RIGHT_AUXILIARY_AND_CONSOLE_EPU_FUEL", 
-        "container_text": "EPU FUEL", 
-        "container_top": 130,
-        "container_left": 250,
-        "container_width": 300,
-        "container_height": 300,
-        "container_scale": 100
     }
 ]
 

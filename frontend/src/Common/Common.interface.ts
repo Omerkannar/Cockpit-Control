@@ -2,10 +2,10 @@
 type Type = "static" | 
             "stateN" | 
             "knobInteger" | 
-            "analogRotation" | 
-            "analogVerticalTranslation" |
-            "analogHorizontalTranslation" | 
-            "analogHorizontalTranslationCyclic" | 
+            "analog_rotation" | 
+            "analog_vertical_translation" |
+            "analog_horizontal_translation" | 
+            "analog_horizontal_translation_cyclic" | 
             "analog_vertical_translation_cyclic" |
             "string" | 
             "number";
@@ -104,6 +104,7 @@ interface BasicData {
                 mapLeft?: string;
                 mapRight?: string;
             };
+            clickType?: OpertaionType; // "toggle" OR "clickByValue"
         };
         knobProps?: {
             rotation: any;

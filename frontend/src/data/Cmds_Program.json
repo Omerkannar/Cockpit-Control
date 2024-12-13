@@ -23,8 +23,8 @@
             "position": {
                 "imgWidth": "78",
                 "imgHeight": "78",
-                "posLeft": "68",
-                "posTop": "72"
+                "posLeft": "75",
+                "posTop": "78"
             },
             "imageProps": {
                 "imageDefault": "/CMDSPanel/Knob_Plus.png"
