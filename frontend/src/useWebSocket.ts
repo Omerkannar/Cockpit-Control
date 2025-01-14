@@ -19,7 +19,8 @@ export const useWebSocket = (url: string) => {
                     panel: detail.Panel,
                     element: detail.Element,
                     value: detail.Value,
-                    blinking: data['Type'] === "UPDATE_CLIENT_ON_STARTUP" ? false : true
+                    // `blinking` is set to false on startup, true otherwise
+                    blinking: data['Type'] === "UPDATE_CLIENT_ON_STARTUP" ? false : true,
                 }));
                 setMessage(incomingMessages);
             } catch (error) {
@@ -49,7 +50,7 @@ export const useWebSocket = (url: string) => {
                 Details: {
                 Panel: panel,
                 Element: element,
-                Value: value.toString()
+                Value: value.toString(), // Ensure it's a string, even for numbers
                 }
             }));
         }

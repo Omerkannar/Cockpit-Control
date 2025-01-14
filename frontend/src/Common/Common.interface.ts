@@ -111,6 +111,11 @@ interface BasicData {
         };
         analogProps?: {
             conversion: any;
+            adiProps?: {
+                pitchOffsetSlope: number;
+                pitchOffsetConstant: number;
+                transformOriginConstant: number;
+            }
         };
         stringProps?: {
             maxStringLength: number;
@@ -139,5 +144,11 @@ export interface BasicComponentContainer extends BasicTypeComponent {
 
 export interface GenericTypeComponent extends BasicTypeComponent {
     state: State;
+    [key: string]: any;
+}
+
+export interface ADIComponent extends BasicTypeComponent {
+    pitch: number;
+    roll: number;
     [key: string]: any;
 }

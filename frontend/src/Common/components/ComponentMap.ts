@@ -9,6 +9,7 @@ import { ComponentIntegerKnob, ComponentMultiStateSwitch } from './IntegerCompon
 import { ComponentError } from './ErrorComponent';
 import { ComponentStringNumber } from './StringComponents';
 import { ComponentStatic } from './StaticComponents';
+import { ComponentADI } from './ADIComponent';
 
 type ComponentMap = {
     [key: string]: React.ComponentType<GenericTypeComponent>;
@@ -23,6 +24,7 @@ const componentMap: ComponentMap = {
     "IntegerKnob": ComponentIntegerKnob,
     "MultiStateSwitch": ComponentMultiStateSwitch,
     "StringNumber" : ComponentStringNumber,
+    "ADI": ComponentADI,
     "Static" : ComponentStatic,
     "Error" : ComponentError
 };

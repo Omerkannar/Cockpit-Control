@@ -57,7 +57,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                             newValue = dynamic_data[index].value
                         } else {
                             newValue = Object.keys(elementData.backend.dbsimProps.enumMapping).find(key =>
-                                elementData.backend.dbsimProps.enumMapping[key as keyof typeof elementData.backend.dbsimProps.enumMapping] === Number(dynamic_data[index].value)
+                                elementData.backend.dbsimProps.enumMapping[key as keyof typeof elementData.backend.dbsimProps.enumMapping] === dynamic_data[index].value
                             );
                         }
                         console.info(`Receive - Panel: ${dynamic_data[index].panel}, Switch: ${elementName}, Value: ${newValue}`)

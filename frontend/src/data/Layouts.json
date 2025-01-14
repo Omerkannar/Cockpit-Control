@@ -1,7 +1,7 @@
 [
   {
     "layout_name": "Instruments Panel",
-    "containers": ["INSTRUMENTS_L1", "INSTRUMENTS_L2", "INSTRUMENTS_MID1", "INSTRUMENTS_MID2", "INSTRUMENTS_R1", "INSTRUMENTS_R2"]
+    "containers": ["INSTRUMENT_PANEL_GAUGES"]
   },
   {
     "layout_name": "Left Auxiliary and Console",
