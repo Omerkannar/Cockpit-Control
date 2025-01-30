@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.20" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="OneSimLinkInterop.netcore">
-      <HintPath>..\..\..\..\..\..\..\FileServer\X\GesstNG\Bin\Debug_x64\OneSimLinkInterop.netcore.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\FileServer\Masada\X\GesstNG\Bin\Debug_x64\OneSimLinkInterop.netcore.dll</HintPath>
     </Reference>
   </ItemGroup>
 

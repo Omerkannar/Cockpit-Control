@@ -1,6 +1,4 @@
-﻿using System;
-
-public class Request
+﻿public class Request
 {
     public string? Type { get; set; }
     //public string RequestedClient { get; set; }

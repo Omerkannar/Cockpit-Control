@@ -4,6 +4,7 @@
         "backend": {
             "key": "LEFT_WHEEL_IN",
             "dbsimProps": {
+                "operationType": "Monitor",
                 "stationName": "",
                 "blockName": "IOToHost.LGControl",
                 "elementName": "Data.LEFT_WHEEL_INDICATION",
@@ -18,6 +19,7 @@
             "debugMode": false,
             "isClickable": false,
             "position": {
+                "imgScale": "100",
                 "imgWidth": "70",
                 "imgHeight": "70",
                 "posLeft": "48",

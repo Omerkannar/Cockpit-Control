@@ -5,9 +5,14 @@ public static class Logger
 {
     private static readonly string logFilePath = "log.txt";  // Define the log file path
 
-    public static void LogInfo(string message)
+    public static void LogInfoGreen(string message)
     {
         LogMessage("INF", message, ConsoleColor.Green);
+    }
+
+    public static void LogInfoYellow(string message)
+    {
+        LogMessage("INF", message, ConsoleColor.Yellow);
     }
 
     public static void LogError(string message)
@@ -23,6 +28,10 @@ public static class Logger
     public static void LogDebug(string message)
     {
         LogMessage("DBG", message, ConsoleColor.Gray);
+    }
+    public static void LogDebugModified(string message, string markedWord)
+    {
+        LogMessageModified("DBG", message, ConsoleColor.Gray, markedWord, ConsoleColor.Blue);
     }
 
     public static void ClearLog()
@@ -45,6 +54,39 @@ public static class Logger
         Console.ForegroundColor = color;
         Console.WriteLine(log);
         Console.ResetColor();
+
+        // Write log to file
+        //AppendLogToFile(log);
+    }
+
+    private static void LogMessageModified(string logLevel, string message, ConsoleColor color, string markedWord, ConsoleColor markedColor)
+    {
+        string timeStamp = DateTime.Now.ToString("yy-MM-dd HH:mm:ss.ffff");  // Add timestamp
+        int maxLogLevelLength = 3; // Length of longest log level (e.g., "[WRN]")
+
+        // Format the log level inside brackets without adding spaces inside the brackets
+        string formattedLogLevel = $"[{logLevel}]".PadRight(maxLogLevelLength + 2); // +2 for the brackets
+
+        // Split the sentence around the highlighted word
+        string[] parts = message.Split(new[] { markedWord }, StringSplitOptions.None);
+
+        // Construct the log entry with consistent spacing
+        string log = $"[{timeStamp}] {formattedLogLevel} {parts[0]}";
+
+        // Output to console
+        Console.ForegroundColor = color;
+        Console.Write(log);
+
+        Console.ForegroundColor = markedColor;
+        Console.Write(markedWord);
+
+        Console.ForegroundColor = color;
+        Console.Write($"{parts[1]}");
+
+
+        Console.ResetColor();
+
+        Console.WriteLine();
 
         // Write log to file
         //AppendLogToFile(log);

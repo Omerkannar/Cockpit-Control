@@ -1,4 +1,4 @@
-call p:\setEnviornments.bat
+call C:\FileServer\Masada\P\setEnvironments.bat
 
 REM Disk D
 REM pause

@@ -1,32 +1,25 @@
-//using System;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.WebSockets;
 using System.Runtime.InteropServices;
 using System.Text;
-//using System.IO;
-//using System.Text.Json;
-//using System.Threading;
-//using System.Threading.Tasks;
+using OneSimLinkInterop;
 using BackEndServices.Configuration;
 using BackEndServices.Interfaces;
-//using BackEndServices.Services;
-//using Newtonsoft.Json.Serialization;
 using BackEndServices.Utilities;
-//using Newtonsoft.Json;
-using OneSimLinkInterop;
-//using Microsoft.AspNetCore.DataProtection.KeyManagement;
-
+using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 class Program
 {
-    private static ConcurrentDictionary<string, WebSocket> _clients = new ConcurrentDictionary<string, WebSocket>();
-    private static ConcurrentDictionary<string, int> _hostnameCounts = new ConcurrentDictionary<string, int>();
-    private static CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemCurrent = new CMapKeyToBindDBSimElementItem();
-    private static CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemPrevious = new CMapKeyToBindDBSimElementItem();
-    private static List<string> _listOfKeys = new List<string>();
-    private static DbSimElementUtils _DbSimElementUtils = new DbSimElementUtils();
-    private static bool _oneSimLinkInitSucceeded;
+    private static readonly ConcurrentDictionary<string, WebSocket> _clients = new ConcurrentDictionary<string, WebSocket>();
+    private static          ConcurrentDictionary<string, int> _hostnameCounts = new ConcurrentDictionary<string, int>();
+    private static          CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemCurrent = new CMapKeyToBindDBSimElementItem();
+    private static          CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemPrevious = new CMapKeyToBindDBSimElementItem();
+    private static          List<string> _listOfKeys = new List<string>();
+    private static          DbSimElementUtils _DbSimElementUtils = new DbSimElementUtils();
+    private static bool     _oneSimLinkInitSucceeded;
+    private const  int      MaxClients = 10;
 
 
 
@@ -49,43 +42,39 @@ class Program
         }
     }
 
-    static async Task StartWebSocketServer()
+    public static async Task StartWebSocketServer()
     {
         var listener = new HttpListener();
         listener.Prefixes.Add("http://localhost:8765/");
         listener.Start();
         Logger.ClearLog();
-        Logger.LogInfo("WebSocket server is listening on ws://localhost:8765");
+        Logger.LogInfoGreen("WebSocket server is listening on ws://localhost:8765");
 
         while (true)
         {
-            HttpListenerContext context = await listener.GetContextAsync();
+            var context = await listener.GetContextAsync();
             if (context.Request.IsWebSocketRequest)
             {
-                HttpListenerWebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
-                WebSocket webSocket = webSocketContext.WebSocket;
-
-                string clientId = Dns.GetHostName();
-
-                if (_clients.TryGetValue(clientId, out var existingSocket))
+                if (_clients.Count >= MaxClients)
                 {
-                    Logger.LogInfo($"Client reconnected: {clientId}. Closing existing connection.");
-                    await existingSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Reconnecting", CancellationToken.None);
-                    _clients.TryRemove(clientId, out _); // Remove the old connection
-                    await Task.Delay(2000); // Wait for 2 seconds before allowing reconnection
+                    context.Response.StatusCode = 503; // Service Unavailable
+                    context.Response.Close();
+                    Logger.LogError("Maximum client limit reached. Connection rejected.");
+                    continue;
                 }
 
-                // Add the new client connection
-                _clients.TryAdd(clientId, webSocket);
-                Logger.LogInfo($"Client connected: {clientId}");
+                var webSocketContext = await context.AcceptWebSocketAsync(null);
+                var clientId = Guid.NewGuid().ToString().Split("-")[4]; // Unique client ID
+                _clients.TryAdd(clientId, webSocketContext.WebSocket);
+                Logger.LogInfoGreen($"Client connected: {clientId}");
 
                 await SendMessagesWithDelay(clientId);
 
-                _ = HandleWebSocketConnection(clientId, webSocket);
+                _ = HandleWebSocketConnection(clientId, webSocketContext.WebSocket);
             }
             else
             {
-                context.Response.StatusCode = 400;
+                context.Response.StatusCode = 400; // Bad Request
                 context.Response.Close();
             }
         }
@@ -114,15 +103,6 @@ class Program
 
         await UpdateClientOnStartup(clientId, details);
 
-    }
-
-    static string GenerateClientId(string hostname)
-    {
-        _hostnameCounts.TryGetValue(hostname, out int count);
-        count++;
-        _hostnameCounts[hostname] = count;
-
-        return count > 1 ? $"{hostname}-{count}" : hostname;
     }
 
     static async Task HandleWebSocketConnection(string clientId, WebSocket webSocket)
@@ -156,16 +136,7 @@ class Program
         finally
         {
             _clients.TryRemove(clientId, out _);
-            Logger.LogInfo($"Client disconnected: {clientId}");
-        }
-    }
-
-    static void UpdateHostnameCount(string clientId)
-    {
-        string hostname = clientId.Split('*')[0];
-        if (_hostnameCounts.TryGetValue(hostname, out int count) && count > 0)
-        {
-            _hostnameCounts[hostname] = count - 1;
+            Logger.LogInfoYellow($"Client disconnected: {clientId}");
         }
     }
 
@@ -182,7 +153,7 @@ class Program
                     SetValue(request.Details.Element, request.Details.Value);
                     //await Task.Delay(1);
                     break;
-                    
+
                 default:
                     Logger.LogError($"Unknown request type received from {clientId}");
                     break;
@@ -197,19 +168,19 @@ class Program
 
     static async Task BroadcastMessage(string senderId, List<MessageDetails> message)
     {
-        var broadcastMessage = new Response 
-        { 
-            Type = "BROADCAST_RESPONSE", 
+        var broadcastMessage = new Response
+        {
+            Type = "BROADCAST_RESPONSE",
             Details = message
         };
         var messageJson = System.Text.Json.JsonSerializer.Serialize(broadcastMessage);
         var messageJsonDetails = System.Text.Json.JsonSerializer.Serialize(broadcastMessage.Details);
-        // Logger.LogDebug($"New Data received, Updating all clients. Data: {messageJsonDetails}");
+        // Logger.LogDebug($"New Data received, Updating all clients. Data: {messageJsonDetails}");        
         var tasks = new List<Task>();
 
         foreach (var client in _clients)
         {
-            // Send to all clients exept the sender
+            // Send to all clients except the sender
             if (client.Value.State == WebSocketState.Open)
             {
                 tasks.Add(SendToClient(client.Key, messageJson));
@@ -228,24 +199,64 @@ class Program
         };
         var messageJson = System.Text.Json.JsonSerializer.Serialize(broadcastMessage);
         var messageJsonDetails = System.Text.Json.JsonSerializer.Serialize(broadcastMessage.Details);
-        Logger.LogInfo($"Update client {senderId} on startup. Data: {messageJsonDetails}");
-        var tasks = new List<Task>();
+        Logger.LogInfoGreen($"Update client {senderId} on startup. Data: {messageJsonDetails}");
+        //var tasks = new List<Task>();
 
-        tasks.Add(SendToClient(senderId, messageJson));
+        //tasks.Add(SendToClient(senderId, messageJson));
 
-        await Task.WhenAll(tasks);
+        //await Task.WhenAll(tasks);
+        await SendToClient(senderId, messageJson);
     }
 
 
 
     static async Task SendToClient(string clientId, string message)
     {
+        //Logger.LogDebug("Send to client start");
+
         if (_clients.TryGetValue(clientId, out WebSocket client) && client.State == WebSocketState.Open)
         {
+            //Logger.LogDebug("Send to client start - ws open");
+
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-            await client.SendAsync(new ArraySegment<byte>(messageBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            // Define a timeout for the operation
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)); // 5-second timeout
+
+            try
+            {
+                await Task.Delay(100, cts.Token); // Optional delay with cancellation support
+                await client.SendAsync(new ArraySegment<byte>(messageBytes), WebSocketMessageType.Text, true, cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                Logger.LogWarning($"Send operation canceled for client {clientId}. Possible timeout.");
+            }
+            catch (WebSocketException ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    Logger.LogError($"WebSocketException for client {clientId}: {ex.Message}");
+                    Logger.LogError($"WebSocketException for client {clientId}: Inner exception: {ex.InnerException.Message}");
+                }
+                else
+                {
+                    Logger.LogError($"WebSocketException for client {clientId}: {ex.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError($"Unexpected exception for client {clientId}: {ex.Message}");
+            }
         }
+        else
+        {
+            //Logger.LogDebug("Send to client start - ws close");
+        }
+
+        //Logger.LogDebug("Send to client end");
     }
+
 
     private static bool StartOneSimLink()
     {
@@ -255,9 +266,10 @@ class Program
         {
             Logger.LogError("OneSimLink Init Failed, Exit...");
             return false;
-        } else
+        }
+        else
         {
-            Logger.LogInfo("OneSimLink Init Succeeded!");
+            Logger.LogInfoGreen("OneSimLink Init Succeeded!");
         }
 
         // =========================
@@ -271,8 +283,33 @@ class Program
             if (stationName != null)
             {
                 Logger.LogDebug("Start Reading map files...");
-                string configFilePath = "C:\\Users\\ATH_O\\Documents\\OmerK\\WebSocket\\Cockpit-Control\\config\\backendConfig.txt";
-                string[] arrFileNames = File.ReadAllLines(configFilePath);
+                string configFilePath = @"..\\..\\..\\..\\..\\config\\backendConfig.txt";
+                string[] arrFileNames;
+
+                try
+                {
+                    // Attempt to read all lines from the file
+                    arrFileNames = File.ReadAllLines(configFilePath);
+                    Logger.LogInfoGreen("File read successfully.");
+                }
+                catch (FileNotFoundException ex)
+                {
+                    // Handle file not found error
+                    Logger.LogError($"Error: The file was not found. Details: {ex.Message}");
+                    arrFileNames = Array.Empty<string>(); // Initialize with an empty array to avoid null
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    // Handle lack of access permissions
+                    Logger.LogError($"Error: Access to the file is denied. Details: {ex.Message}");
+                    arrFileNames = Array.Empty<string>();
+                }
+                catch (Exception ex)
+                {
+                    // Handle any other exceptions
+                    Logger.LogError($"An unexpected error occurred: {ex.Message}");
+                    arrFileNames = Array.Empty<string>();
+                }
 
                 foreach (string sConfigFile in arrFileNames)
                 {
@@ -282,42 +319,122 @@ class Program
                     string jsonString = File.ReadAllText(sConfigFile);
                     Logger.LogDebug($"Read map file: {Path.GetFileName(sConfigFile)}");
 
-                    // =============================
+                    // ==============================
                     // Deserialize Object
-                    // =============================
-                    // Deserialize JSON to a list of BasicDataBackend
-                    var dataList = System.Text.Json.JsonSerializer.Deserialize<List<BasicDataBackend>>(jsonString);
-
-                    if (dataList != null)
+                    // ==============================
+                    
+                    try
                     {
-                        foreach (var data in dataList)
+                        // Deserialize JSON to a list of BasicDataBackend
+                        //var dataList = System.Text.Json.JsonSerializer.Deserialize<List<BasicDataBackend>>(jsonString);
+                        //var options = new JsonSerializerOptions
+                        //{
+                        //    PropertyNameCaseInsensitive = true, // Handle case-insensitive property names
+                        //    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                        //};
+
+                        //var dataList = JsonSerializer.Deserialize<List<BasicDataBackend>>(jsonString, options);
+
+                        using JsonDocument document = JsonDocument.Parse(jsonString);
+                        // Extract the "backend" property from each top-level object
+                        var dataList = new List<Backend>();
+
+                        foreach (var element in document.RootElement.EnumerateArray())
                         {
-                            //Console.WriteLine($"Key: {data.backend.key}");
-                            // Access other properties within backend as needed
-                            string sKey = data.backend.key;
-                            CBindDBSimElementItem cBindDBSimElementItem = new CBindDBSimElementItem();
-                            cBindDBSimElementItem.cConfig.StationName = stationName;
-                            cBindDBSimElementItem.cConfig.BlockName = data.backend.dbsimProps.blockName;
-                            cBindDBSimElementItem.cConfig.ElementName = data.backend.dbsimProps.elementName;
-                            cBindDBSimElementItem.cConfig.ElementType = data.backend.dbsimProps.elementType;
-
-                            string sBlockFullName = $"{stationName}.{data.backend.dbsimProps.blockName}";
-
-                            cBindDBSimElementItem.m_nStationBlockID = OneSimLink.GetBlockIdByName(sBlockFullName);
-                            cBindDBSimElementItem.m_nElementID = OneSimLink.RegisterElement(sBlockFullName, cBindDBSimElementItem.cConfig.ElementName);
-                            cBindDBSimElementItem.m_sPanelName = Path.GetFileNameWithoutExtension(sConfigFile);
-                            cBindDBSimElementItem.m_sValue = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
-
-                            if ((cBindDBSimElementItem.m_nStationBlockID != -1) && (cBindDBSimElementItem.m_nElementID != -1))
+                            if (element.TryGetProperty("backend", out var backendElement))
                             {
-                                Logger.LogDebug($"Key: {sKey} -> Block: {data.backend.dbsimProps.blockName}, Element: {data.backend.dbsimProps.elementName}, Type: {data.backend.dbsimProps.elementType}");
-                                _listOfKeys.Add(sKey);
-                                _mapKeyToBindDBSimElementItemCurrent.Add(sKey, cBindDBSimElementItem);
-                                _mapKeyToBindDBSimElementItemPrevious.Add(sKey, cBindDBSimElementItem);
-                            }
+                                var backend = JsonSerializer.Deserialize<Backend>(backendElement.GetRawText(), new JsonSerializerOptions
+                                {
+                                    PropertyNameCaseInsensitive = true
+                                });
 
+                                if (backend != null)
+                                {
+                                    dataList.Add(backend);
+                                }
+                            }
+                        }
+
+
+                        if (dataList != null)
+                        {
+                            foreach (var data in dataList)
+                            {
+                                //Console.WriteLine($"Key: {data.backend.key}");
+                                // Access other properties within backend as needed
+                                string sKey = data.key;
+
+                                if (data.dbsimProps != null)
+                                {
+                                    foreach (var operation in data.dbsimProps)
+                                    {
+                                        if (operation.blockName == null ||
+                                            operation.elementName == null ||
+                                            operation.elementType == null)
+                                        {
+                                            continue;
+                                        }
+
+                                        CBindDBSimElementItem cBindDBSimElementItem = new CBindDBSimElementItem();
+                                        cBindDBSimElementItem.cConfig.StationName = stationName;
+                                        cBindDBSimElementItem.cConfig.BlockName = operation.blockName;
+                                        cBindDBSimElementItem.cConfig.ElementName = operation.elementName;
+                                        cBindDBSimElementItem.cConfig.ElementType = operation.elementType;
+
+                                        string sBlockFullName = $"{stationName}.{operation.blockName}";
+
+                                        cBindDBSimElementItem.m_nStationBlockID = OneSimLink.GetBlockIdByName(sBlockFullName);
+                                        cBindDBSimElementItem.m_nElementID = OneSimLink.RegisterElement(sBlockFullName, cBindDBSimElementItem.cConfig.ElementName);
+                                        cBindDBSimElementItem.m_sPanelName = Path.GetFileNameWithoutExtension(sConfigFile);
+                                        cBindDBSimElementItem.m_sValue = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
+
+                                        if ((cBindDBSimElementItem.m_nStationBlockID != -1) && (cBindDBSimElementItem.m_nElementID != -1))
+                                        {
+                                            if (operation.operationType == "Injection")
+                                            {
+                                                Logger.LogDebugModified($"{sKey + "_Injection"} mapped to: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}", "Injection");
+                                                _mapKeyToBindDBSimElementItemCurrent.Add(sKey + "_Injection", cBindDBSimElementItem);
+                                                _mapKeyToBindDBSimElementItemPrevious.Add(sKey + "_Injection", cBindDBSimElementItem);
+                                            }
+                                            else // operation.operationType == "Monitor" Or operation.operationType is empty
+                                            {
+                                                //Logger.LogDebug($"Key: {sKey} -> Block: {operation.blockName}, Element: {operation.elementName}, Type: {operation.elementType}");
+                                                Logger.LogDebugModified($"{sKey + "_Monitor"} mapped to: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}", "Monitor");
+                                                // Add only monitor list of keys that are scanned for a change
+                                                _listOfKeys.Add(sKey + "_Monitor");
+                                                _mapKeyToBindDBSimElementItemCurrent.Add(sKey + "_Monitor", cBindDBSimElementItem);
+                                                _mapKeyToBindDBSimElementItemPrevious.Add(sKey + "_Monitor", cBindDBSimElementItem);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (operation.operationType == "Monitor")
+                                            {
+                                                Logger.LogError($"{sKey + "_Monitor"} unable to map to: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}");
+                                            }
+                                            else if (operation.operationType == "Injection")
+                                            {
+                                                Logger.LogError($"{sKey + "_Injection"} unable to map to: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}");
+                                            }
+                                            else
+                                            {
+                                                Logger.LogError($"{sKey} Does't contain 'Monitor' or 'Injection', unable to map: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}. Check configuration...");
+                                            }
+                                        }
+                                    }
+                                }
+
+                                
+                            }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError($"Error deserializing JSON: {ex.Message}");
+                    }
+                    
+
+                   
                 }
             }
         }
@@ -347,32 +464,31 @@ class Program
 
         if (cBindDBSimElementItem == null)
         {
-            //System.Console.WriteLine("Error : Can't find {0} in configuration file\n", sKey);
             return sResult;
         }
         else
         {
-            if (cBindDBSimElementItem.cConfig.ElementType.Equals("Double"))
+            if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Double"))
             {
                 double dResult = _DbSimElementUtils.GetDoubleValue((uint)cBindDBSimElementItem.m_nElementID);
                 sResult = dResult.ToString();
             }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Float"))
+            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Float"))
             {
                 float fResult = _DbSimElementUtils.GetFloatValue((uint)cBindDBSimElementItem.m_nElementID);
                 sResult = fResult.ToString();
             }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Integer"))
+            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Integer"))
             {
                 int nResult = _DbSimElementUtils.GetIntValue((uint)cBindDBSimElementItem.m_nElementID);
                 sResult = nResult.ToString();
             }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Boolean"))
+            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Boolean"))
             {
                 bool bResult = _DbSimElementUtils.GetBooleanValue((uint)cBindDBSimElementItem.m_nElementID);
                 sResult = bResult.ToString();
             }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("String"))
+            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("String"))
             {
                 sResult = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
             }
@@ -390,14 +506,12 @@ class Program
 
             // Wait for a period (10msec) before checking again
             await Task.Delay(TimeSpan.FromSeconds(0.1));
-            
-        }
-        await Task.Delay(TimeSpan.FromSeconds(0.1));
 
+        }
     }
 
     static async Task CheckDBSIMChanges()
-    {  
+    {
         try
         {
             //var details = new MessageDetails [];
@@ -407,7 +521,7 @@ class Program
             {
                 var val = GetValueByKey(key);
                 var bindElement = _mapKeyToBindDBSimElementItemCurrent.Search(key);
-                if (val == null || val == bindElement.m_sValue) continue;
+                if (bindElement== null || val == bindElement.m_sValue || val == null) continue;
                 count++;
                 Logger.LogDebug($"Panel: {bindElement.m_sPanelName}, Element: {key}, Value: {val}");
                 bindElement.m_sValue = val;
@@ -433,9 +547,12 @@ class Program
 
     public static void SetValue(string key, string value)
     {
+        if (_mapKeyToBindDBSimElementItemCurrent == null) return;
+
         CBindDBSimElementItem cBindDBSimElementItem = _mapKeyToBindDBSimElementItemCurrent.Search(key);
 
-        if (cBindDBSimElementItem != null)
+        if (cBindDBSimElementItem != null && cBindDBSimElementItem.cConfig.ElementType != null)
+        {
             if (cBindDBSimElementItem.cConfig.ElementType.Equals("Integer"))
             {
                 _DbSimElementUtils.SetIntValue((uint)cBindDBSimElementItem.m_nElementID, int.Parse(value));
@@ -461,6 +578,7 @@ class Program
                 _DbSimElementUtils.SetStringValue((uint)cBindDBSimElementItem.m_nElementID, value);
                 //await Task.Delay(100);
             }
+        }
     }
 
 }

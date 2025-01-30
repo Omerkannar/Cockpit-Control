@@ -8,7 +8,8 @@ type Type = "static" |
             "analog_horizontal_translation_cyclic" | 
             "analog_vertical_translation_cyclic" |
             "string" | 
-            "number";
+            "number" | 
+            "stateNMomentary";
 type State = boolean | number | string;
 export type ClickType = "click" | "longPress";
 export type OpertaionType = "toggle" | "clickByValue"
@@ -66,17 +67,20 @@ export interface ClickContainerInterface {
     handleClick?: (clickPosition: string) => void
 }
 
+export interface DbsimProps {
+    operationType: string;
+    stationName: string;
+    blockName: string;
+    elementName: string;
+    elementType: ElementType;
+    enumMapping?: any;
+}
+
 interface BasicData {
     type: Type;
     backend: {
         key: string;
-        dbsimProps?: {
-            stationName: string;
-            blockName: string;
-            elementName: string;
-            elementType: ElementType;
-            enumMapping?: any;
-        }
+        dbsimProps?: DbsimProps | DbsimProps[]
     };
     component: {
         debugMode?: boolean;
@@ -139,6 +143,8 @@ export interface BasicComponentContainer extends BasicTypeComponent {
     isBlinking?: boolean;
     handleClick?: (componentName: string, clickedName: string) => void;
     handleLongPress?: (componentName: string, clickedName: string) => void;
+    handleClickDown?: (componentName: string, clickedName: string) => void;
+    handleClickUp?: (componentName: string, clickedName: string) => void;
 }
 
 

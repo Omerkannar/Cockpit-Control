@@ -15,7 +15,8 @@
             "debugMode": false,
             "isClickable": false,
             "position": {
-                "width": "100",
+                "imgScale": "100",
+                "imgWidth": "100",
                 "height": "100",
                 "left": "1164",
                 "top": "750"

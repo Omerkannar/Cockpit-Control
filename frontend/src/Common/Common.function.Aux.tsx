@@ -36,14 +36,15 @@ export const linearInterpolation = (data: any, x: number): number => {
 
 
 export function readDigits(str: string, dig: number): (string)[] {
-    // Ensure the string has exactly 4 digits by padding it with empty spaces (or zeros)
-    const paddedStr = str.padStart(dig); // Pads with spaces if the string has less than 4 digits
+    // Ensure the string has exactly 5 digits by padding it with empty spaces (or zeros)
+    const paddedStr = str.padStart(dig); // Pads with spaces if the string has less than 5 digits
 
     // Read the digits (using [] notation) and return them as an array
     return [
-        paddedStr[0], // Thousands place
-        paddedStr[1], // Hundreds place
-        paddedStr[2], // Tens place
-        paddedStr[3]  // Ones place
+        paddedStr[0], // Ten Thousands place
+        paddedStr[1], // Thousands place
+        paddedStr[2], // Hundreds place
+        paddedStr[3], // Tens place
+        paddedStr[4]  // Ones place
     ];
 }

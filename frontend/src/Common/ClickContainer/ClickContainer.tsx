@@ -22,6 +22,7 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
   const isLeftMapping = props.data.component.clickProps?.mapping?.mapLeft;
 
   const [isLongPress, setIsLongPress] = useState<boolean>(false);
+  const [isMousePressedDown, setIsMousePressedDown] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -31,6 +32,9 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
   const handleOnMouseDown = (event: any) => {
     // const target = event.target as HTMLElement; // Cast to HTMLElement
     // console.log(event.button)
+    setIsMousePressedDown(true)
+    if (props.handleClickDown)
+        props.handleClickDown(props.data.backend.key, event.target.id);
     setIsLongPress(false);
     timeoutRef.current = setTimeout(() => {
       setIsLongPress(true);
@@ -45,6 +49,10 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
 
   const handleOnMouseUp = (event: any) => {
     // If timeoutRef exists and long press hasn't started, it's a short click
+    if (props.handleClickUp && isMousePressedDown) {
+      setIsMousePressedDown(false);
+      props.handleClickUp(props.data.backend.key, event.target.id);
+    }
     if (timeoutRef.current && !isLongPress && props.handleClick) {
       props.handleClick(props.data.backend.key, event.target.id);
     }

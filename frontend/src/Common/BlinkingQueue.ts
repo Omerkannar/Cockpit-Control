@@ -11,10 +11,10 @@ class BlinkingQueue {
     })
     if (blinkMap.length > 0) {
       this.queue.push(blinkMap[0].source);  
-      console.log(`Enqueued: ${blinkMap[0].source}`);
+      //console.log(`Enqueued: ${blinkMap[0].source}`);
     } else {
       this.queue.push(item);
-      console.log(`Enqueued: ${item}`);
+      //console.log(`Enqueued: ${item}`);
     }
   
 
@@ -28,7 +28,7 @@ class BlinkingQueue {
   private dequeue(): void {
     if (this.queue.length > 0) {
       const item = this.queue.shift();
-      console.log(`Dequeued after 5 seconds: ${item}`);
+      //console.log(`Dequeued after 5 seconds: ${item}`);
       this.timeouts.shift();
     }
   }
@@ -48,7 +48,7 @@ class BlinkingQueue {
 
   // Helper method to display the current queue
   displayQueue(): void {
-    console.log("Current queue:", this.queue);
+    //console.log("Current queue:", this.queue);
   }
 
   // New method to get the current size of the queue
@@ -60,7 +60,7 @@ class BlinkingQueue {
     this.timeouts.forEach(clearTimeout);
     this.timeouts = [];
     this.queue = [];
-    console.log("Queue cleared");
+    //console.log("Queue cleared");
   }
 
 

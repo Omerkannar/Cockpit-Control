@@ -26,7 +26,7 @@ for panel in panels_data:
     interface_map_str += f"     \"{panel_name}\":\t{panel_name}Interface;\n"
     initial_values_str += f"export const {panel_name}InitialValues: Interface.{panel_name}Interface['input'] = {{\n"
     interface_str += "  input: {\n"
-    backend_config_str += os.path.abspath(base_folder) + panel_name + ".json\n"
+    backend_config_str += os.path.abspath(base_folder) + "\\" + panel_name + ".json\n"
     try:
         with open(f'{base_folder}{panel_name}.json', 'r') as file:
             panel_data = json.load(file)
@@ -38,7 +38,10 @@ for panel in panels_data:
         # Catch any other exceptions
         raise RuntimeError(f"An unexpected error occurred: {e}")
     for item in panel_data:
-        backend_data = item["backend"]
+        try:
+            backend_data = item["backend"]
+        except Exception as e:
+            raise RuntimeError(f"Can't find the property 'backend' in {panel_name}")
         backend_name = backend_data["key"]
         backend_type = "string"
         initial_value = "\"\"" if backend_type == "string" else "0" if backend_type == "number" else "false" if backend_type == "boolean" else "0"

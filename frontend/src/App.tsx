@@ -17,8 +17,8 @@ const App = () => {
 
 
   const handleSendRequest = (panelName: string, switchName: string, switchValue: string) => {
-    console.log(`App.tsx received change request for ${panelName} panel, ${switchName} => ${switchValue}`)
-    sendMessage(panelName, switchName, switchValue);
+    //console.log(`App.tsx received change request for ${panelName} panel, ${switchName} => ${switchValue}`)
+    sendMessage(panelName, `${switchName}_Injection`, switchValue);
   }
 
   // Function to handle zoom level changes
@@ -91,3 +91,6 @@ const App = () => {
 }
 
 export default App;
+
+
+
