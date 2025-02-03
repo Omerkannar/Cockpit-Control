@@ -1,6 +1,6 @@
 [
     {
-        "type": "analog_rotation",
+        "type": "analogRotation",
         "backend_name": "EPU_FUEL_LEVEL_IN",
         "width": "375",
         "height": "375",

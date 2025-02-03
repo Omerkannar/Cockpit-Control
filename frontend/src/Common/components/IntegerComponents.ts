@@ -11,6 +11,7 @@ export const ComponentIntegerKnob = styled.img.attrs<GenericTypeComponent>(({ st
     top: ${props => (props.scale * props.data.component.position.posTop / 100)}px;
     left: ${props => (props.scale * props.data.component.position.posLeft / 100)}px;
     transform: rotate(${(props) => Number(props.state) || 0}deg);
+    z-index: ${(props) => props.data.component.position.zIndex | 1} ;
 `
 
 
@@ -23,5 +24,6 @@ export const ComponentMultiStateSwitch = styled.img.attrs<GenericTypeComponent>(
     height: ${(props) => (props.scale * (props.data.component.position.imgScale / 100) * props.data.component.position.imgHeight / 100)}px;
     top: ${props => (props.scale * props.data.component.position.posTop / 100)}px;
     left: ${props => (props.scale * props.data.component.position.posLeft / 100)}px;
+    z-index: ${(props) => props.data.component.position.zIndex | 1} ;
 `
 

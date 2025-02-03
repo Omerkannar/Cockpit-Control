@@ -11,6 +11,7 @@ export const MainContainer = styled.div`
   column-gap: 0em;
   width: ${settings.general.width}px;
   height: ${settings.general.height}px;
+  overflow: hidden;
 `
 
 export const Panel = styled.div<{ url: string; scale: number, width: number; height: number; top: number; left: number }>`

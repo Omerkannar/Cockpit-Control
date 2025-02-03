@@ -1,16 +1,17 @@
 
-type Type = "static" | 
-            "stateN" | 
-            "knobInteger" | 
-            "analog_rotation" | 
-            "analog_vertical_translation" |
-            "analog_horizontal_translation" | 
-            "analog_horizontal_translation_cyclic" | 
-            "analog_vertical_translation_cyclic" |
-            "string" | 
-            "number" | 
-            "stateNMomentary";
-type State = boolean | number | string;
+type Type = "static" |
+    "stateN" |
+    "knobInteger" |
+    "analogRotation" |
+    "analogVerticalTranslation" |
+    "analogHorizontalTranslation" |
+    "analogHorizontalTranslationCyclic" |
+    "analogVerticalTranslationCyclic" |
+    "string" |
+    "number" |
+    "stateNMomentary" |
+    "adi";
+type State = boolean | number | string | any;
 export type ClickType = "click" | "longPress";
 export type OpertaionType = "toggle" | "clickByValue"
 type ElementType = "Double" | "Float" | "Integer" | "Boolean" | "String";
@@ -65,6 +66,11 @@ export interface ClickContainerInterface {
     "width": number,
     "scale": number,
     handleClick?: (clickPosition: string) => void
+}
+
+interface AdditionalCssProps {
+    position : "relative" | "absolute",
+    objectFit: "cover" | "fill" | "contain";
 }
 
 export interface DbsimProps {
@@ -130,6 +136,7 @@ interface BasicData {
         logger?: {
             display: boolean;
         };
+        additionalCssProps? : AdditionalCssProps;
     }
 }
 
@@ -154,7 +161,9 @@ export interface GenericTypeComponent extends BasicTypeComponent {
 }
 
 export interface ADIComponent extends BasicTypeComponent {
-    pitch: number;
-    roll: number;
+    state: {
+        pitch: number;
+        roll: number;
+    }
     [key: string]: any;
 }

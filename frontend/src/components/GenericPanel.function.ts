@@ -28,9 +28,9 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
             return [handleSimpleComponentNextValue(filteredName, clickedName, currentValue), showInLogger];
         case "knobInteger":
             return [handleKnobNextValue(filteredName, clickedName, currentValue), showInLogger];
-        case "analog_rotation":
-        case "analog_vertical_translation":
-        case "analog_horizontal_translation":
+        case "analogRotation":
+        case "analogVerticalTranslation":
+        case "analogHorizontalTranslation":
             //  In this case - According to the value that was pressed, the logic will provide the next value
             //  If the user pressed DECREASE or CCW the logic will substract 1 if the user clicked and 10 (configuration) if the user long pressed 
             //  If the user pressed DECREASE or CCW the logic will add 1 if the user clicked and 10 (configuration) if the user long pressed

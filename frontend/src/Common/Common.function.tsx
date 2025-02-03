@@ -45,23 +45,23 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
                 const SelectedComponent = getComponentById("Error") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={state} data={data}>Error {data.backend.key} - maxStringLength not defined</SelectedComponent>;
             }
-        case "analog_rotation":
+        case "analogRotation":
             {
                 const SelectedComponent = getComponentById("AnalogRotation") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analogProps, Number(state))} data={data} />
             }
-        case "analog_vertical_translation":
-            //console.log("analog_rotation")
+        case "analogVerticalTranslation":
+            //console.log("analogRotation")
             {
                 const SelectedComponent = getComponentById("AnalogVerticalTranslation") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analogProps, Number(state))} data={data} />
             }
-        case "analog_horizontal_translation":
+        case "analogHorizontalTranslation":
             {
                 const SelectedComponent = getComponentById("AnalogHorizontalTranslation") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analogProps, Number(state))} data={data} />
             }
-        case "analog_horizontal_translation_cyclic":
+        case "analogHorizontalTranslationCyclic":
             {
                 const SelectedComponent = getComponentById("AnalogHorizontalCyclicTranslation") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={linearInterpolation(data.component.analogProps, Number(state))} data={data} />
@@ -70,6 +70,12 @@ export const ComponentWrapper = (scale: number, state: string, data: GenericType
             {
                 const SelectedComponent = getComponentById("Static") as React.ComponentType<GenericTypeComponent>;
                 return <SelectedComponent scale={scale} state={state} data={data} />
+            }
+        case "adi":
+            {
+                const SelectedComponent = getComponentById("ADI") as React.ComponentType<GenericTypeComponent>;
+                const state1 = {pitch: 30, roll: -5};
+                return <SelectedComponent scale={scale} state={state1} data={data} />
             }
 
         default:

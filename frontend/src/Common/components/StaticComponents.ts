@@ -11,5 +11,6 @@ export const ComponentStatic = styled.img.attrs<GenericTypeComponent>(({ state, 
     height: ${(props) => (props.scale * (props.data.component.position.imgScale / 100) * props.data.component.position.imgHeight / 100)}px;
     top: ${props => (props.scale * props.data.component.position.posTop / 100)}px;
     left: ${props => (props.scale * props.data.component.position.posLeft / 100)}px;
+    z-index: ${(props) => props.data.component.position.zIndex | 1} ;
 `
 

@@ -28,7 +28,7 @@
     {
         "panel_name" : "Adi",
         "panel_container": "INSTRUMENT_PANEL_GAUGES",
-        "panel_url" : "./ADIPanel/ADI.png",
+        "panel_url" : "./ADIPanel/ADIBlankPanel.png",
         "panel_resources" : "/ADIPanel/",
         "panel_scale": 50,
         "panel_top": 40,

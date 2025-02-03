@@ -5,11 +5,16 @@ export const LandingGear_WheelsInitialValues: Interface.LandingGear_WheelsInterf
 }
 
 export const Cmds_ProgramInitialValues: Interface.Cmds_ProgramInterface['input'] = {
-     "KNOB_PRGM_IN":	"",
+     "KNOB_PRGM":	"",
 }
 
 export const AdiInitialValues: Interface.AdiInterface['input'] = {
-     "KNOB_PRGM_IN":	"",
+     "ADI_LADDER_PITCH":	"",
+     "ADI_Cover":	"",
+     "AUX":	"",
+     "LOC":	"",
+     "GS":	"",
+     "OFF":	"",
 }
 
 export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.InterfaceMap[K]['input'] } = {

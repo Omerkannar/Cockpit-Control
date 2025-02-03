@@ -7,14 +7,19 @@ export interface LandingGear_WheelsInterface {
 
 export interface Cmds_ProgramInterface {
   input: {
-     "KNOB_PRGM_IN":	string,
+     "KNOB_PRGM":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
 
 export interface AdiInterface {
   input: {
-     "KNOB_PRGM_IN":	string,
+     "ADI_LADDER_PITCH":	string,
+     "ADI_Cover":	string,
+     "AUX":	string,
+     "LOC":	string,
+     "GS":	string,
+     "OFF":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
