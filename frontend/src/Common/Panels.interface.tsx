@@ -20,6 +20,8 @@ export interface AdiInterface {
      "LOC":	string,
      "GS":	string,
      "OFF":	string,
+     "VERTICAL_NEEDLE":	string,
+     "HORIZONTAL_NEEDLE":	string,
   }
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }

@@ -13,6 +13,7 @@ export const ComponentRotationAnalog = styled.img.attrs<GenericTypeComponent>(({
     top: ${props => (props.scale * Number(props.data.component.position.posTop) / 100)}px;
     left: ${props => (props.scale * Number(props.data.component.position.posLeft) / 100)}px;
     transform: rotate(${(props) => Number(props.state) || 0}deg);
+    z-index: ${(props) => props.data.component.position.zIndex};
 `
 
 // Translation up and down (vertical handles)
@@ -25,6 +26,7 @@ export const ComponentVerticalTranslationAnalog = styled.img.attrs<GenericTypeCo
     height: ${(props) => (props.scale * (props.data.component.position.imgScale / 100) * props.data.component.position.imgHeight / 100)}px;
     top: ${props => (props.scale * (Number(props.data.component.position.posTop) + Number(props.state)) / 100)}px;
     left: ${props => (props.scale * Number(props.data.component.position.posLeft) / 100)}px;
+    z-index: ${(props) => props.data.component.position.zIndex};
 `
 
 // Translation right and left (horizontal handles)
@@ -37,6 +39,7 @@ export const ComponentHorizontalTranslationAnalog = styled.img.attrs<GenericType
     height: ${(props) => (props.scale * (props.data.component.position.imgScale / 100) * props.data.component.position.imgHeight / 100)}px;
     top: ${props => (props.scale * Number(props.data.component.position.posTop)  / 100)}px;
     left: ${props => (props.scale * (Number(props.data.component.position.posLeft) + Number(props.state)) / 100)}px;
+    z-index: ${(props) => props.data.component.position.zIndex};
 `
 
 // Translation up and down with cyclic capabilities (vertical ruler for example)

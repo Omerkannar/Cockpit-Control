@@ -15,6 +15,8 @@ export const AdiInitialValues: Interface.AdiInterface['input'] = {
      "LOC":	"",
      "GS":	"",
      "OFF":	"",
+     "VERTICAL_NEEDLE":	"",
+     "HORIZONTAL_NEEDLE":	"",
 }
 
 export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.InterfaceMap[K]['input'] } = {
