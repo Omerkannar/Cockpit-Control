@@ -1,5 +1,6 @@
 import settings from '../settings.json'
 import { ClickType } from '../Common/Common.interface'
+import { DbsimProps } from '../Common/Common.interface';
 
 
 function getValueByKey<T extends Record<string, any>>(obj: T, key: string): any {
@@ -25,6 +26,7 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
     switch (filteredName.type) {
         case "static":
         case "stateN":
+        case "stateNMomentary":
             return [handleSimpleComponentNextValue(filteredName, clickedName, currentValue), showInLogger];
         case "knobInteger":
             return [handleKnobNextValue(filteredName, clickedName, currentValue), showInLogger];
@@ -80,17 +82,18 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
 const handleSimpleComponentNextValue = (selectedComponent: any, clickedName: string, currentValue: string): string => {
     let nextValue = ""
     const clickBehaviorType = clickedName.toLowerCase().startsWith("toggle") ? "toggle" : "clickByValue";
+    const injectionElementData : DbsimProps = getObjectInjectionDbsimProps(selectedComponent.backend.dbsimProps);
     if (clickBehaviorType === "clickByValue") {
-        nextValue = (Object.keys(selectedComponent.backend.dbsimProps.enumMapping).length === 0) ?
-            clickedName : selectedComponent.backend.dbsimProps.enumMapping[clickedName]
+        nextValue = (Object.keys(injectionElementData.enumMapping).length === 0) ?
+            clickedName : injectionElementData.enumMapping[clickedName]
         console.log(nextValue, typeof (nextValue))
         return nextValue;
     } else if (clickBehaviorType === "toggle") {
-        if (Object.keys(selectedComponent.backend.dbsimProps.enumMapping).length === 0) {
+        if (Object.keys(injectionElementData.enumMapping).length === 0) {
             return "";
         } else {
-            const getNextEnumValue = (currentValue: keyof typeof selectedComponent.backend.dbsimProps.enumMapping): keyof typeof selectedComponent.backend.dbsimProps.enumMapping => {
-                const enumMapping = selectedComponent.backend.dbsimProps.enumMapping;
+            const getNextEnumValue = (currentValue: keyof typeof injectionElementData.enumMapping): keyof typeof injectionElementData.enumMapping => {
+                const enumMapping = injectionElementData.enumMapping;
                 const enumKeys = Object.keys(enumMapping) as Array<keyof typeof enumMapping>;
                 const currentIndex = enumKeys.indexOf(currentValue);
                 // If value == "toggle_increase" increase the next value
@@ -148,15 +151,50 @@ const handleKnobNextValue = (selectedComponent: any, clickedName: string, curren
             if (index === keys.length - 1) nextIndex = keys.length - 1;
             else nextIndex = index + 1;
         }
-        return String(nextIndex);
+        const val = keys.filter((_, i)=> {
+            return nextIndex === i;
+        })[0]
+        console.log(nextIndex, selectedComponent.backend.dbsimProps.enumMapping, val)
+        return selectedComponent.backend.dbsimProps.enumMapping[(val)];
     } else if (clickBehaviorType === "toggle") {
         // If value == "toggle_increase" increase the next value
         // Else if value == "toggle_decrease" decrease the next value
         // else increase the next value by default
         const increaseOrDecreaseIndex: number = clickedName.toLowerCase().search("increase") > 0 ? 1 : clickedName.toLowerCase().search("decrease") > 0 ? -1 : 1;
         nextIndex = (index + increaseOrDecreaseIndex + knobPropsRotationLength) % knobPropsRotationLength;
-        return String(nextIndex);
+        return selectedComponent.backend.dbsimProps.enumMapping[String(nextIndex)];
     } else {
         return ""
     }
 }
+
+
+export const getObjectMonitorDbsimProps = (data: DbsimProps): DbsimProps => {
+
+    console.log(data)
+    // Check if the key is an array
+    if (Array.isArray(data)) {
+        const res = data.filter((props: DbsimProps) => {
+             return (props.operationType === "Monitor" || props.operationType === null)
+         })[0]
+         return res;
+     }
+
+    // If it's a single object, return 1
+    return data;
+};
+
+export const getObjectInjectionDbsimProps = (data: DbsimProps): DbsimProps => {
+
+    console.log(data)
+    // Check if the key is an array
+    if (Array.isArray(data)) {
+        const res = data.filter((props: DbsimProps) => {
+             return (props.operationType === "Injection")
+         })[0]
+         return res;
+     }
+
+    // If it's a single object, return 1
+    return data;
+};

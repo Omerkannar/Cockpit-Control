@@ -3,36 +3,20 @@
         "type": "knobInteger",
         "backend": {
             "key": "KNOB_PRGM",
-            "dbsimProps": [
+            "dbsimProps": 
                 {
-                    "operationType": "Monitor",
                     "stationName": "",
-                    "blockName": "IOToHost.CMDS",
-                    "elementName": "Data.KNOB_PRGM",
-                    "elementType": "Integer",
+                    "blockName": "WhitePhosphorus.Data",
+                    "elementName": "m_eSmokeColour",
+                    "elementType": "String",
                     "enumMapping": {
-                        "BIT": 0,
-                        "1": 1,
-                        "2": 2,
-                        "3": 3,
-                        "4": 4
-                    }
-                },
-                {
-                    "operationType": "Injection",
-                    "stationName": "",
-                    "blockName": "HostToIO.CMDS",
-                    "elementName": "Data.KNOB_PRGM",
-                    "elementType": "Integer",
-                    "enumMapping": {
-                        "BIT": 0,
-                        "1": 1,
-                        "2": 2,
-                        "3": 3,
-                        "4": 4
+                        "1": "ONE",
+                        "2": "TWO",
+                        "3": "THREE",
+                        "4": "FOUR"
                     }
                 }
-            ]
+            
         },
         "component": {
             "debugMode": true,
@@ -60,7 +44,6 @@
             },
             "knobProps": {
                 "rotation": {
-                    "BIT": -90,
                     "1": -55,
                     "2": -15,
                     "3": 25,

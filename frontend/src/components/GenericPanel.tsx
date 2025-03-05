@@ -1,14 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import BlinkingQueue from '../Common/BlinkingQueue';
-import { GenericPanelInterface, GenericTypeComponent, BasicTypeComponent } from '../Common/Common.interface'
+import { GenericPanelInterface, GenericTypeComponent, BasicTypeComponent, DbsimProps } from '../Common/Common.interface'
 import { ComponentWrapper } from '../Common/Common.function';
 import useDynamicState from '../useDynamicState';
 import { InterfaceMap } from '../Common/Panels.interface'
 import { Panel } from '../Common/Common.styles'
 import ClickContainer from '../Common/ClickContainer/ClickContainer';
 import clickingMapping from '../data/mapping/ClickingMapping.json'
-import { getValue, nextValueToSend } from './GenericPanel.function';
+import { getValue, nextValueToSend, getObjectMonitorDbsimProps } from './GenericPanel.function';
 import Modal from '../Modal/Modal';
 
 const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_data, handleSendRequest }) => {
@@ -45,19 +45,25 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
     useEffect(() => {
         if (dynamic_data) {
             for (let index = 0; index < dynamic_data.length; index++) {
+                console.log(dynamic_data)
                 if (static_data.panel_name.toLowerCase() === dynamic_data[index].panel.toLowerCase()) {
                     try {
-                        const elementName: string = dynamic_data[index].element;
+                        let elementName: string = dynamic_data[index].element;
+                        if (elementName.includes("_Monitor")) {
+                            elementName = elementName.replace("_Monitor", "");
+                        }
                         const elementData = jsonData.filter((item: BasicTypeComponent['data']) => {
-                            return elementName === item.backend.key;
+                            return (elementName === item.backend.key) ;
                         })[0]
                         let newValue: string | undefined = "";
-                        if (Object.keys(elementData.backend.dbsimProps.enumMapping).length === 0) {
+                        const monitorElementData: DbsimProps = getObjectMonitorDbsimProps(elementData.backend.dbsimProps);
+                        if (Object.keys(monitorElementData.enumMapping).length === 0) {
                             console.log(`No dbsim enum mapping found, new value is ${dynamic_data[index].value}`)
                             newValue = dynamic_data[index].value
                         } else {
-                            newValue = Object.keys(elementData.backend.dbsimProps.enumMapping).find(key =>
-                                elementData.backend.dbsimProps.enumMapping[key as keyof typeof elementData.backend.dbsimProps.enumMapping] === dynamic_data[index].value
+                            console.log(`Received new value, new value is ${dynamic_data[index].value}. Type ${typeof (dynamic_data[index].value)}`)
+                            newValue = Object.keys(monitorElementData.enumMapping).find(key =>
+                                monitorElementData.enumMapping[key as keyof typeof monitorElementData.enumMapping] == dynamic_data[index].value
                             );
                         }
                         console.info(`Receive - Panel: ${dynamic_data[index].panel}, Switch: ${elementName}, Value: ${newValue}`)
@@ -107,11 +113,16 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
             }
             handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
-            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, clickedName, "click");
-            if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
+            const elementData: BasicTypeComponent['data'] = jsonData.filter((item: BasicTypeComponent['data']) => {
+                return componentName === item.backend.key;
+            })[0]
+            if (elementData.type !== 'stateNMomentary') {
+                [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, clickedName, "click");
+                if (showOnLogger === "true") {
+                    console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
+                }
+                handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
             }
-            handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
         }
     }
 
@@ -129,10 +140,39 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
             }
             handleSendRequest(static_data?.panel_name, clickMap.source, newValueToSend);
         } else {
-            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, clickedName, "longPress");
-            if (showOnLogger === "true") {
-                console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
+            const elementData: BasicTypeComponent['data'] = jsonData.filter((item: BasicTypeComponent['data']) => {
+                return componentName === item.backend.key;
+            })[0]
+            if (elementData.type !== 'stateNMomentary') {
+                [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, clickedName, "longPress");
+                if (showOnLogger === "true") {
+                    console.info(`Send - Panel: ${static_data?.panel_name}, Switch: ${componentName}, Value: ${newValueToSend}`)
+                }
+                handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
             }
+        }
+    }
+
+    const handleClickDown = (componentName: string, clickedName: string) => {
+        let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
+        const elementData: BasicTypeComponent['data'] = jsonData.filter((item: BasicTypeComponent['data']) => {
+            return componentName === item.backend.key;
+        })[0]
+        if (elementData.type === 'stateNMomentary') {
+            console.log(`Mouse Down on stateNMomentary`);
+            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, clickedName, "click");
+            handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
+        }
+    }
+
+    const handleClickUp = (componentName: string, clickedName: string) => {
+        let [newValueToSend, showOnLogger]: [string, string] = ["", ""]
+        const elementData: BasicTypeComponent['data'] = jsonData.filter((item: BasicTypeComponent['data']) => {
+            return componentName === item.backend.key;
+        })[0]
+        if (elementData.type === 'stateNMomentary') {
+            console.log(`Mouse Up on stateNMomentary`);
+            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, "RELEASE", "click");
             handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
         }
     }
@@ -159,6 +199,8 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                             isBlinking={blinkingQueue.search(item.backend.key)}
                             handleClick={handleOnClick}
                             handleLongPress={handleOnLongPress}
+                            handleClickDown={handleClickDown}
+                            handleClickUp={handleClickUp}
                         />
                     </div>
                 )}
@@ -185,6 +227,8 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                                 isBlinking={blinkingQueue.search(item.backend.key)}
                                 handleClick={handleOnClick}
                                 handleLongPress={handleOnLongPress}
+                                handleClickDown={handleClickDown}
+                                handleClickUp={handleClickUp}
                             />
                         </div>
                     )}

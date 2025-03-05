@@ -6,12 +6,12 @@
             "dbsimProps": {
                 "operationType": "Monitor",
                 "stationName": "",
-                "blockName": "IOToHost.LGControl",
-                "elementName": "Data.LEFT_WHEEL_INDICATION",
+                "blockName": "WhitePhosphorus.Data",
+                "elementName": "m_eSmokeColour",
                 "elementType": "Integer",
                 "enumMapping": {
-                    "DOWN": 0,
-                    "UP": 1
+                    "DOWN": "NoColor",
+                    "UP": "Black"
                 }
             }
         },

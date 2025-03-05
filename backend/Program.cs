@@ -4,11 +4,13 @@ using System.Net.WebSockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using OneSimLinkInterop;
+using OneSimLinkManaged;
 using BackEndServices.Configuration;
 using BackEndServices.Interfaces;
-using BackEndServices.Utilities;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 class Program
 {
@@ -17,7 +19,6 @@ class Program
     private static          CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemCurrent = new CMapKeyToBindDBSimElementItem();
     private static          CMapKeyToBindDBSimElementItem _mapKeyToBindDBSimElementItemPrevious = new CMapKeyToBindDBSimElementItem();
     private static          List<string> _listOfKeys = new List<string>();
-    private static          DbSimElementUtils _DbSimElementUtils = new DbSimElementUtils();
     private static bool     _oneSimLinkInitSucceeded;
     private const  int      MaxClients = 10;
 
@@ -27,7 +28,7 @@ class Program
     {
 
         //await Task.Delay(10000);
-        var oneSimLinkInitSucceed = StartOneSimLink();
+        var oneSimLinkInitSucceed = await StartOneSimLink();
 
         if (oneSimLinkInitSucceed)
         {
@@ -258,9 +259,10 @@ class Program
     }
 
 
-    private static bool StartOneSimLink()
+    private static async Task<bool> StartOneSimLink()
     {
-        _oneSimLinkInitSucceeded = OneSimLink.OneSimLinkStartup();
+        //_oneSimLinkInitSucceeded = OneSimLink.OneSimLinkStartup();
+        _oneSimLinkInitSucceeded = OneSimLinkManaged.Simulation.Instance.OneSimLinkStartup(true);
 
         if (!_oneSimLinkInitSucceeded)
         {
@@ -269,7 +271,14 @@ class Program
         }
         else
         {
-            Logger.LogInfoGreen("OneSimLink Init Succeeded!");
+            Logger.LogInfoGreen("OneSimLinkManaged Stratup Succeeded!");
+            OneSimLinkManaged.Simulation.Instance.WaitForSystemReadyAsync().Wait();
+            OneSimLinkManaged.SimStateType simState = OneSimLinkManaged.Simulation.Instance.GetSimState();
+            while (simState != SimStateType.STATE_STOP && simState != SimStateType.STATE_RUN)
+            {
+                simState = OneSimLinkManaged.Simulation.Instance.GetSimState();
+                await Task.Delay(100);
+            }
         }
 
         // =========================
@@ -326,14 +335,6 @@ class Program
                     try
                     {
                         // Deserialize JSON to a list of BasicDataBackend
-                        //var dataList = System.Text.Json.JsonSerializer.Deserialize<List<BasicDataBackend>>(jsonString);
-                        //var options = new JsonSerializerOptions
-                        //{
-                        //    PropertyNameCaseInsensitive = true, // Handle case-insensitive property names
-                        //    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-                        //};
-
-                        //var dataList = JsonSerializer.Deserialize<List<BasicDataBackend>>(jsonString, options);
 
                         using JsonDocument document = JsonDocument.Parse(jsonString);
                         // Extract the "backend" property from each top-level object
@@ -354,7 +355,6 @@ class Program
                                 }
                             }
                         }
-
 
                         if (dataList != null)
                         {
@@ -382,13 +382,17 @@ class Program
                                         cBindDBSimElementItem.cConfig.ElementType = operation.elementType;
 
                                         string sBlockFullName = $"{stationName}.{operation.blockName}";
+                                        string sElementFullName = $"{sBlockFullName}.{operation.elementName}";
 
-                                        cBindDBSimElementItem.m_nStationBlockID = OneSimLink.GetBlockIdByName(sBlockFullName);
-                                        cBindDBSimElementItem.m_nElementID = OneSimLink.RegisterElement(sBlockFullName, cBindDBSimElementItem.cConfig.ElementName);
+                                        OneSimLinkManaged.IBlock block = OneSimLinkManaged.Simulation.Instance.BlockManager.GetBlock(sBlockFullName);
+                                        OneSimLinkManaged.IElement element = OneSimLinkManaged.Simulation.Instance.ElementManager.GetElement(sElementFullName);
+
+                                        cBindDBSimElementItem.m_cBlockData = block;
+                                        cBindDBSimElementItem.m_cElementData = element;
                                         cBindDBSimElementItem.m_sPanelName = Path.GetFileNameWithoutExtension(sConfigFile);
-                                        cBindDBSimElementItem.m_sValue = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
+                                        cBindDBSimElementItem.m_sValue = await element.GetValueAsync() ; 
 
-                                        if ((cBindDBSimElementItem.m_nStationBlockID != -1) && (cBindDBSimElementItem.m_nElementID != -1))
+                                        if ((block != null) && (element != null))
                                         {
                                             if (operation.operationType == "Injection")
                                             {
@@ -396,9 +400,21 @@ class Program
                                                 _mapKeyToBindDBSimElementItemCurrent.Add(sKey + "_Injection", cBindDBSimElementItem);
                                                 _mapKeyToBindDBSimElementItemPrevious.Add(sKey + "_Injection", cBindDBSimElementItem);
                                             }
-                                            else // operation.operationType == "Monitor" Or operation.operationType is empty
+                                            else if (operation.operationType == "Monitor")// operation.operationType == "Monitor" 
                                             {
-                                                //Logger.LogDebug($"Key: {sKey} -> Block: {operation.blockName}, Element: {operation.elementName}, Type: {operation.elementType}");
+                                                Logger.LogDebugModified($"{sKey + "_Monitor"} mapped to: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}", "Monitor");
+                                                // Add only monitor list of keys that are scanned for a change
+                                                _listOfKeys.Add(sKey + "_Monitor");
+                                                _mapKeyToBindDBSimElementItemCurrent.Add(sKey + "_Monitor", cBindDBSimElementItem);
+                                                _mapKeyToBindDBSimElementItemPrevious.Add(sKey + "_Monitor", cBindDBSimElementItem);
+                                            }
+                                            else  // operation.operationType is empty is both "Monitor" and "Injection
+                                            {
+                                                // First map "Injection"
+                                                Logger.LogDebugModified($"{sKey + "_Injection"} mapped to: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}", "Injection");
+                                                _mapKeyToBindDBSimElementItemCurrent.Add(sKey + "_Injection", cBindDBSimElementItem);
+                                                _mapKeyToBindDBSimElementItemPrevious.Add(sKey + "_Injection", cBindDBSimElementItem);
+                                                // Then, map "Monitor"
                                                 Logger.LogDebugModified($"{sKey + "_Monitor"} mapped to: {operation.blockName}.{operation.elementName}, Type: {operation.elementType}", "Monitor");
                                                 // Add only monitor list of keys that are scanned for a change
                                                 _listOfKeys.Add(sKey + "_Monitor");
@@ -422,19 +438,14 @@ class Program
                                             }
                                         }
                                     }
-                                }
-
-                                
+                                }              
                             }
                         }
                     }
                     catch (Exception ex)
                     {
                         Logger.LogError($"Error deserializing JSON: {ex.Message}");
-                    }
-                    
-
-                   
+                    }       
                 }
             }
         }
@@ -468,31 +479,10 @@ class Program
         }
         else
         {
-            if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Double"))
+            if(cBindDBSimElementItem.cConfig.ElementType != null)
             {
-                double dResult = _DbSimElementUtils.GetDoubleValue((uint)cBindDBSimElementItem.m_nElementID);
-                sResult = dResult.ToString();
+                sResult = cBindDBSimElementItem.m_cElementData.GetValue();
             }
-            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Float"))
-            {
-                float fResult = _DbSimElementUtils.GetFloatValue((uint)cBindDBSimElementItem.m_nElementID);
-                sResult = fResult.ToString();
-            }
-            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Integer"))
-            {
-                int nResult = _DbSimElementUtils.GetIntValue((uint)cBindDBSimElementItem.m_nElementID);
-                sResult = nResult.ToString();
-            }
-            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("Boolean"))
-            {
-                bool bResult = _DbSimElementUtils.GetBooleanValue((uint)cBindDBSimElementItem.m_nElementID);
-                sResult = bResult.ToString();
-            }
-            else if (cBindDBSimElementItem.cConfig.ElementType != null && cBindDBSimElementItem.cConfig.ElementType.Equals("String"))
-            {
-                sResult = _DbSimElementUtils.GetStringValue((uint)cBindDBSimElementItem.m_nElementID, 1024);
-            }
-
             return sResult;
         }
     }
@@ -545,39 +535,16 @@ class Program
     }
 
 
-    public static void SetValue(string key, string value)
+    public static async void SetValue(string key, string value)
     {
         if (_mapKeyToBindDBSimElementItemCurrent == null) return;
 
         CBindDBSimElementItem cBindDBSimElementItem = _mapKeyToBindDBSimElementItemCurrent.Search(key);
 
-        if (cBindDBSimElementItem != null && cBindDBSimElementItem.cConfig.ElementType != null)
+        if (cBindDBSimElementItem != null)
         {
-            if (cBindDBSimElementItem.cConfig.ElementType.Equals("Integer"))
-            {
-                _DbSimElementUtils.SetIntValue((uint)cBindDBSimElementItem.m_nElementID, int.Parse(value));
-                //await Task.Delay(100);
-            }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Float"))
-            {
-                _DbSimElementUtils.SetFloatValue((uint)cBindDBSimElementItem.m_nElementID, float.Parse(value));
-                //await Task.Delay(100);
-            }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Double"))
-            {
-                _DbSimElementUtils.SetDoubleValue((uint)cBindDBSimElementItem.m_nElementID, double.Parse(value));
-                //await Task.Delay(100);
-            }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("Boolean"))
-            {
-                _DbSimElementUtils.SetBoolValue((uint)cBindDBSimElementItem.m_nElementID, Boolean.Parse(value));
-                //await Task.Delay(100);
-            }
-            else if (cBindDBSimElementItem.cConfig.ElementType.Equals("String"))
-            {
-                _DbSimElementUtils.SetStringValue((uint)cBindDBSimElementItem.m_nElementID, value);
-                //await Task.Delay(100);
-            }
+            cBindDBSimElementItem.m_cElementData.SetValue(value);
+            await Task.Delay(100);
         }
     }
 

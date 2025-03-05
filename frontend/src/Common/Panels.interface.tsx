@@ -12,24 +12,9 @@ export interface Cmds_ProgramInterface {
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
 
-export interface AdiInterface {
-  input: {
-     "ADI_LADDER_PITCH":	string,
-     "ADI_Cover":	string,
-     "AUX":	string,
-     "LOC":	string,
-     "GS":	string,
-     "OFF":	string,
-     "VERTICAL_NEEDLE":	string,
-     "HORIZONTAL_NEEDLE":	string,
-  }
-  handleSendRequest?: (switchName: string, switchValue: string) => void;
-}
-
 export type InterfaceMap = {
      "LandingGear_Wheels":	LandingGear_WheelsInterface;
      "Cmds_Program":	Cmds_ProgramInterface;
-     "Adi":	AdiInterface;
 }
 
 export type InterfaceKey = keyof InterfaceMap;
