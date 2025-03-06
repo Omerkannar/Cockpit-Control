@@ -1,0 +1,57 @@
+[
+    {
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "CAUTION_RESET",
+            "dbsimProps": {
+                "operationType": "",
+                "stationName": "",
+                "blockName": "OwnshipPanels.Electric",
+                "elementName": "Out.ELEC_CAUTION_RESET",
+                "elementType": "String",
+                "enumMapping": {
+                    "PUSH": "PUSH",
+                    "RELEASE": "RELEASE"
+                }
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgScale": "100",
+                "imgWidth": "100",
+                "imgHeight": "100",
+                "posLeft": "115",
+                "posTop": "300"
+            },
+            "imageProps": {
+                "imageDefault": "/ElecControlPanel/Button_Out.png",
+                "additionalImageData": {
+                    "PUSH": "/ElecControlPanel/Button_In.png",
+                    "RELEASE": "/ElecControlPanel/Button_Out.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1.5,
+                "clickBoundsWidthFactor": 1.5,
+                "mapping": {
+                    "mapTop": "PUSH",
+                    "mapRight": "PUSH",
+                    "mapBottom": "PUSH",
+                    "mapLeft": "PUSH",
+                    "mapPressPull1": "PUSH"
+                }
+            },
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    }
+]

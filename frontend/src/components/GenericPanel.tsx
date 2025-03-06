@@ -73,7 +73,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                                     ...prevState,
                                     [elementName]: newValue
                                 }));
-                                console.log(dynamic_data[index].blinking)
+                                //console.log(dynamic_data[index].blinking)
                                 if (dynamic_data[index].blinking === true) {
                                     blinkingQueue.enqueue(elementName);
                                 }
@@ -85,8 +85,8 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
                 }
             }
         }
-        // eslint-disable-next-line
-    }, [dynamic_data]);
+    // eslint-disable-next-line
+    }, [dynamic_data, jsonData]);
 
     // Set panel dimensions according to panel original size
     useEffect(() => {

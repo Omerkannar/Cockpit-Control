@@ -15,24 +15,45 @@ export const getObjectEntries = (obj: Record<string, any>) => {
 }
 
 export const linearInterpolation = (data: any, x: number): number => {
-    const res = getObjectEntries(data.conversion)
-    //console.log(res)
-    if (res.length < 2) {
-        return res[0].value;
-    } else {
-        let x0 = -1, x1 = -1, y0 = -1, y1 = -1;
-        for (let v: number = 1; v < res.length; v++) {
-            if (x <= Number(res[v].key) && x >= Number(res[v - 1].key)) {
-                x0 = Number(res[v - 1].key)
-                y0 = Number(res[v - 1].value)
-                x1 = Number(res[v].key)
-                y1 = Number(res[v].value)
-                return ((y1 - y0) / (x1 - x0)) * (x - x0) + y0;
-            }
-        }
-        return 0;
+    const res = getObjectEntries(data.conversion).map(entry => ({
+        key: Number(entry.key),
+        value: entry.value
+    }));
+
+    if (res.length === 0) {
+        throw new Error("Conversion data is empty.");
     }
-}
+
+    if (res.length === 1) {
+        return res[0].value;
+    }
+
+    // Sort array in ascending order
+    res.sort((a, b) => a.key - b.key);
+
+    // Out-of-bounds cases
+    if (x <= res[0].key) {
+        return res[0].value; // Lowest boundary value
+    }
+    if (x >= res[res.length - 1].key) {
+        return res[res.length - 1].value; // Highest boundary value
+    }
+
+    // Find the two closest points (x0, y0) and (x1, y1)
+    for (let v = 1; v < res.length; v++) {
+        if (x <= res[v].key) {
+            const x0 = res[v - 1].key;
+            const y0 = res[v - 1].value;
+            const x1 = res[v].key;
+            const y1 = res[v].value;
+
+            // linear interpolation
+            return y0 + ((y1 - y0) / (x1 - x0)) * (x - x0);
+        }
+    }
+
+    throw new Error("Unexpected case in interpolation.");
+};
 
 
 export function readDigits(str: string, dig: number): (string)[] {

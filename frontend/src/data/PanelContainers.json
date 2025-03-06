@@ -56,6 +56,15 @@
         "container_height": 400,
         "container_scale": 100
     },
+	{
+        "container_name": "LEFT_AUXILIARY_AND_CONSOLE_EXT_LIGHTING", 
+        "container_text": "Ext Light", 
+        "container_top": 40,
+        "container_left": 200,
+        "container_width": 500,
+        "container_height": 300,
+        "container_scale": 100
+    },
     {
         "container_name": "LEFT_AUXILIARY_AND_CONSOLE_CMDS", 
         "container_text": "CMDS", 
@@ -63,6 +72,15 @@
         "container_left": 20,
         "container_width": 600,
         "container_height": 400,
+        "container_scale": 100
+    },
+    {
+        "container_name": "LEFT_AUXILIARY_AND_CONSOLE_ELECTRICAL", 
+        "container_text": "Electrical Control", 
+        "container_top": 110,
+        "container_left": 200,
+        "container_width": 225,
+        "container_height": 330,
         "container_scale": 100
     },
     {

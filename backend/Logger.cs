@@ -36,7 +36,7 @@ public static class Logger
 
     public static void ClearLog()
     {
-        File.Delete("C:\\Temp\\CC_Log.txt");
+       // File.Delete("C:\\Temp\\CC_Log.txt");
     }
 
     private static void LogMessage(string logLevel, string message, ConsoleColor color)

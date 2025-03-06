@@ -1,0 +1,247 @@
+[
+    {
+        "type": "knobInteger",
+        "backend": {
+            "key": "ANTI_COLLISION",
+            "dbsimProps": {
+                "operationType": "",
+                "stationName": "",
+                "blockName": "OwnshipPanels.ExteriorLighting",
+                "elementName": "Out.ANTI_COLLISION_Switch_Sufa",
+                "elementType": "String",
+                "enumMapping": {
+                    "OFF": "OFF",
+                    "1": "1",
+                    "2": "2",
+                    "3": "3",
+                    "4": "4",
+                    "A": "A",
+                    "B": "B",
+                    "C": "C"
+                }
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgScale": "100",
+                "imgWidth": "118",
+                "imgHeight": "118",
+                "posLeft": "175",
+                "posTop": "115",
+                "zIndex": "1"
+            },
+            "imageProps": {
+                "imageDefault": "/EXTPanel/Knob1.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 2,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "mapTop": "INCREASE",
+                    "mapRight": "INCREASE",
+                    "mapBottom": "DECREASE",
+                    "mapLeft": "DECREASE",
+                    "mapPressPull1": "DECREASE"
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "OFF": "-53",
+                    "1": "-20",
+                    "2": "30",
+                    "3": "77",
+                    "4": "120",
+                    "A": "163",
+                    "B": "210",
+                    "C": "260"
+                }
+            },
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "knobInteger",
+        "backend": {
+            "key": "EXT_LIGHT_MASTER",
+            "dbsimProps": {
+                "operationType": "",
+                "stationName": "",
+                "blockName": "OwnshipPanels.ExteriorLighting",
+                "elementName": "Out.MASTER_Switch_Sufa",
+                "elementType": "String",
+                "enumMapping": {
+                    "OFF": "OFF",
+                    "ALL": "ALL",
+                    "A_C": "A_C",
+                    "FORM": "FORM",
+                    "NORM": "NORM"
+                }
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgScale": "100",
+                "imgWidth": "118",
+                "imgHeight": "118",
+                "posLeft": "440",
+                "posTop": "362",
+                "zIndex": "1"
+            },
+            "imageProps": {
+                "imageDefault": "/EXTPanel/Knob1.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 2,
+                "clickBoundsWidthFactor": 2,
+                "mapping": {
+                    "mapTop": "INCREASE",
+                    "mapRight": "INCREASE",
+                    "mapBottom": "DECREASE",
+                    "mapLeft": "DECREASE",
+                    "mapPressPull1": "DECREASE"
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "OFF": "0",
+                    "ALL": "45",
+                    "A_C": "90",
+                    "FORM": "135",
+                    "NORM": "180"
+                }
+            },
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "analogRotation",
+        "backend": {
+            "key": "FORM_LIGHT",
+            "dbsimProps": {
+                "operationType": "",
+                "stationName": "",
+                "blockName": "OwnshipPanels.ExteriorLighting",
+                "elementName": "Out.FORM_Knob",
+                "elementType": "String",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgScale": "100",
+                "imgWidth": "140",
+                "imgHeight": "140",
+                "posLeft": "155",
+                "posTop": "352",
+                "zIndex": "1"
+            },
+            "imageProps": {
+                "imageDefault": "/EXTPanel/Knob_Big.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1.8,
+                "clickBoundsWidthFactor": 1.8,
+                "mapping": {
+                    "mapTop": "INCREASE",
+                    "mapRight": "INCREASE",
+                    "mapBottom": "DECREASE",
+                    "mapLeft": "DECREASE",
+                    "mapPressPull1": "DECREASE"
+                }
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {
+                    "0": 20,
+                    "1": 340
+                }
+            },
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "stateN",
+        "backend": {
+            "key": "FUSELAGE",
+            "dbsimProps": {
+                "operationType": "",
+                "stationName": "",
+                "blockName": "OwnshipPanels.ExteriorLighting",
+                "elementName": "Out.FUSELAGE_Switch",
+                "elementType": "String",
+                "enumMapping": {
+                    "OFF": "OFF",
+                    "BRT": "BRT",
+                    "DIM": "DIM"
+                }
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgScale": "100",
+                "imgWidth": "100",
+                "imgHeight": "100",
+                "posLeft": "777",
+                "posTop": "147"
+            },
+            "imageProps": {
+                "imageDefault": "/ElecControlPanel/Switch1_Mid.png",
+                "additionalImageData": {
+                    "OFF": "/EXTPanel/Switch1_Mid.png",
+                    "BRT": "/EXTPanel/Switch1_Up.png",
+                    "DIM": "/EXTPanel/Switch1_Down.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1.8,
+                "clickBoundsWidthFactor": 1.6,
+                "mapping": {
+                    "mapTop": "BRT",
+                    "mapRight": "OFF",
+                    "mapBottom": "DIM",
+                    "mapLeft": "OFF",
+                    "mapPressPull1": "OFF"
+                }
+            },
+            "knobProps": {},
+            "analogProps": {},
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    }
+]

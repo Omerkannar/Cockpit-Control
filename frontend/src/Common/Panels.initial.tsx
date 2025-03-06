@@ -8,8 +8,21 @@ export const Cmds_ProgramInitialValues: Interface.Cmds_ProgramInterface['input']
      "KNOB_PRGM":	"",
 }
 
+export const Exterior_LightingInitialValues: Interface.Exterior_LightingInterface['input'] = {
+     "ANTI_COLLISION":	"",
+     "EXT_LIGHT_MASTER":	"",
+     "FORM_LIGHT":	"",
+     "FUSELAGE":	"",
+}
+
+export const Electrical_ControlInitialValues: Interface.Electrical_ControlInterface['input'] = {
+     "CAUTION_RESET":	"",
+}
+
 export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.InterfaceMap[K]['input'] } = {
 	"LandingGear_Wheels":	LandingGear_WheelsInitialValues,
 	"Cmds_Program":	Cmds_ProgramInitialValues,
+	"Exterior_Lighting":	Exterior_LightingInitialValues,
+	"Electrical_Control":	Electrical_ControlInitialValues,
 }
 

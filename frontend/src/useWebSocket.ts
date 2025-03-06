@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IncomingMessage } from './Common/Common.interface'; // Adjust this type according to server response
+import { IncomingMessage, MessageType } from './Common/Common.interface'; // Adjust this type according to server response
 
 
 export const useWebSocket = (url: string) => {
@@ -11,7 +11,6 @@ export const useWebSocket = (url: string) => {
         
         socket.onopen = () => {
             console.info('WebSocket connection established');
-            //setWs(socket);
         };
         socket.onmessage = (event) => {
             try {
@@ -24,7 +23,8 @@ export const useWebSocket = (url: string) => {
                     element: detail.Element,
                     value: detail.Value,
                     // `blinking` is set to false on startup, true otherwise
-                    blinking: data['Type'] === "UPDATE_CLIENT_ON_STARTUP" ? false : true,
+                    blinking: data['Type']  === "UPDATE_CLIENT_ON_STARTUP" ? false : true,
+                    type: data['Type']      === "UPDATE_CLIENT_ON_STARTUP" ? "UPDATE_ALL" : "UPDATE_UPON_CHANGE"
                 }));
                 setMessage(incomingMessages);
                 }

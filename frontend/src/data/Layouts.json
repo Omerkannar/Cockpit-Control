@@ -1,14 +1,24 @@
 [
   {
     "layout_name": "Instruments Panel",
-    "containers": ["INSTRUMENT_PANEL_GAUGES"]
+    "containers": [
+      "INSTRUMENT_PANEL_GAUGES"
+    ]
   },
   {
     "layout_name": "Left Auxiliary and Console",
-    "containers": ["LEFT_AUXILIARY_AND_CONSOLE_LANDING_GEAR", "LEFT_AUXILIARY_AND_CONSOLE_CMDS"]
+    "containers": [
+      "LEFT_AUXILIARY_AND_CONSOLE_LANDING_GEAR",
+      "LEFT_AUXILIARY_AND_CONSOLE_CMDS",
+      "LEFT_AUXILIARY_AND_CONSOLE_EXT_LIGHTING",
+      "LEFT_AUXILIARY_AND_CONSOLE_ELECTRICAL"
+    ]
   },
   {
     "layout_name": "Right Auxiliary and Console",
-    "containers": ["INSTRUMENTS_L2", "INSTRUMENTS_R2"]
+    "containers": [
+      "INSTRUMENTS_L2",
+      "INSTRUMENTS_R2"
+    ]
   }
 ]

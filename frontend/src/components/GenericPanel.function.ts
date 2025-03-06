@@ -33,36 +33,44 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
         case "analogRotation":
         case "analogVerticalTranslation":
         case "analogHorizontalTranslation":
+
+            // Get max and min values from configuration
+            let rotationKeys = Object.keys(filteredName.component.analogProps.conversion).map(Number)
+
+            const minValue = Math.min(...rotationKeys);
+            const maxValue = Math.max(...rotationKeys);
+            const step = (maxValue - minValue) / 20;    // 20 click will bring you from min -> max or max -> min
+
             //  In this case - According to the value that was pressed, the logic will provide the next value
             //  If the user pressed DECREASE or CCW the logic will substract 1 if the user clicked and 10 (configuration) if the user long pressed 
             //  If the user pressed DECREASE or CCW the logic will add 1 if the user clicked and 10 (configuration) if the user long pressed
             // ! There is difference if the user pressed long press or click
             if (clickedName === "DECREASE" || clickedName === "CCW") {
-                if (currentValue === "0") {
-                    return ["0", filteredName.component.logger?.display || "true"];
+                if (currentValue === String(minValue) || Number(currentValue) - step < minValue) {
+                    return [String(minValue), filteredName.component.logger?.display || "true"];
                 }
                 else {
                     if (pressType === 'click') {
                         console.log(`click on ${filteredName.component}`)
-                        return [String(Number(currentValue) - 1), filteredName.logger?.display || "true"];
+                        return [String(Number(currentValue) - step), filteredName.logger?.display || "true"];
                     } else { // 'Long Press'
                         if (Number(currentValue) < settings.componentsBehavior.analogLongPressStep) {
-                            return ["0", filteredName.component.logger?.display || "true"];
+                            return [String(minValue), filteredName.component.logger?.display || "true"];
                         } else {
                             return [String(Number(currentValue) - settings.componentsBehavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
                         }
                     }
                 }
             } else if (clickedName === "INCREASE" || clickedName === "CW") {
-                if (currentValue === "100") {
-                    return ["100", filteredName.component.logger?.display || "true"];
+                if (currentValue === String(maxValue) || Number(currentValue) + step > maxValue) {
+                    return [String(maxValue), filteredName.component.logger?.display || "true"];
                 }
                 else {
                     if (pressType === 'click') {
-                        return [String(Number(currentValue) + 1), filteredName.component.logger?.display || "true"];
+                        return [String(Number(currentValue) + step), filteredName.component.logger?.display || "true"];
                     } else {
-                        if ((100 - Number(currentValue)) < settings.componentsBehavior.analogLongPressStep) {
-                            return ["100", filteredName.component.logger?.display || "true"];
+                        if ((maxValue - Number(currentValue)) < settings.componentsBehavior.analogLongPressStep) {
+                            return [String(maxValue), filteredName.component.logger?.display || "true"];
                         } else {
                             return [String(Number(currentValue) + settings.componentsBehavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
                         }
@@ -127,10 +135,11 @@ const handleKnobNextValue = (selectedComponent: any, clickedName: string, curren
     // In this case we have knobProps properties
     // Sort the available knob rotation according to their values
     const keys = Object.keys(selectedComponent.component.knobProps.rotation).sort((a, b) => {
-        const valueA = selectedComponent.component.knobProps.rotation[a];
-        const valueB = selectedComponent.component.knobProps.rotation[b];
-        return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
-    })
+        const valueA = Number(selectedComponent.component.knobProps.rotation[a]);
+        const valueB = Number(selectedComponent.component.knobProps.rotation[b]);
+        return valueA - valueB; // Sort in ascending order
+    });
+    console.log(keys)
     const index = keys.indexOf(currentValue.toString());
     const knobPropsRotationLength: number = Object.keys(selectedComponent.component.knobProps.rotation).length;
     if (index === -1) {

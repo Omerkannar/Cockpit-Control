@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import settings from './settings.json';
-import { GenericPanelInterface, PanelContainerInterface } from './Common/Common.interface';
+import { GenericPanelInterface, PanelContainerInterface, MessageType, IncomingMessage } from './Common/Common.interface';
 import { Container, MainContainer, LayoutNavigation, LayoutButton } from './Common/Common.styles';
 import { useWebSocket } from './useWebSocket';
 import GenericPanel from './components/GenericPanel';
@@ -12,6 +12,7 @@ import FloatingLogger from './Logger/FloatingLogger';
 const App = () => {
 
   const { message, sendMessage } = useWebSocket('ws://localhost:8765');
+  const [initialMessage, setInitialMessage] = useState<IncomingMessage[]>([])
   const [currentLayout, setCurrentLayout] = useState(layoutsData[0].layout_name);
   const [zoomScale, setZoomScale] = useState<number>(1); // State to track zoom scale
 
@@ -41,6 +42,15 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (message !== null) {
+      const newMessageType: MessageType = message[0].type;
+      if (newMessageType === 'UPDATE_ALL') {
+        setInitialMessage(message);
+      }
+    }
+  }, [message]);
+
   const handleLayoutChange = (layoutName: string) => {
     setCurrentLayout(layoutName);
   };
@@ -49,7 +59,6 @@ const App = () => {
   const visibleContainers = containerConfigs.filter(container =>
     currentLayoutData?.containers.includes(container.container_name)
   );
-
 
   return (
     <MainContainer>
@@ -69,21 +78,21 @@ const App = () => {
         </LayoutNavigation>
       )}
       {visibleContainers.map((container: PanelContainerInterface) => (
-        <Container 
-        key={container.container_name} {...container}>
+        <Container
+          key={container.container_name} {...container}>
           {panelsStaticData
             .filter((data: GenericPanelInterface['static_data']) => data.panel_container === container.container_name)
             .map((data: GenericPanelInterface['static_data']) => (
               <GenericPanel
                 key={data.panel_name}
                 static_data={data}
-                dynamic_data={message || undefined}
+                dynamic_data={message || initialMessage || undefined}
                 handleSendRequest={handleSendRequest}
               />
             ))}
-            <div className="text-area">
-              {container.container_text? container.container_text : null}
-            </div>
+          <div className="text-area">
+            {container.container_text ? container.container_text : null}
+          </div>
         </Container>
       ))}
     </MainContainer>

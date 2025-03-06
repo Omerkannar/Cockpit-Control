@@ -24,6 +24,34 @@
             "enable": false,
             "scale": 60
         }
+    },
+	{
+        "panel_name" : "Exterior_Lighting",
+        "panel_container": "LEFT_AUXILIARY_AND_CONSOLE_EXT_LIGHTING",
+        "panel_url" : "./EXTPanel/EXT.png",
+        "panel_resources" : "/EXTPanel/",
+        "panel_scale": 50,
+        "panel_top": 0,
+        "panel_left": 0,
+        "enlargeProps": {
+            "enable": false,
+            "scale": 60
+        }
+    },
+	{
+        "panel_name" : "Electrical_Control",
+        "panel_container": "LEFT_AUXILIARY_AND_CONSOLE_ELECTRICAL",
+        "panel_url" : "./ElecControlPanel/Elec_Control.png",
+        "panel_resources" : "/ElecControlPanel/",
+        "panel_scale": 50,
+        "panel_top": 0,
+        "panel_left": 0,
+        "enlargeProps": {
+            "enable": false,
+            "scale": 60
+        }
     }
+
+    
 ]
 

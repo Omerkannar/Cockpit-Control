@@ -15,6 +15,7 @@ type State = boolean | number | string | any;
 export type ClickType = "click" | "longPress";
 export type OpertaionType = "toggle" | "clickByValue"
 type ElementType = "Double" | "Float" | "Integer" | "Boolean" | "String";
+export type MessageType = "UPDATE_ALL" | "UPDATE_UPON_CHANGE";
 
 
 export interface IncomingMessage {
@@ -22,6 +23,7 @@ export interface IncomingMessage {
     element: string;
     value: string;
     blinking: boolean;
+    type: MessageType;
 }
 
 
@@ -69,7 +71,7 @@ export interface ClickContainerInterface {
 }
 
 interface AdditionalCssProps {
-    position : "relative" | "absolute",
+    position: "relative" | "absolute",
     objectFit: "cover" | "fill" | "contain";
 }
 
@@ -136,7 +138,7 @@ interface BasicData {
         logger?: {
             display: boolean;
         };
-        additionalCssProps? : AdditionalCssProps;
+        additionalCssProps?: AdditionalCssProps;
     }
 }
 
