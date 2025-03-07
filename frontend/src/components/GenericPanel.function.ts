@@ -40,6 +40,7 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
             const minValue = Math.min(...rotationKeys);
             const maxValue = Math.max(...rotationKeys);
             const step = (maxValue - minValue) / 20;    // 20 click will bring you from min -> max or max -> min
+            const longStep = (maxValue - minValue) / settings.componentsBehavior.analogLongPressStep;    // analogLongPressStep click will bring you from min -> max or max -> min
 
             //  In this case - According to the value that was pressed, the logic will provide the next value
             //  If the user pressed DECREASE or CCW the logic will substract 1 if the user clicked and 10 (configuration) if the user long pressed 
@@ -54,10 +55,10 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
                         console.log(`click on ${filteredName.component}`)
                         return [String(Number(currentValue) - step), filteredName.logger?.display || "true"];
                     } else { // 'Long Press'
-                        if (Number(currentValue) < settings.componentsBehavior.analogLongPressStep) {
+                        if (Number(currentValue) < longStep) {
                             return [String(minValue), filteredName.component.logger?.display || "true"];
                         } else {
-                            return [String(Number(currentValue) - settings.componentsBehavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
+                            return [String(Number(currentValue) - longStep), filteredName.component.logger?.display || "true"];
                         }
                     }
                 }
@@ -69,10 +70,10 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
                     if (pressType === 'click') {
                         return [String(Number(currentValue) + step), filteredName.component.logger?.display || "true"];
                     } else {
-                        if ((maxValue - Number(currentValue)) < settings.componentsBehavior.analogLongPressStep) {
+                        if ((maxValue - Number(currentValue)) < longStep) {
                             return [String(maxValue), filteredName.component.logger?.display || "true"];
                         } else {
-                            return [String(Number(currentValue) + settings.componentsBehavior.analogLongPressStep), filteredName.component.logger?.display || "true"];
+                            return [String(Number(currentValue) + longStep), filteredName.component.logger?.display || "true"];
                         }
                     }
                 }

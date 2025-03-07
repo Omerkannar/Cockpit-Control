@@ -1,5 +1,18 @@
 # Cockpit Controls / VICO
 
+## Installation
+
+1. Create symbolic link of `./data` folder: \
+ - `cd frontend` and then
+ - `mklink /D src\data ..\data` \
+> Where:
+> - /D → Creates a directory symlink.
+> - src\data → New virtual folder inside src/ (where CRA allows imports).
+> - ..\data → Points to your actual data folder outside src/.
+
+
+ 
+
 
 ## Element interface
 
@@ -9,6 +22,7 @@
 |*backend*                                          |object		|Defines all properties to Backend|
 |*backend\key*                                      |string		|Logical name of the component|
 |*backend\dbsimProps*                               |object		|Defines all properties to DBSIM|
+|*backend\dbsimProps\operationType*                 |string		|Define if the elment is used for monitor, injection or both ("Monitor" for monitor, "Injection" for injection or leave empty for both monitor and injection) |
 |*backend\dbsimProps\stationName*                   |string		|Name of the station (Default: "")|
 |*backend\dbsimProps\blockName*                     |string		|Block name|
 |*backend\dbsimProps\elementName*                   |string		|Element name|
@@ -18,10 +32,11 @@
 |*component\debugMode*                              |boolean	|Defines if the component is in debug mode (Gives component additional data)|
 |*component\isClickable*                            |boolean	|Defines if the component can be clicked from the app|
 |*component\position*                               |object	    |Defines all position and size properties of the component|
-|*component\position\width*                         |px     	|Default width size of the component|
-|*component\position\height*                        |px     	|Default height size of the component|
-|*component\position\left*                          |px     	|Left location of the component on the panel (from top- left corner) (0 - Left side of the panel)|
-|*component\position\top*                           |px     	|Top location of the component on the panel (from top- left corner) (0 - Top side of the panel)|
+|*component\position\imgScale*                      |%     	    |Default scale of the component|
+|*component\position\imgWidth*                      |px     	|Default width size of the component|
+|*component\position\imgHeight                      |px     	|Default height size of the component|
+|*component\position\posLeft*                       |px     	|Left location of the component on the panel (from top- left corner) (0 - Left side of the panel)|
+|*component\position\posTop*                        |px     	|Top location of the component on the panel (from top- left corner) (0 - Top side of the panel)|
 |*component\imageProps*                             |object 	|Defines all images properties|
 |*component\imageProps\imageDefault*                |string 	|URL to the off state image|
 |*component\imageProps\additionalImageData*         |object 	|Defines all other images URLs|
@@ -47,100 +62,117 @@
 ## StateN Component
 ```
 {
-        "type": "stateN",
-        "backend": {
-            "key": "RWR_SWITCH_IN",
-            "dbsimProps": {
+    "type": "stateN",
+    "backend": {
+        "key": "RWR_SWITCH_IN",
+        "dbsimProps": [
+            {
+                "operationType": "Monitor",
                 "stationName": "",
                 "blockName": "IOToHost.CMDS",
                 "elementName": "Data.RWR_SWITCH",
-                "elementType": "Integer",
+                "elementType": "String",
                 "enumMapping": {
-                    "OFF": 0,
-                    "ON": 1
+                    "OFF": "OFF",
+                    "ON": "ON"
                 }
+            },
+            {
+                "operationType": "Injection",
+                "stationName": "",
+                "blockName": "HostToIO.CMDS",
+                "elementName": "Data.RWR_SWITCH",
+                "elementType": "String",
+                "enumMapping": {
+                    "OFF": "OFF",
+                    "ON": "ON"
+                }
+            }
+        ]
+    },
+    "component": {
+        "debugMode": false,
+        "isClickable": true,
+        "position": {
+            "imgScale": "100",
+            "imgWidth": "85",
+            "imgHeight": "160",
+            "posLeft": "156",
+            "posTop": "60"
+        },
+        "imageProps": {
+            "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
+            "additionalImageData": {
+                "ON": "/CMDSPanel/SWITCH_10_UP1.png",
+                "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
             }
         },
-        "component": {
-            "debugMode": false,
-            "isClickable": true,
-            "position": {
-                "width": "85",
-                "height": "160",
-                "left": "156",
-                "top": "60"
-            },
-            "imageProps": {
-                "imageDefault": "/CMDSPanel/SWITCH_10_DOWN_1.png",
-                "additionalImageData": {
-                    "ON": "/CMDSPanel/SWITCH_10_UP1.png",
-                    "OFF": "/CMDSPanel/SWITCH_10_DOWN_1.png"
-                }
-            },
-            "clickProps": {
-                "clickBoundsHeightFactor": 1,
-                "clickBoundsWidthFactor": 2,
-                "mapping": {
-                    "top": "ON",
-                    "bottom": "OFF"
-                }
-            },
-            "knobProps": {},
-            "analogProps": {},
-            "stringProps": {},
-            "blinking": {
-                "color": "yellow"
-            },
-            "logger": {
-                "display": true
+        "clickProps": {
+            "clickBoundsHeightFactor": 1,
+            "clickBoundsWidthFactor": 2,
+            "mapping": {
+                "mapTop": "ON",
+                "mapBottom": "OFF"
             }
+        },
+        "knobProps": {},
+        "analogProps": {},
+        "stringProps": {},
+        "blinking": {
+            "color": "yellow"
+        },
+        "logger": {
+            "display": true
         }
     }
+}
 ```
 
 ## knobInteger Component
 ```
 {
-        "type": "knobInteger",
-        "backend": {
-            "key": "KNOB_PRGM_IN",
-            "dbsimProps": {
-                "stationName": "",
-                "blockName": "IOToHost.CMDS",
-                "elementName": "Data.KNOB_PRGM",
-                "elementType": "Integer",
-                "enumMapping": {
-                    "BIT": 0,
-                    "1": 1,
-                    "2": 2,
-                    "3": 3,
-                    "4": 4
-                }
+    "type": "knobInteger",
+    "backend": {
+        "key": "KNOB_PRGM_IN",
+        "dbsimProps": {
+            "opertionType": "",
+            "stationName": "",
+            "blockName": "IOToHost.CMDS",
+            "elementName": "Data.KNOB_PRGM",
+            "elementType": "Integer",
+            "enumMapping": {
+                "BIT": "BIT",
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4"
+            }
+        }
+    },
+    "component": {
+        "debugMode": false,
+        "isClickable": true,
+        "position": {
+            "imgScale": "100",
+            "imgWidth": "78",
+            "imgHeight": "78",
+            "posLeft": "533",
+            "posTop": "443"
+        },
+        "imageProps": {
+            "imageDefault": "/CMDSPanel/Knob_Plus.png"
+        },
+        "clickProps": {
+            "clickBoundsHeightFactor": 2,
+            "clickBoundsWidthFactor": 2,
+            "mapping": {
+                "mapTop": "INCREASE",
+                "mpaRight": "INCREASE",
+                "mapBottom": "DECREASE",
+                "mpaLeft": "DECREASE"
             }
         },
-        "component": {
-            "debugMode": false,
-            "isClickable": true,
-            "position": {
-                "width": "78",
-                "height": "78",
-                "left": "533",
-                "top": "443"
-            },
-            "imageProps": {
-                "imageDefault": "/CMDSPanel/Knob_Plus.png"
-            },
-            "clickProps": {
-                "clickBoundsHeightFactor": 2,
-                "clickBoundsWidthFactor": 2,
-                "mapping": {
-                    "top": "INCREASE",
-                    "right": "INCREASE",
-                    "bottom": "DECREASE",
-                    "left": "DECREASE"
-                }
-            },
-            "knobProps": {
+        "knobProps": {
             "rotation": {
                 "BIT": -90,
                 "1": -55,
@@ -149,15 +181,15 @@
                 "4": 69
             }
         },
-            "analogProps": {},
-            "stringProps": {},
-            "blinking": {
-                "color": "yellow"
-            },
-            "logger": {
-                "display": true
-            }
+        "analogProps": {},
+        "stringProps": {},
+        "blinking": {
+            "color": "yellow"
+        },
+        "logger": {
+            "display": true
         }
     }
+}
 ```
 

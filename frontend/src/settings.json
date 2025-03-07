@@ -23,6 +23,6 @@
     },
     "componentsBehavior" : {
         "analogLongPressDelay" : 200,
-        "analogLongPressStep" : 10
+        "analogLongPressStep" : 5
     }
 }
