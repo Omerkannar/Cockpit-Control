@@ -15,7 +15,7 @@ const ClickContainer: React.FC<BasicComponentContainer> = (props) => {
   const smallRectangleWidth: number = Number(props.data.component.clickProps?.clickBoundsWidthFactor) * Number(props.data.component.position.imgWidth) * props.scale / 100 / REDUCE_FACTOR;
 
   const isCenter1Mapping = props.data.component.clickProps?.mapping?.mapPressPull1; // 1st center zone
-  const isCenter2Mapping = props.data.component.clickProps?.mapping?.mapPressPull2; // 2nd center zone (optional)
+  //const isCenter2Mapping = props.data.component.clickProps?.mapping?.mapPressPull2; // 2nd center zone (optional)
   const isTopMapping = props.data.component.clickProps?.mapping?.mapTop;
   const isBottomMapping = props.data.component.clickProps?.mapping?.mapBottom;
   const isRightMapping = props.data.component.clickProps?.mapping?.mapRight;
