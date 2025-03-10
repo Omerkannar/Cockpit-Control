@@ -3,7 +3,7 @@ import settings from './settings.json';
 import { GenericPanelInterface, PanelContainerInterface, MessageType, IncomingMessage } from './Common/Common.interface';
 import { Container, MainContainer, LayoutNavigation, LayoutButton } from './Common/Common.styles';
 import { useWebSocket } from './useWebSocket';
-import GenericPanel from './components/GenericPanel';
+import GenericPanel from './Components/GenericPanel';
 import panelsStaticData from '../../data/Panels.json';
 import containerConfigs from '../../data/PanelContainers.json';
 import layoutsData from '../../data/Layouts.json';

@@ -27,7 +27,7 @@ class BlinkingQueue {
 
   private dequeue(): void {
     if (this.queue.length > 0) {
-      const item = this.queue.shift();
+     // const item = this.queue.shift();
       //console.log(`Dequeued after 5 seconds: ${item}`);
       this.timeouts.shift();
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { GenericTypeComponent } from './Common.interface'
-import { getComponentById } from './components/ComponentMap'
+import { getComponentById } from './Components/ComponentMap'
 import { ComponentStringContainer } from './components/StringComponents';
 import { getValueByKey, linearInterpolation, readDigits } from './Common.function.Aux';
 
