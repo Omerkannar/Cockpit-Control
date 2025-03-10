@@ -22,6 +22,14 @@ export interface Exterior_LightingInterface {
   handleSendRequest?: (switchName: string, switchValue: string) => void;
 }
 
+export interface Fuel_FlowInterface {
+  input: {
+     "FUEL_NEEDLE":	string,
+     "FUEL_QUANTITY_NUMBER":	string,
+  }
+  handleSendRequest?: (switchName: string, switchValue: string) => void;
+}
+
 export interface Electrical_ControlInterface {
   input: {
      "CAUTION_RESET":	string,
@@ -33,6 +41,7 @@ export type InterfaceMap = {
      "LandingGear_Wheels":	LandingGear_WheelsInterface;
      "Cmds_Program":	Cmds_ProgramInterface;
      "Exterior_Lighting":	Exterior_LightingInterface;
+     "Fuel_Flow":	Fuel_FlowInterface;
      "Electrical_Control":	Electrical_ControlInterface;
 }
 

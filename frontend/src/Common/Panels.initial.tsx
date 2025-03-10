@@ -15,6 +15,11 @@ export const Exterior_LightingInitialValues: Interface.Exterior_LightingInterfac
      "FUSELAGE":	"",
 }
 
+export const Fuel_FlowInitialValues: Interface.Fuel_FlowInterface['input'] = {
+     "FUEL_NEEDLE":	"",
+     "FUEL_QUANTITY_NUMBER":	"",
+}
+
 export const Electrical_ControlInitialValues: Interface.Electrical_ControlInterface['input'] = {
      "CAUTION_RESET":	"",
 }
@@ -23,6 +28,7 @@ export const initialValues: { [K in keyof Interface.InterfaceMap]: Interface.Int
 	"LandingGear_Wheels":	LandingGear_WheelsInitialValues,
 	"Cmds_Program":	Cmds_ProgramInitialValues,
 	"Exterior_Lighting":	Exterior_LightingInitialValues,
+	"Fuel_Flow":	Fuel_FlowInitialValues,
 	"Electrical_Control":	Electrical_ControlInitialValues,
 }
 

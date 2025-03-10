@@ -1,0 +1,116 @@
+[
+    {
+        "type": "analogRotation",
+        "backend": {
+            "key": "FUEL_NEEDLE",
+            "dbsimProps": {
+                "operationType": "Monitor",
+                "stationName": "",
+                "blockName": "OwnshipPanels.FuelQuantityIndicator",
+                "elementName": "Total",
+                "elementType": "String",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgScale": "100",
+                "imgWidth": "489",
+                "imgHeight": "489",
+                "posLeft": "0",
+                "posTop": "0",
+                "zIndex": "1"
+            },
+            "imageProps": {
+                "imageDefault": "/FuelFlowPanel/ASHANDLE.png"
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 1,
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {
+                    "0": -126,
+                    "40000": 122
+                }
+            },
+            "stringProps": {},
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    },
+    {
+        "type": "number",
+        "backend": {
+            "key": "FUEL_QUANTITY_NUMBER",
+            "dbsimProps": {
+                "operationType": "Monitor",
+                "stationName": "",
+                "blockName": "OwnshipPanels.FuelQuantityIndicator",
+                "elementName": "Total",
+                "elementType": "String",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgScale": "100",
+                "imgWidth": "15",
+                "imgHeight": "20",
+                "posLeft": "84",
+                "posTop": "141",
+                "zIndex": "1"
+            },
+            "imageProps": {
+                "imageDefault": "/FuelFlowPanel/Num0.png",
+                "additionalImageData": {
+                    "0": "/FuelFlowPanel/Num0.png",
+                    "1": "/FuelFlowPanel/Num1.png",
+                    "2": "/FuelFlowPanel/Num2.png",
+                    "3": "/FuelFlowPanel/Num3.png",
+                    "4": "/FuelFlowPanel/Num4.png",
+                    "5": "/FuelFlowPanel/Num5.png",
+                    "6": "/FuelFlowPanel/Num6.png",
+                    "7": "/FuelFlowPanel/Num7.png",
+                    "8": "/FuelFlowPanel/Num8.png",
+                    "9": "/FuelFlowPanel/Num9.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": 1,
+                "clickBoundsWidthFactor": 1,
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {
+                    "0": -126,
+                    "40000": 122
+                }
+            },
+            "stringProps": {
+                "maxStringLength": "5"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": true
+            }
+        }
+    }
+]

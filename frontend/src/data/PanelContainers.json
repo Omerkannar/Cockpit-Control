@@ -91,6 +91,15 @@
         "container_width": 600,
         "container_height": 600,
         "container_scale": 100
+    },
+    {
+        "container_name": "RIGHT_AUXILIARY_AND_CONSOLE_FUEL_FLOW", 
+        "container_text": "Indicators", 
+        "container_top": 90,
+        "container_left": 130,
+        "container_width": 600,
+        "container_height": 600,
+        "container_scale": 100
     }
 ]
 

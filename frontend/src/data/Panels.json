@@ -39,6 +39,19 @@
         }
     },
 	{
+        "panel_name" : "Fuel_Flow",
+        "panel_container": "RIGHT_AUXILIARY_AND_CONSOLE_FUEL_FLOW",
+        "panel_url" : "./FuelFlowPanel/FUELQUANTITY.png",
+        "panel_resources" : "/FuelFlowPanel/",
+        "panel_scale": 40,
+        "panel_top": 40,
+        "panel_left": 5,
+        "enlargeProps": {
+            "enable": false,
+            "scale": 60
+        }
+    },
+	{
         "panel_name" : "Electrical_Control",
         "panel_container": "LEFT_AUXILIARY_AND_CONSOLE_ELECTRICAL",
         "panel_url" : "./ElecControlPanel/Elec_Control.png",
