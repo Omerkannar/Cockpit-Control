@@ -1,6 +1,7 @@
 import settings from '../settings.json'
 import styled from "styled-components"
 import { PanelContainerInterface } from "./Common.interface";
+import isPropValid from '@emotion/is-prop-valid'
 
 export const MainContainer = styled.div`
   background-color: ${settings.general.mainScreenBackgroundColor};
@@ -26,7 +27,19 @@ export const Panel = styled.div<{ url: string; scale: number, width: number; hei
 `
 
 // Define styled containers
-export const Container = styled.div<PanelContainerInterface>`
+export const Container = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    isPropValid(prop) && ![
+      'container_url',
+      'container_name',
+      'container_text',
+      'container_top',
+      'container_left',
+      'container_width',
+      'container_height',
+      'container_scale',
+    ].includes(prop)
+}) <PanelContainerInterface>`
     background-image: ${props => props.container_url ? `url(${props.container_url})` : null};
     background-color: ${props => props.container_url ? null : settings.general.containerBackgroundColor};
     border-radius: ${props => props.container_url ? 0 : settings.general.containerBorderRadius}px;
@@ -57,11 +70,11 @@ export const Container = styled.div<PanelContainerInterface>`
 
 
 // Layouts selector
-export const LayoutNavigation = styled.div<{ zoomScale: number }>`
+export const LayoutNavigation = styled.div<{ $zoomScale: number }>`
   position: fixed;
   top: 20px;
   left: 50%;
-  transform: ${({ zoomScale }) => `scale(${zoomScale})`}; /* Adjust based on zoom scale */
+  transform: ${({ $zoomScale }) => `scale(${$zoomScale})`}; /* Adjust based on zoom scale */
   z-index: 9999;
   border-radius: 5px;
   width: 900px; // Fixed width for consistency

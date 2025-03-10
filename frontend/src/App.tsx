@@ -66,7 +66,7 @@ const App = () => {
 
       {/* Navigation UI (only shown if there are multiple layouts) */}
       {layoutsData.length > 1 && (
-        <LayoutNavigation zoomScale={zoomScale}>
+        <LayoutNavigation $zoomScale={zoomScale}>
           {layoutsData.map(layout => (
             <LayoutButton
               key={layout.layout_name}

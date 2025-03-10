@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import settings from '../settings.json';
 
-const LoggerContainer = styled.div<{ isMinimized: boolean; zoomScale: number }>`
+const LoggerContainer = styled.div<{ isMinimized: boolean; $zoomScale: number }>`
   position: fixed;
   top: 20px;
   left: 20px;
@@ -16,7 +16,7 @@ const LoggerContainer = styled.div<{ isMinimized: boolean; zoomScale: number }>`
   font-family: monospace;
   z-index: 9999;
   transform-origin: top left;
-  transform: ${({ zoomScale }) => `scale(${zoomScale})`}; /* Adjust based on zoom scale */
+  transform: ${({ $zoomScale }) => `scale(${$zoomScale})`}; /* Adjust based on zoom scale */
   font-size: 14px; /* Fixed font size */
   transition: max-height 0.3s; /* Smooth transition for minimization */
 `;
@@ -35,7 +35,7 @@ const LogEntry = styled.div`
   margin-bottom: 5px;
 `;
 
-const ClearButton = styled.button<{ zoomScale: number }>`
+const ClearButton = styled.button<{ $zoomScale: number }>`
   position: absolute;
   top: 10px;
   right: 80px;
@@ -49,7 +49,7 @@ const ClearButton = styled.button<{ zoomScale: number }>`
   box-sizing: border-box;
 `;
 
-const ToggleButton = styled.button<{ zoomScale: number }>`
+const ToggleButton = styled.button<{ $zoomScale: number }>`
   position: absolute;
   top: 10px;
   right: 10px;
@@ -124,13 +124,13 @@ const FloatingLogger: React.FC<FloatingLoggerProps> = ({ limit = 50 }) => {
   };
 
   return (
-    <LoggerContainer isMinimized={isMinimized} zoomScale={zoomScale}>
+    <LoggerContainer isMinimized={isMinimized} $zoomScale={zoomScale}>
       <LoggerHeader onClick={toggleMinimize}>
         Info
         <ToggleButton onClick={(e) => {
             e.stopPropagation();
             toggleMinimize()
-            }} zoomScale={zoomScale}>
+            }} $zoomScale={zoomScale}>
           {isMinimized ? 'Restore' : 'Minimize'}
         </ToggleButton>
       </LoggerHeader>
@@ -139,7 +139,7 @@ const FloatingLogger: React.FC<FloatingLoggerProps> = ({ limit = 50 }) => {
           {logs.map((log, index) => (
             <LogEntry key={index}>{log}</LogEntry>
           ))}
-           <ClearButton onClick={handleClearLogs} zoomScale={zoomScale}>Clear</ClearButton>
+           <ClearButton onClick={handleClearLogs} $zoomScale={zoomScale}>Clear</ClearButton>
         </>
       )}
     </LoggerContainer>
