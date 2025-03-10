@@ -7,7 +7,7 @@ import useDynamicState from '../useDynamicState';
 import { InterfaceMap } from '../Common/Panels.interface'
 import { Panel } from '../Common/Common.styles'
 import ClickContainer from '../Common/ClickContainer/ClickContainer';
-import clickingMapping from '../data/mapping/ClickingMapping.json'
+import clickingMapping from '../../../data/mapping/ClickingMapping.json'
 import { getValue, nextValueToSend, getObjectMonitorDbsimProps } from './GenericPanel.function';
 import Modal from '../Modal/Modal';
 
@@ -30,7 +30,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         // Dynamic import with try-catch for better error handling
         const loadJson = async () => {
             try {
-                const module = await import(`../data/${static_data.panel_name}.json`)
+                const module = await import(`../../../data/${static_data.panel_name}.json`)
                 setJsonData(module.default);
             } catch (err) {
                 console.error("Error loading JSON file:", err);

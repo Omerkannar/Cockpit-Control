@@ -1,7 +1,7 @@
 import json
 import os
 
-base_folder = "../frontend/src/data/"
+base_folder = "../data/"
 # Map JSON types to TypeScript types
 type_mapping = {
     "string": "string",
@@ -67,10 +67,10 @@ interface_map_str += "export type InterfaceKey = keyof InterfaceMap;"
 
 interface_str += interface_map_str
 
-with open(f"{base_folder}../Common/Panels.interface.tsx", "w") as interface_file:
+with open(f"{base_folder}../frontend/src/Common/Panels.interface.tsx", "w") as interface_file:
     interface_file.write(interface_str)
 
-with open(f"{base_folder}../Common/Panels.initial.tsx", "w") as initial_file:
+with open(f"{base_folder}../frontend/src/Common/Panels.initial.tsx", "w") as initial_file:
     initial_file.write(initial_values_str)
 
 # Ensure the directory exists

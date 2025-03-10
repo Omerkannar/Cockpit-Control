@@ -4,9 +4,9 @@ import { GenericPanelInterface, PanelContainerInterface, MessageType, IncomingMe
 import { Container, MainContainer, LayoutNavigation, LayoutButton } from './Common/Common.styles';
 import { useWebSocket } from './useWebSocket';
 import GenericPanel from './components/GenericPanel';
-import panelsStaticData from './data/Panels.json';
-import containerConfigs from './data/PanelContainers.json';
-import layoutsData from './data/Layouts.json';
+import panelsStaticData from '../../data/Panels.json';
+import containerConfigs from '../../data/PanelContainers.json';
+import layoutsData from '../../data/Layouts.json';
 import FloatingLogger from './Logger/FloatingLogger';
 
 const App = () => {
