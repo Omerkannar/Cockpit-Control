@@ -1,0 +1,72 @@
+[
+    {
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "ICP_DUCK",
+            "dbsimProps": {
+                "operationType": "",
+                "stationName": "",
+                "blockName": "IOMessages.MatrixOutput",
+                "elementName": "IKP.Ducks_Switch",
+                "elementType": "String",
+                "enumMapping": {
+                    "Up": "Up",
+                    "Down": "Down",
+                    "Center": "Center",
+                    "SEQ": "SEQ",
+                    "RTN": "RTN"
+                }
+            }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 100,
+                "imgHeight": 100,
+                "posLeft": 310,
+                "posTop": 426,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "ICP/SQUARESWITCHNUETRAL.png",
+                "additionalImageData": {
+                    "Up": "ICP/SQUARESWITCHUP.png",
+                    "Down": "ICP/SQUARESWITCHDOWN.png",
+                    "Center": "ICP/SQUARESWITCHNUETRAL.png",
+                    "SEQ": "ICP/SQUARESWITCHRIGHT.png",
+                    "RTN": "ICP/SQUARESWITCHLEFT.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1.4",
+                "clickBoundsWidthFactor": "1.4",
+                "mapping": {
+                    "mapTop": "Up",
+                    "mapRight": "SEQ",
+                    "mapBottom": "Down",
+                    "mapLeft": "RTN"
+                }
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            },
+            "additionProps": {
+                "stateNMomentaryDefault": "Center"
+            }
+        }
+    }
+]

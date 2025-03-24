@@ -1,0 +1,1257 @@
+[
+	{
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "PROG_Button",
+            "dbsimProps": 
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.ProgButton",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "RELEASE": "RELEASE",
+                        "PUSH": "PUSH"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 70,
+                "imgHeight": 30,
+                "posLeft": 188,
+                "posTop": 85,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/PROGON.png",
+                "additionalImageData": {
+                    "RELEASE": "Left/PROG/PROGOFF.png",
+                    "PUSH": "Left/PROG/PROGON.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "2",
+                "clickBoundsWidthFactor": "2",
+                "mapping": {
+                    "mapTop": "PUSH",
+                    "mapRight": "PUSH",
+                    "mapBottom": "PUSH",
+                    "mapLeft": "PUSH",
+					"mapPressPull1":"PUSH"
+					}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+    {
+        "type": "knobInteger",
+        "backend": {
+            "key": "Program_selector_IN",
+            "dbsimProps":
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out.Prog",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "ONE": "ONE",
+                        "TWO": "TWO",
+                        "THREE": "THREE",
+                        "FOUR": "FOUR"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 135,
+                "imgHeight": 135,
+                "posLeft": 338,
+                "posTop": 58,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/KNOB3.png",
+                "additionalImageData": {}
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1.5",
+                "clickBoundsWidthFactor": "1.3",
+                "mapping": {
+                    "mapTop": "INCREASE",
+                    "mapRight": "INCREASE",
+                    "mapBottom": "DECREASE",
+                    "mapLeft": "DECREASE"
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "ONE": "90",
+                    "TWO": "140",
+                    "THREE": "180",
+                    "FOUR": "230"
+                }
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "knobInteger",
+        "backend": {
+            "key": "MODE_selector_IN",
+            "dbsimProps":
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.MODE",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "MODE_A": "MODE_A",
+                        "MODE_B": "MODE_B",
+                        "MODE_C": "MODE_C",
+                        "MODE_D": "MODE_D"
+                    }
+                }
+       
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 135,
+                "imgHeight": 135,
+                "posLeft": 551,
+                "posTop": 58,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/KNOB3.png",
+                "additionalImageData": {}
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1.5",
+                "clickBoundsWidthFactor": "1.5",
+                "mapping": {
+                    "mapTop": "INCREASE",
+                    "mapRight": "INCREASE",
+                    "mapBottom": "DECREASE",
+                    "mapLeft": "DECREASE"
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "MODE_A": "30",
+                    "MODE_B": "80",
+                    "MODE_C": "100",
+                    "MODE_D": "145"
+                }
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    }, 
+    {
+        "type": "stateN",
+        "backend": {
+            "key": "EMER_SWITCH_IN",
+            "dbsimProps": [
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.EMER",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                },
+                {
+                    "operationType": "Injection",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.EMER",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+            ]
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 175,
+                "imgHeight": 175,
+                "posLeft": 65,
+                "posTop": 210,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/SWITCHBIGHEAD4.png",
+                "additionalImageData": {
+                    "OFF": "Left/PROG/SWITCHBIGHEAD4.png",
+                    "ON": "Left/PROG/SWITCHBIGHEADNUTERAL.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {
+                    "mapBottom": "OFF",
+                    "mapRight": "ON",
+                    "mapLeft": "ON",
+                    "mapPressPull1": "ON"
+                }
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },        
+	{
+        "type": "stateN",
+        "backend": {
+            "key": "R_indicators_lights_IN",
+            "dbsimProps":
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "In.R",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 17,
+                "imgHeight": 21,
+                "posLeft": 338,
+                "posTop": 312,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/RON.png",
+                "additionalImageData": {
+                    "ON": "Left/PROG/RON.png",
+                    "OFF": "Left/PROG/ROFF.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateN",
+        "backend": {
+            "key": "T_indicators_lights_IN",
+            "dbsimProps":
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "In.T",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 17,
+                "imgHeight": 21,
+                "posLeft": 338,
+                "posTop": 270,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/TON.png",
+                "additionalImageData": {
+                    "ON": "Left/PROG/TON.png",
+                    "OFF": "Left/PROG/TOFF.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    }, 
+	{
+        "type": "stateN",
+        "backend": {
+            "key": "P_indicators_lights_IN",
+            "dbsimProps": 
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "In.P",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 17,
+                "imgHeight": 21,
+                "posLeft": 272,
+                "posTop": 285,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/PON.png",
+                "additionalImageData": {
+                    "ON": "Left/PROG/PON.png",
+                    "OFF": "Left/PROG/POFF.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "C_BUTTON_IN",
+            "dbsimProps": 
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 17,
+                "imgHeight": 21,
+                "posLeft": 410,
+                "posTop": 234,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/C_ON.png",
+                "additionalImageData": {
+                    "ON": "Left/PROG/C_ON.png",
+                    "OFF": "Left/PROG/COFF.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "2",
+                "clickBoundsWidthFactor": "4",
+                "mapping": {
+                    "mapTop": "PUSH",
+                    "mapRight": "PUSH",
+                    "mapBottom": "PUSH",
+                    "mapLeft": "PUSH",
+					"mapPressPull1":"PUSH"
+					}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "Panic_Button",
+            "dbsimProps": 
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.Panic",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "RELEASE": "RELEASE",
+                        "PUSH": "PUSH"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 110,
+                "imgHeight": 50,
+                "posLeft": 605,
+                "posTop": 295,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/PANICOFF.png",
+                "additionalImageData": {
+                    "RELEASE": "Left/PROG/PANICOFF.png",
+                    "PUSH": "Left/PROG/PANICON.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1.5",
+                "clickBoundsWidthFactor": "1.5",
+                "mapping": {
+                    "mapTop": "PUSH",
+                    "mapRight": "PUSH",
+                    "mapBottom": "PUSH",
+                    "mapLeft": "PUSH",
+					"mapPressPull1":"PUSH"
+					}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "analogRotation",
+        "backend": {
+            "key": "NVIS_BTR_IN",
+            "dbsimProps": 
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.DIM_BRT",
+                    "elementType": "Double",
+                    "enumMapping": {
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 68,
+                "imgHeight": 68,
+                "posLeft": 150,
+                "posTop": 497,
+                "zIndex": 0,
+                "imgScale": 130
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/KNOB.png",
+                "additionalImageData": {}
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "2",
+                "clickBoundsWidthFactor": "2",
+                "mapping": {
+					"mapTop": "INCREASE",
+                    "mapRight": "INCREASE",
+                    "mapBottom": "DECREASE",
+                    "mapLeft": "DECREASE"
+                    }
+            },
+            "knobProps": {
+                "rotation": {
+                }
+            },
+            "analogProps": {
+                 "conversion": {
+                    "0": "-50",
+                    "1": "140"
+                }
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "number",
+        "backend": {
+            "key": "CH_TOTAL_IN",
+            "dbsimProps": {
+                "stationName": "Monitor",
+                "blockName": "OwnshipPanels.FuelQuantityIndicator",
+                "elementName": "Total",
+                "elementType": "String",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 25,
+                "imgHeight": 25,
+                "posLeft": 287,
+                "posTop": 520,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/0.png",
+                "additionalImageData": {
+                    "0": "Left/PROG/0.png",
+                    "1": "Left/PROG/1.png",
+                    "2": "Left/PROG/2.png",
+                    "3": "Left/PROG/3.png",
+                    "4": "Left/PROG/4.png",
+                    "5": "Left/PROG/5.png",
+                    "6": "Left/PROG/6.png",
+                    "7": "Left/PROG/7.png",
+                    "8": "Left/PROG/8.png",
+                    "9": "Left/PROG/9.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "2",
+                "clickBoundsWidthFactor": "1.5",
+                "mapping": {
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "none": "none"
+                }
+            },
+            "analogProps": {
+                "conversion": {
+                    "none": "none"
+                }
+            },
+            "stringProps": {
+                "maxStringLength": "3"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "number",
+        "backend": {
+            "key": "FL_TOTAL_IN",
+            "dbsimProps": {
+                "stationName": "Monitor",
+                "blockName": "OwnshipPanels.FuelQuantityIndicator",
+                "elementName": "Total",
+                "elementType": "String",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 25,
+                "imgHeight": 25,
+                "posLeft": 425,
+                "posTop": 497,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/0.png",
+                "additionalImageData": {
+                    "0": "Left/PROG/0.png",
+                    "1": "Left/PROG/1.png",
+                    "2": "Left/PROG/2.png",
+                    "3": "Left/PROG/3.png",
+                    "4": "Left/PROG/4.png",
+                    "5": "Left/PROG/5.png",
+                    "6": "Left/PROG/6.png",
+                    "7": "Left/PROG/7.png",
+                    "8": "Left/PROG/8.png",
+                    "9": "Left/PROG/9.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "2",
+                "clickBoundsWidthFactor": "1.5",
+                "mapping": {
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "none": "none"
+                }
+            },
+            "analogProps": {
+                "conversion": {
+                    "none": "none"
+                }
+            },
+            "stringProps": {
+                "maxStringLength": "2"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "number",
+        "backend": {
+            "key": "RF_TOTAL_IN",
+            "dbsimProps": {
+                "stationName": "Monitor",
+                "blockName": "OwnshipPanels.FuelQuantityIndicator",
+                "elementName": "Total",
+                "elementType": "String",
+                "enumMapping": {}
+            }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 25,
+                "imgHeight": 25,
+                "posLeft": 545,
+                "posTop": 473,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/0.png",
+                "additionalImageData": {
+                    "0": "Left/PROG/0.png",
+                    "1": "Left/PROG/1.png",
+                    "2": "Left/PROG/2.png",
+                    "3": "Left/PROG/3.png",
+                    "4": "Left/PROG/4.png",
+                    "5": "Left/PROG/5.png",
+                    "6": "Left/PROG/6.png",
+                    "7": "Left/PROG/7.png",
+                    "8": "Left/PROG/8.png",
+                    "9": "Left/PROG/9.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "2",
+                "clickBoundsWidthFactor": "1.5",
+                "mapping": {
+                }
+            },
+            "knobProps": {
+                "rotation": {
+                    "none": "none"
+                }
+            },
+            "analogProps": {
+                "conversion": {
+                    "none": "none"
+                }
+            },
+            "stringProps": {
+                "maxStringLength": "2"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "CH_Button",
+            "dbsimProps": 
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.CH_DefeatButton",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "RELEASE": "RELEASE",
+                        "PUSH": "PUSH"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 32,
+                "imgHeight": 12,
+                "posLeft": 302,
+                "posTop": 580,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/CHON.png",
+                "additionalImageData": {
+                    "RELEASE": "Left/PROG/CHOFF.png",
+                    "PUSH": "Left/PROG/CHON.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "3",
+                "clickBoundsWidthFactor": "2",
+                "mapping": {
+                    "mapTop": "PUSH",
+                    "mapRight": "PUSH",
+                    "mapBottom": "PUSH",
+                    "mapLeft": "PUSH",
+					"mapPressPull1":"PUSH"
+					}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "FL_Button",
+            "dbsimProps": 
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.FL_DefeaButton",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "RELEASE": "RELEASE",
+                        "PUSH": "PUSH"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 32,
+                "imgHeight": 12,
+                "posLeft": 440,
+                "posTop": 580,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/FLON.png",
+                "additionalImageData": {
+                    "RELEASE": "Left/PROG/FLOFF.png",
+                    "PUSH": "Left/PROG/FLON.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "3",
+                "clickBoundsWidthFactor": "2",
+                "mapping": {
+                    "mapTop": "PUSH",
+                    "mapRight": "PUSH",
+                    "mapBottom": "PUSH",
+                    "mapLeft": "PUSH",
+					"mapPressPull1":"PUSH"
+					}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateNMomentary",
+        "backend": {
+            "key": "RF_Button",
+            "dbsimProps": 
+                {
+                    "operationType": "",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out_Sufa.RF_DefeaButton",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "RELEASE": "RELEASE",
+                        "PUSH": "PUSH"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 32,
+                "imgHeight": 12,
+                "posLeft": 547,
+                "posTop": 580,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/RFON.png",
+                "additionalImageData": {
+                    "RELEASE": "Left/PROG/RFOFF.png",
+                    "PUSH": "Left/PROG/RFON.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "3",
+                "clickBoundsWidthFactor": "2",
+                "mapping": {
+                    "mapTop": "PUSH",
+                    "mapRight": "PUSH",
+                    "mapBottom": "PUSH",
+                    "mapLeft": "PUSH",
+					"mapPressPull1":"PUSH"
+					}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateN",
+        "backend": {
+            "key": "CH_light_IN",
+            "dbsimProps":
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "In.CH",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 17,
+                "imgHeight": 17,
+                "posLeft": 350,
+                "posTop": 580,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/LIGHTON.png",
+                "additionalImageData": {
+                    "ON": "Left/PROG/LIGHTON.png",
+                    "OFF": "Left/PROG/LIGHTOFF.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateN",
+        "backend": {
+            "key": "FL_light_IN",
+            "dbsimProps":
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "In.FL",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 17,
+                "imgHeight": 17,
+                "posLeft": 485,
+                "posTop": 580,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/LIGHTON.png",
+                "additionalImageData": {
+                    "ON": "Left/PROG/LIGHTON.png",
+                    "OFF": "Left/PROG/LIGHTOFF.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateN",
+        "backend": {
+            "key": "RF_light_IN",
+            "dbsimProps":
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "In.RF",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+        },
+        "component": {
+            "debugMode": false,
+            "isClickable": false,
+            "position": {
+                "imgWidth": 17,
+                "imgHeight": 17,
+                "posLeft": 592,
+                "posTop": 580,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/LIGHTON.png",
+                "additionalImageData": {
+                    "ON": "Left/PROG/LIGHTON.png",
+                    "OFF": "Left/PROG/LIGHTOFF.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {}
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    },
+	{
+        "type": "stateN",
+        "backend": {
+            "key": "ADDS_power_IN",
+            "dbsimProps": [
+                {
+                    "operationType": "Monitor",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out.Power",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                },
+                {
+                    "operationType": "Injection",
+                    "stationName": "",
+                    "blockName": "OwnshipPanels.ADDS",
+                    "elementName": "Out.Power",
+                    "elementType": "String",
+                    "enumMapping": {
+                        "OFF": "OFF",
+                        "ON": "ON"
+                    }
+                }
+            ]
+        },
+        "component": {
+            "debugMode": true,
+            "isClickable": true,
+            "position": {
+                "imgWidth": 175,
+                "imgHeight": 175,
+                "posLeft": 598,
+                "posTop": 410,
+                "zIndex": 0,
+                "imgScale": 100
+            },
+            "imageProps": {
+                "imageDefault": "Left/PROG/SWITCHBIGHEAD4.png",
+                "additionalImageData": {
+                    "OFF": "Left/PROG/SWITCHBIGHEAD4.png",
+                    "ON": "Left/PROG/SWITCHBIGHEAD2.png"
+                }
+            },
+            "clickProps": {
+                "clickBoundsHeightFactor": "1",
+                "clickBoundsWidthFactor": "1",
+                "mapping": {
+                    "mapTop": "ON",
+                    "mapBottom": "OFF"
+                }
+            },
+            "knobProps": {
+                "rotation": {}
+            },
+            "analogProps": {
+                "conversion": {}
+            },
+            "stringProps": {
+                "maxStringLength": "0"
+            },
+            "blinking": {
+                "color": "yellow"
+            },
+            "logger": {
+                "display": "true"
+            }
+        }
+    }
+]

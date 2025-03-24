@@ -63,6 +63,32 @@
             "enable": false,
             "scale": 60
         }
+    },
+	{
+        "panel_name" : "ADDS",
+        "panel_container": "LEFT_AUXILIARY_AND_CONSOLE_ELECTRICAL",
+        "panel_url" : "./ElecControlPanel/Elec_Control.png",
+        "panel_resources" : "/ElecControlPanel/",
+        "panel_scale": 50,
+        "panel_top": 0,
+        "panel_left": 0,
+        "enlargeProps": {
+            "enable": false,
+            "scale": 60
+        }
+    },
+    {
+        "panel_name" : "ICP",
+        "panel_container": "INSTRUMENT_PANEL_GAUGES",
+        "panel_url" : "./ICP/ICP.png",
+        "panel_resources" : "/ICP/",
+        "panel_scale": 80,
+        "panel_top": 0,
+        "panel_left": 0,
+        "enlargeProps": {
+            "enable": false,
+            "scale": 60
+        }
     }
 
     

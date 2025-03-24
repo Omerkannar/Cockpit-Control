@@ -75,6 +75,10 @@ interface AdditionalCssProps {
     objectFit: "cover" | "fill" | "contain";
 }
 
+interface AdditionalProps {
+    stateNMomentaryDefault: string
+}
+
 export interface DbsimProps {
     operationType: string;
     stationName: string;
@@ -139,6 +143,7 @@ interface BasicData {
             display: boolean;
         };
         additionalCssProps?: AdditionalCssProps;
+        additionProps?: AdditionalProps;
     }
 }
 

@@ -372,6 +372,7 @@ class Program
                                             operation.elementName == null ||
                                             operation.elementType == null)
                                         {
+                                            Logger.LogError("Check DBSIM props. blockName, elementname or elementType is missing");
                                             continue;
                                         }
 
@@ -383,6 +384,27 @@ class Program
 
                                         string sBlockFullName = $"{stationName}.{operation.blockName}";
                                         string sElementFullName = $"{sBlockFullName}.{operation.elementName}";
+
+                                        // Try to get block and element - if one of them does not exist, report and continue to the next one
+                                        try
+                                        {
+                                            OneSimLinkManaged.IBlock tempBlock = OneSimLinkManaged.Simulation.Instance.BlockManager.GetBlock(sBlockFullName);
+                                        }
+                                        catch (Exception exc)
+                                        {
+                                            Logger.LogError($"{exc.Message}, Can't GetBlock of key: {sKey}");
+                                            continue;
+                                        }
+
+                                        try
+                                        {
+                                            OneSimLinkManaged.IElement tempElement = OneSimLinkManaged.Simulation.Instance.ElementManager.GetElement(sElementFullName);
+                                        }
+                                        catch (Exception exc)
+                                        {
+                                            Logger.LogError($"{exc.Message}, Can't GetElement of key: {sKey}");
+                                            continue;
+                                        }
 
                                         OneSimLinkManaged.IBlock block = OneSimLinkManaged.Simulation.Instance.BlockManager.GetBlock(sBlockFullName);
                                         OneSimLinkManaged.IElement element = OneSimLinkManaged.Simulation.Instance.ElementManager.GetElement(sElementFullName);

@@ -172,7 +172,7 @@ const GenericPanel: React.FC<GenericPanelInterface> = ({ static_data, dynamic_da
         })[0]
         if (elementData.type === 'stateNMomentary') {
             console.log(`Mouse Up on stateNMomentary`);
-            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, "RELEASE", "click");
+            [newValueToSend, showOnLogger] = nextValueToSend(jsonData, state, componentName, elementData.component.additionProps?.stateNMomentaryDefault || "RELEASE", "click");
             handleSendRequest(static_data?.panel_name, componentName, newValueToSend);
         }
     }
