@@ -53,12 +53,12 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
                 else {
                     if (pressType === 'click') {
                         console.log(`click on ${filteredName.component}`)
-                        return [String(Number(currentValue) - step), filteredName.logger?.display || "true"];
+                        return [String(roundToDecimal(Number(currentValue) - step, 4)), filteredName.logger?.display || "true"];
                     } else { // 'Long Press'
                         if (Number(currentValue) < longStep) {
                             return [String(minValue), filteredName.component.logger?.display || "true"];
                         } else {
-                            return [String(Number(currentValue) - longStep), filteredName.component.logger?.display || "true"];
+                            return [String(roundToDecimal(Number(currentValue) - longStep, 4)), filteredName.component.logger?.display || "true"];
                         }
                     }
                 }
@@ -68,12 +68,12 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
                 }
                 else {
                     if (pressType === 'click') {
-                        return [String(Number(currentValue) + step), filteredName.component.logger?.display || "true"];
+                        return [String(roundToDecimal(Number(currentValue) + step, 4)), filteredName.component.logger?.display || "true"];
                     } else {
                         if ((maxValue - Number(currentValue)) < longStep) {
                             return [String(maxValue), filteredName.component.logger?.display || "true"];
                         } else {
-                            return [String(Number(currentValue) + longStep), filteredName.component.logger?.display || "true"];
+                            return [String(roundToDecimal(Number(currentValue) + longStep, 4)), filteredName.component.logger?.display || "true"];
                         }
                     }
                 }
@@ -91,7 +91,7 @@ export const nextValueToSend = (jsonData: any, state: any, componentName: string
 const handleSimpleComponentNextValue = (selectedComponent: any, clickedName: string, currentValue: string): string => {
     let nextValue = ""
     const clickBehaviorType = clickedName.toLowerCase().startsWith("toggle") ? "toggle" : "clickByValue";
-    const injectionElementData : DbsimProps = getObjectInjectionDbsimProps(selectedComponent.backend.dbsimProps);
+    const injectionElementData: DbsimProps = getObjectInjectionDbsimProps(selectedComponent.backend.dbsimProps);
     if (clickBehaviorType === "clickByValue") {
         nextValue = (Object.keys(injectionElementData.enumMapping).length === 0) ?
             clickedName : injectionElementData.enumMapping[clickedName]
@@ -161,7 +161,7 @@ const handleKnobNextValue = (selectedComponent: any, clickedName: string, curren
             if (index === keys.length - 1) nextIndex = keys.length - 1;
             else nextIndex = index + 1;
         }
-        const val = keys.filter((_, i)=> {
+        const val = keys.filter((_, i) => {
             return nextIndex === i;
         })[0]
         console.log(nextIndex, selectedComponent.backend.dbsimProps.enumMapping, val)
@@ -185,10 +185,10 @@ export const getObjectMonitorDbsimProps = (data: DbsimProps): DbsimProps => {
     // Check if the key is an array
     if (Array.isArray(data)) {
         const res = data.filter((props: DbsimProps) => {
-             return (props.operationType === "Monitor" || props.operationType === null)
-         })[0]
-         return res;
-     }
+            return (props.operationType === "Monitor" || props.operationType === null)
+        })[0]
+        return res;
+    }
 
     // If it's a single object, return 1
     return data;
@@ -200,11 +200,17 @@ export const getObjectInjectionDbsimProps = (data: DbsimProps): DbsimProps => {
     // Check if the key is an array
     if (Array.isArray(data)) {
         const res = data.filter((props: DbsimProps) => {
-             return (props.operationType === "Injection")
-         })[0]
-         return res;
-     }
+            return (props.operationType === "Injection")
+        })[0]
+        return res;
+    }
 
     // If it's a single object, return 1
     return data;
+};
+
+
+const roundToDecimal = (num: number, decimalPlaces: number): number => {
+    const factor = 10 ** decimalPlaces;
+    return Math.round(num * factor) / factor;
 };
